@@ -109,7 +109,7 @@ type Animation = {
 type Slide = {
 	id: string;
 	background: Background;
-	elements: Array<Rectangle|Triangle|TextBlock|Ellipse|Image|Video|Audio>;
+	elements: Array<Rectangle | Triangle | TextBlock | Ellipse | Image | Video | Audio>;
 	chosenElements: Array<string>;
 	transition: TransionType;
 	animations: Array<Animation>;
@@ -132,6 +132,6 @@ type MainEditor = {
 
 export {
 	TextBlock, Ellipse, Rectangle, Triangle, Image,
-	BackColor, Slide, Presentation, MainEditor, Background, Char, Animation, 
-	TypeAnimation, TransionType,
+	BackColor, Slide, Presentation, MainEditor, Background, Char, Animation,
+	TypeAnimation, TransionType, Video, Audio
 };
