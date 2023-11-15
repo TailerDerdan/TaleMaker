@@ -1,52 +1,65 @@
 import {
-	TextBlock, Ellipse, Rectangle, Triangle, Image, Video, Audio,
-	BackColor, Slide, Presentation, MainEditor, Background, Char, Animation, 
-    TypeAnimation, TransionType
-} from "./types";
+	TextBlock,
+	Ellipse,
+	Rectangle,
+	Triangle,
+	Image,
+	Video,
+	Audio,
+	BackColor,
+	Slide,
+	Presentation,
+	MainEditor,
+	Background,
+	Char,
+	Animation,
+	TypeAnimation,
+	TransionType,
+} from "../model/types";
 
 const char1: Char = {
-    id: "char1",
-    value: "q",
-    fontSize: 14,
-    fontFamily: "Comic Sans MS",
-    color: "#000000",
-    bold: false,
-    underlined: false,
-    opacity: 100,
-}
+	id: "char1",
+	value: "q",
+	fontSize: 14,
+	fontFamily: "Comic Sans MS",
+	color: "#000000",
+	bold: false,
+	underlined: false,
+	opacity: 100,
+};
 
 const char2: Char = {
-    id: "char2",
-    value: "w",
-    fontSize: 14,
-    fontFamily: "Comic Sans MS",
-    color: "#000000",
-    bold: false,
-    underlined: false,
-    opacity: 100,
-}
+	id: "char2",
+	value: "w",
+	fontSize: 14,
+	fontFamily: "Comic Sans MS",
+	color: "#000000",
+	bold: false,
+	underlined: false,
+	opacity: 100,
+};
 
 const char3: Char = {
-    id: "char3",
-    value: "w",
-    fontSize: 20,
-    fontFamily: "Comic Sans MS",
-    color: "#000000",
-    bold: true,
-    underlined: false,
-    opacity: 100,
-}
+	id: "char3",
+	value: "w",
+	fontSize: 20,
+	fontFamily: "Comic Sans MS",
+	color: "#000000",
+	bold: true,
+	underlined: false,
+	opacity: 100,
+};
 
 const char4: Char = {
-    id: "char4",
-    value: "w",
-    fontSize: 20,
-    fontFamily: "Comic Sans MS",
-    color: "#000000",
-    bold: false,
-    underlined: true,
-    opacity: 100,
-}
+	id: "char4",
+	value: "w",
+	fontSize: 20,
+	fontFamily: "Comic Sans MS",
+	color: "#000000",
+	bold: false,
+	underlined: true,
+	opacity: 100,
+};
 
 const textBlock: TextBlock = {
 	id: "block1",
@@ -128,7 +141,7 @@ const equilTriangle: Triangle = {
 	trianglePoint1: { x: 0, y: 0 },
 	trianglePoint2: { x: 5, y: 0 },
 	trianglePoint3: { x: 2.5, y: 4.33 },
-}
+};
 
 const rightTriangle: Triangle = {
 	id: "block5",
@@ -153,7 +166,7 @@ const rightTriangle: Triangle = {
 	trianglePoint1: { x: 4, y: 6 },
 	trianglePoint2: { x: 4, y: 8 },
 	trianglePoint3: { x: 6, y: 6 },
-}
+};
 
 const imageBlock: Image = {
 	id: "block6",
@@ -165,83 +178,82 @@ const imageBlock: Image = {
 };
 
 const audioBlock: Audio = {
-    id: "block6",
+	id: "block6",
 	point1: { x: 150, y: 125 },
 	point2: { x: 175, y: 150 },
 	angelRotate: 0,
 	type: "audio",
 	urlStr: "https://freesound.org/people/InspectorJ/sounds/405561/",
-}
+};
 
 const videoBlock: Video = {
-    id: "block7",
+	id: "block7",
 	point1: { x: 200, y: 175 },
 	point2: { x: 225, y: 200 },
 	angelRotate: 0,
 	type: "video",
 	urlStr: "https://clck.ru/3vyXS",
-}
-
+};
 
 const backgroundColor: BackColor = {
 	type: "backColor",
 	color: "#699DF9",
-}
+};
 
 const background: Background = {
 	type: backgroundColor,
-}
+};
 
 const block1Animation: Animation = {
-    id: "anim1",
-    blockId: "block1",
-    animation: TypeAnimation.Moving,
-}
+	id: "anim1",
+	blockId: "block1",
+	animation: TypeAnimation.Moving,
+};
 
 const block2Animtion: Animation = {
-    id: "anim2",
-    blockId: "block2",
-    animation: TypeAnimation.Appearing,
-}
+	id: "anim2",
+	blockId: "block2",
+	animation: TypeAnimation.Appearing,
+};
 
 const slide1: Slide = {
 	id: "slide1",
-	background: background, // вот так
+	background, // вот так
 	elements: [textBlock, circle, rectangle, rightTriangle, imageBlock],
 	chosenElements: ["block6"],
 	transition: TransionType.Default,
 	animations: [block1Animation],
-}
+};
 
 const slide2: Slide = {
 	id: "slide2",
-	background: background, // вот так
+	background, // вот так
 	elements: [rightTriangle, textBlock, circle],
 	chosenElements: ["block5"],
 	transition: TransionType.Fading,
 	animations: [block2Animtion],
-}
+};
 
 const presentation0: Presentation = {
 	height: 500,
-	width: 600,
-    versionId:"1",
+	width: 610,
+	versionId: "1",
 	name: "React",
 	slides: [slide1],
-    chosenSlideIds: ["slide1"],
-}
+	chosenSlideIds: ["slide1"],
+};
 
 const presentation1: Presentation = {
 	height: 500,
 	width: 600,
-    versionId:"1",
+	versionId: "1",
 	name: "React",
 	slides: [slide1, slide2],
-    chosenSlideIds: ["slide2"],
-}
+	chosenSlideIds: ["slide2"],
+};
 
 const user: MainEditor = {
 	presentation: presentation1,
 	history: [presentation0, presentation1],
 	viewingMode: "editor",
-}
+};

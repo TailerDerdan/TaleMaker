@@ -1,3 +1,0 @@
-# TaleMaker
-
-fronted project
