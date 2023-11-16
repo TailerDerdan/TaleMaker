@@ -1,7 +1,15 @@
 import {
-	TextBlock, Ellipse, Rectangle, Triangle, Image,
-	BackColor, Slide, Presentation, MainEditor, Background
-} from "./types";
+	TextBlock,
+	Ellipse,
+	Rectangle,
+	Triangle,
+	Image,
+	BackColor,
+	Slide,
+	Presentation,
+	MainEditor,
+	Background,
+} from "../model/types";
 
 const textBlock: TextBlock = {
 	id: "id1",
@@ -83,7 +91,7 @@ const equilTriangle: Triangle = {
 	trianglePoint1: { x: 0, y: 0 },
 	trianglePoint2: { x: 5, y: 0 },
 	trianglePoint3: { x: 2.5, y: 4.33 },
-}
+};
 
 const rightTriangle: Triangle = {
 	id: "id5",
@@ -108,7 +116,7 @@ const rightTriangle: Triangle = {
 	trianglePoint1: { x: 4, y: 6 },
 	trianglePoint2: { x: 4, y: 8 },
 	trianglePoint3: { x: 6, y: 6 },
-}
+};
 
 const imageBlock: Image = {
 	id: "id6",
@@ -122,11 +130,11 @@ const imageBlock: Image = {
 const backgroundColor: BackColor = {
 	type: "backColor",
 	color: "#699DF9",
-}
+};
 
 const background: Background = {
 	type: backgroundColor,
-}
+};
 
 const slide1: Slide = {
 	id: "slide1",
@@ -135,7 +143,7 @@ const slide1: Slide = {
 	chosenElements: [],
 	transition: 0,
 	animations: [],
-}
+};
 
 const presentation: Presentation = {
 	width: 500,
@@ -144,10 +152,10 @@ const presentation: Presentation = {
 	name: "React",
 	slides: [],
 	chosenSlideIds: [],
-}
+};
 
 const user: MainEditor = {
 	presentation: presentation,
 	history: [],
 	viewingMode: "editor",
-}
+};
