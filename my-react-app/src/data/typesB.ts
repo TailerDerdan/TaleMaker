@@ -1,19 +1,30 @@
 import {
-	TextBlock, Ellipse, Rectangle, Triangle, Image,
-	BackColor, Slide, Presentation, MainEditor, Background, Char, Animation, 
-    TypeAnimation, TransionType
-} from "./types";
+	TextBlock,
+	Ellipse,
+	Rectangle,
+	Triangle,
+	Image,
+	BackColor,
+	Slide,
+	Presentation,
+	MainEditor,
+	Background,
+	Char,
+	Animation,
+	TypeAnimation,
+	TransionType,
+} from "../model/types";
 
 const char1: Char = {
-    id: "char1",
-    value: "q",
-    fontSize: 14,
-    fontFamily: "Comic Sans MS",
-    color: "#000000",
-    bold: false,
-    underlined: false,
-    opacity: 100,
-}
+	id: "char1",
+	value: "q",
+	fontSize: 14,
+	fontFamily: "Comic Sans MS",
+	color: "#000000",
+	bold: false,
+	underlined: false,
+	opacity: 100,
+};
 
 const textBlock: TextBlock = {
 	id: "block1",
@@ -95,7 +106,7 @@ const equilTriangle: Triangle = {
 	trianglePoint1: { x: 0, y: 0 },
 	trianglePoint2: { x: 5, y: 0 },
 	trianglePoint3: { x: 2.5, y: 4.33 },
-}
+};
 
 const rightTriangle: Triangle = {
 	id: "block5",
@@ -120,7 +131,7 @@ const rightTriangle: Triangle = {
 	trianglePoint1: { x: 4, y: 6 },
 	trianglePoint2: { x: 4, y: 8 },
 	trianglePoint3: { x: 6, y: 6 },
-}
+};
 
 const imageBlock: Image = {
 	id: "block6",
@@ -134,17 +145,17 @@ const imageBlock: Image = {
 const backgroundColor: BackColor = {
 	type: "backColor",
 	color: "#699DF9",
-}
+};
 
 const background: Background = {
 	type: backgroundColor,
-}
+};
 
 const block1Animation: Animation = {
-    id: "anim1",
-    blockId: "block1",
-    animation: TypeAnimation.Moving,
-}
+	id: "anim1",
+	blockId: "block1",
+	animation: TypeAnimation.Moving,
+};
 
 const slide1: Slide = {
 	id: "slide1",
@@ -153,7 +164,7 @@ const slide1: Slide = {
 	chosenElements: ["block6"],
 	transition: TransionType.Default,
 	animations: [block1Animation],
-}
+};
 
 const slide2: Slide = {
 	id: "slide2",
@@ -162,28 +173,28 @@ const slide2: Slide = {
 	chosenElements: ["block5"],
 	transition: TransionType.Fading,
 	animations: [],
-}
+};
 
 const presentation0: Presentation = {
 	height: 500,
 	width: 600,
-    versionId:"1",
+	versionId: "1",
 	name: "React",
 	slides: [slide1],
-   chosenSlideIds: [],
-}
+	chosenSlideIds: [],
+};
 
 const presentation1: Presentation = {
 	height: 500,
 	width: 600,
-    versionId:"1",
+	versionId: "1",
 	name: "React",
 	slides: [slide1, slide2],
-    chosenSlideIds: ["slide2"],
-}
+	chosenSlideIds: ["slide2"],
+};
 
 const user: MainEditor = {
 	presentation: presentation1,
 	history: [presentation0, presentation1],
 	viewingMode: "editor",
-}
+};

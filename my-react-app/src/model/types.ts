@@ -32,7 +32,7 @@ type TextBlock = Block & {
 	type: "text";
 	chars: Array<Char>;
 	chosenCharIds: Array<string>;
-	alignment: Alignment,
+	alignment: Alignment;
 };
 
 type GraphicObject = Block & {
@@ -109,7 +109,9 @@ type Animation = {
 type Slide = {
 	id: string;
 	background: Background;
-	elements: Array<Rectangle|Triangle|TextBlock|Ellipse|Image|Video|Audio>;
+	elements: Array<
+		Rectangle | Triangle | TextBlock | Ellipse | Image | Video | Audio
+	>;
 	chosenElements: Array<string>;
 	transition: TransionType;
 	animations: Array<Animation>;
@@ -130,8 +132,21 @@ type MainEditor = {
 	viewingMode: "editor" | "slideShow";
 };
 
-export {
-	TextBlock, Ellipse, Rectangle, Triangle, Image,
-	BackColor, Slide, Presentation, MainEditor, Background, Char, Animation, 
-	TypeAnimation, TransionType,
+export type {
+	TextBlock,
+	Ellipse,
+	Rectangle,
+	Triangle,
+	Image,
+	BackColor,
+	Slide,
+	Presentation,
+	MainEditor,
+	Background,
+	Char,
+	Animation,
+	TypeAnimation,
+	TransionType,
+	Video,
+	Audio,
 };
