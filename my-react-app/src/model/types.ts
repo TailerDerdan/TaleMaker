@@ -106,7 +106,14 @@ type Animation = {
     animation: TypeAnimation;
 };
 
-type ObjectOnSlide = Rectangle | Triangle | TextBlock | Ellipse | Image | Video | Audio;
+type ObjectOnSlide =
+    | Rectangle
+    | Triangle
+    | TextBlock
+    | Ellipse
+    | Image
+    | Video
+    | Audio;
 
 type Slide = {
     id: string;
