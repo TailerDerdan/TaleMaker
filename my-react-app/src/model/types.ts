@@ -23,9 +23,10 @@ type Point = {
 
 type Block = {
     id: string;
-    point1: Point;
-    point2: Point;
-    angelRotate: number;
+    point: Point;
+    width?: number;
+    height?: number;
+    angleRotate: number;
 };
 
 type TextBlock = Block & {
@@ -54,7 +55,7 @@ type Rectangle = GraphicObject & {
 };
 
 type Triangle = GraphicObject & {
-    type: "Triangle";
+    type: "triangle";
     trianglePoint1: Point;
     trianglePoint2: Point;
     trianglePoint3: Point;
@@ -106,7 +107,14 @@ type Animation = {
     animation: TypeAnimation;
 };
 
-type ObjectOnSlide = Rectangle | Triangle | TextBlock | Ellipse | Image | Video | Audio;
+type ObjectOnSlide =
+    | Rectangle
+    | Triangle
+    | TextBlock
+    | Ellipse
+    | Image
+    | Video
+    | Audio;
 
 type Slide = {
     id: string;
@@ -148,6 +156,7 @@ export type {
     Video,
     Audio,
     ObjectOnSlide,
+    Point,
 };
 
 export { Alignment, TransionType, TypeAnimation };
