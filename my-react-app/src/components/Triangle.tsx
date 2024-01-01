@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { Point } from "../model/types";
 
 type TriangleProps = {
     id: string;
     point: Point;
-    width?: number;
-    height?: number;
+    width: number;
+    height: number;
     angleRotate: number;
     color: string;
     borderThickness: number;
@@ -19,9 +19,6 @@ type TriangleProps = {
 const TriangleView = (props: TriangleProps) => {
     const {
         id,
-        point,
-        width,
-        height,
         angleRotate,
         color,
         borderThickness,
@@ -31,14 +28,39 @@ const TriangleView = (props: TriangleProps) => {
         trianglePoint2,
         trianglePoint3,
     } = props;
-    const points = `${trianglePoint1.x}, ${trianglePoint1.y} ${trianglePoint2.x}, ${trianglePoint2.y} ${trianglePoint3.x}, ${trianglePoint3.y}`;
+    const [width, setWidth] = useState<number>(
+        Math.max(trianglePoint1.x, trianglePoint2.x, trianglePoint3.x) -
+            Math.min(trianglePoint1.x, trianglePoint2.x, trianglePoint3.x) +
+            5,
+    );
+    const [height, setHeight] = useState<number>(
+        Math.max(trianglePoint1.y, trianglePoint2.y, trianglePoint3.y) -
+            Math.min(trianglePoint1.y, trianglePoint2.y, trianglePoint3.y) +
+            5,
+    );
+    props.point.x = Math.min(
+        trianglePoint1.x,
+        trianglePoint2.x,
+        trianglePoint3.x,
+    );
+    props.point.y = Math.min(
+        trianglePoint1.y,
+        trianglePoint2.y,
+        trianglePoint3.y,
+    );
+    const { point } = props;
+    const points = `${trianglePoint1.x - point.x}, ${
+        trianglePoint1.y - point.y
+    } ${trianglePoint2.x - point.x}, ${trianglePoint2.y - point.y} ${
+        trianglePoint3.x - point.x
+    }, ${trianglePoint3.y - point.y}`;
     return (
         <div
             key={id}
             style={{
                 position: "absolute",
-                top: point.x,
-                left: point.y,
+                top: point.y,
+                left: point.x,
                 width: width,
                 height: height,
                 transform: `rotate(${angleRotate})`,

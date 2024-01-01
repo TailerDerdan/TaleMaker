@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { Point } from "../model/types";
 
 type RectangleProps = {
     id: string;
     point: Point;
-    width?: number;
-    height?: number;
+    width: number;
+    height: number;
     angleRotate: number;
     color: string;
     borderThickness: number;
@@ -17,13 +17,13 @@ const RectangleView = (props: RectangleProps) => {
     const {
         id,
         point,
-        width,
-        height,
         angleRotate,
         color,
         borderThickness,
         colorBorder,
         opacity,
+        width,
+        height,
     } = props;
     return (
         <div

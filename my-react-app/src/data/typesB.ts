@@ -174,6 +174,8 @@ const slide1: Slide = {
     chosenElements: ["block6"],
     transition: TransionType.Default,
     animations: [block1Animation],
+    width: 1262,
+    height: 692,
 };
 
 const slide2: Slide = {
@@ -183,11 +185,11 @@ const slide2: Slide = {
     chosenElements: ["block5"],
     transition: TransionType.Fading,
     animations: [],
+    width: 1262,
+    height: 692,
 };
 
 const presentation0: Presentation = {
-    height: 500,
-    width: 600,
     versionId: "1",
     name: "React",
     slides: [slide1],
@@ -195,8 +197,6 @@ const presentation0: Presentation = {
 };
 
 const presentation1: Presentation = {
-    height: 500,
-    width: 600,
     versionId: "1",
     name: "React",
     slides: [slide1, slide2],

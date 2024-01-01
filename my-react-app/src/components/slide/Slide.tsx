@@ -1,9 +1,11 @@
 import React from "react";
-import { Background, ObjectOnSlide, TransionType } from "../model/types";
-import { EllipseView } from "./Ellipse";
-import { RectangleView } from "./Rectangle";
-import { TriangleView } from "./Triangle";
-import { TextBlockView } from "./TextBlock";
+import { Background, ObjectOnSlide, TransionType } from "../../model/types";
+import { EllipseView } from "../Ellipse";
+import { RectangleView } from "../Rectangle";
+import { TriangleView } from "../Triangle";
+import { TextBlockView } from "../TextBlock";
+import { ImageView } from "../ImageView";
+import styles from "../slide/Slide.module.css";
 
 type SlideProps = {
     id: string;
@@ -38,6 +40,8 @@ function SlideView(props: SlideProps) {
                 return <TriangleView {...el} />;
             case "text":
                 return <TextBlockView {...el} />;
+            case "image":
+                return <ImageView {...el} />;
             default:
                 return <></>;
         }
@@ -45,12 +49,11 @@ function SlideView(props: SlideProps) {
 
     return (
         <div
-            id={id}
+            key={id}
+            className={styles.slideStyles}
             style={{
-                position: "relative",
-                width: width,
-                height: height,
-                border: "2px solid #000",
+                width: `${width * document.documentElement.clientWidth}px`,
+                height: `${height * document.documentElement.clientHeight}px`,
             }}
         >
             {slideElements}

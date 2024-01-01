@@ -24,8 +24,8 @@ type Point = {
 type Block = {
     id: string;
     point: Point;
-    width?: number;
-    height?: number;
+    width: number;
+    height: number;
     angleRotate: number;
 };
 
@@ -123,11 +123,11 @@ type Slide = {
     chosenElements: Array<string>;
     transition: TransionType;
     animations: Array<Animation>;
+    width: number;
+    height: number;
 };
 
 type Presentation = {
-    width: number;
-    height: number;
     versionId: string;
     name: string;
     slides: Array<Slide>;

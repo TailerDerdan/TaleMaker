@@ -153,11 +153,11 @@ const slide1: Slide = {
     chosenElements: [],
     transition: 0,
     animations: [],
+    width: 1262,
+    height: 692,
 };
 
 const presentation: Presentation = {
-    width: 500,
-    height: 600,
     versionId: "0",
     name: "React",
     slides: [],

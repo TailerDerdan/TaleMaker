@@ -76,6 +76,8 @@ const textBlock: TextBlock = {
 const circle: Ellipse = {
     id: "block2",
     point: { x: 2, y: 12 },
+    width: 0,
+    height: 0,
     angleRotate: 0,
     color: "FF0000",
     borderThickness: 2,
@@ -124,6 +126,8 @@ const rectangle: Rectangle = {
 const equilTriangle: Triangle = {
     id: "block4",
     point: { x: 0, y: 5 },
+    width: 0,
+    height: 0,
     color: "#B8A74B",
     borderThickness: 1,
     colorBorder: "#000000",
@@ -148,7 +152,9 @@ const equilTriangle: Triangle = {
 
 const rightTriangle: Triangle = {
     id: "block5",
-    point: { x: 4, y: 8 },
+    point: { x: 250, y: 50 },
+    width: 0,
+    height: 0,
     angleRotate: 0,
     color: "#F3FF00",
     borderThickness: 3.5,
@@ -178,7 +184,7 @@ const imageBlock: Image = {
     height: 100,
     angleRotate: 0,
     type: "image",
-    urlStr: "https://m.media-amazon.com/images/I/31enPn7dN+L.jpg",
+    urlStr: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/React_Logo_SVG.svg/512px-React_Logo_SVG.svg.png",
 };
 
 const audioBlock: Audio = {
@@ -229,6 +235,8 @@ const slide1: Slide = {
     chosenElements: ["block6"],
     transition: TransionType.Default,
     animations: [block1Animation],
+    width: 0.66,
+    height: 0.64,
 };
 
 const slide2: Slide = {
@@ -238,11 +246,11 @@ const slide2: Slide = {
     chosenElements: ["block5"],
     transition: TransionType.Fading,
     animations: [block2Animtion],
+    width: 0.66,
+    height: 0.64,
 };
 
 const presentation0: Presentation = {
-    height: 500,
-    width: 600,
     versionId: "1",
     name: "React",
     slides: [slide1],
@@ -250,8 +258,6 @@ const presentation0: Presentation = {
 };
 
 const presentation1: Presentation = {
-    height: 500,
-    width: 600,
     versionId: "1",
     name: "React",
     slides: [slide1, slide2],
@@ -264,4 +270,12 @@ const user: MainEditor = {
     viewingMode: "editor",
 };
 
-export { user, textBlock, circle, rectangle, rightTriangle, imageBlock };
+export {
+    user,
+    textBlock,
+    circle,
+    rectangle,
+    rightTriangle,
+    imageBlock,
+    presentation1,
+};

@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { Point, Char, Alignment } from "../model/types";
 
 type TextBlockViewProps = {
     id: string;
     point: Point;
-    width?: number;
-    height?: number;
+    width: number;
+    height: number;
     angleRotate: number;
     chars: Array<Char>;
     chosenCharIds: Array<string>;
@@ -16,12 +16,12 @@ function TextBlockView(props: TextBlockViewProps) {
     const {
         id,
         point,
-        width,
-        height,
         angleRotate,
         chars,
         chosenCharIds,
         alignment,
+        width,
+        height,
     } = props;
 
     const spanArr = chars.map((ch) => {
@@ -44,11 +44,15 @@ function TextBlockView(props: TextBlockViewProps) {
 
     return (
         <div
+            key={id}
             style={{
                 display: "inline-block",
+                width: width,
+                height: height,
                 position: "absolute",
                 top: point.x,
                 left: point.y,
+                transform: `rotate(${angleRotate})`,
             }}
         >
             {spanArr}
