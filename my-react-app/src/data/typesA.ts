@@ -9,16 +9,6 @@ import {
     Presentation,
     MainEditor,
     Background,
-    TextBlock,
-    Ellipse,
-    Rectangle,
-    Triangle,
-    Image,
-    BackColor,
-    Slide,
-    Presentation,
-    MainEditor,
-    Background,
 } from "../model/types";
 
 const textBlock: TextBlock = {
@@ -175,9 +165,6 @@ const presentation: Presentation = {
 };
 
 const user: MainEditor = {
-    presentation: presentation,
-    history: [],
-    viewingMode: "editor",
     presentation: presentation,
     history: [],
     viewingMode: "editor",

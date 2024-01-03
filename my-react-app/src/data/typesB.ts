@@ -155,19 +155,13 @@ const imageBlock: Image = {
 const backgroundColor: BackColor = {
     type: "backColor",
     color: "#699DF9",
-    type: "backColor",
-    color: "#699DF9",
 };
 
 const background: Background = {
     type: backgroundColor,
-    type: backgroundColor,
 };
 
 const block1Animation: Animation = {
-    id: "anim1",
-    blockId: "block1",
-    animation: TypeAnimation.Moving,
     id: "anim1",
     blockId: "block1",
     animation: TypeAnimation.Moving,
@@ -213,7 +207,5 @@ const user: MainEditor = {
     presentation: presentation1,
     history: [presentation0, presentation1],
     viewingMode: "editor",
-    presentation: presentation1,
-    history: [presentation0, presentation1],
-    viewingMode: "editor",
+
 };
