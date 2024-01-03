@@ -46,10 +46,9 @@
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
-    width: 12%;
 }
 
-.header__necessary {
+.header__toolbox {
     display: flex;
     width: 89%;
     background-color: #fdfffc;
@@ -57,4 +56,6 @@
     height: 30px;
     border-radius: 30px;
     margin-bottom: 2%;
+    padding-left: 30px;
+    align-items: center;
 }

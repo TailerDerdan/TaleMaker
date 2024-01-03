@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { TransionType, BackColor, Background } from "../../model/types";
 import { SlideProps } from "../../components/slide/Slide";
 import {
@@ -40,12 +40,28 @@ function App() {
         width: 0.66,
         height: 0.64,
     };
+
+    const defaultSlide: SlideProps = {
+        id: "",
+        background,
+        elements: [],
+        chosenElements: [],
+        transition: TransionType.Default,
+        width: 0.66,
+        height: 0.64,
+    };
+
+    const [slides, setSlides] = useState([slide1, slide2]);
     return (
         <>
-            <Header />
+            <Header addSlideFunc={() => {
+                const newSlide = {...defaultSlide}
+                setSlides([...slides, newSlide])
+                console.log(slides)
+                }} />
             <div className={styles.two__panel__layout}>
-                <ListOfSLide slides={[slide1, slide2]} />
-                <WorkField slides={[slide1, slide2]} id="slide2" />
+                <ListOfSLide slides={slides} />
+                <WorkField slides={slides} id="slide2" />
             </div>
         </>
     );

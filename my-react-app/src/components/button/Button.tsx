@@ -1,23 +1,42 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Button.module.css";
 
+enum ButtonType {
+    Icon,
+    Text,
+}
+
 type ButtonProps = {
     onClick: () => void;
-    title: string;
+    title?: string;
     id: string;
+    type: ButtonType;
+    icon?: JSX.Element | undefined;
 };
 
 const Button = (props: ButtonProps) => {
-    const { onClick, title, id } = props;
+    const ButtonProps = props;
+    if (ButtonProps.type == ButtonType.Text){
+        return (
+            <div key={ButtonProps.id} className={styles.buttonWrapper}>
+                <button key={ButtonProps.id} onClick={ButtonProps.onClick} className={styles.button}>
+                    {ButtonProps.title}
+                </button>
+            </div>
+        );
+    }
+    if (ButtonProps.type == ButtonType.Icon){
+        return (
+            <div key={ButtonProps.id} className={styles.buttonWrapper}>
+                <button key={ButtonProps.id} onClick={ButtonProps.onClick} className={styles.buttonIcon}>
+                    {ButtonProps.icon}
+                </button>
 
-    return (
-        <div key={id} className={styles.buttonWrapper}>
-            <button key={id} onClick={onClick} className={styles.button}>
-                {title}
-            </button>
-        </div>
-    );
+            </div>
+        )
+    }
+    return <>12</>
 };
 
-export { Button };
+export { Button, ButtonType };
 export type { ButtonProps };

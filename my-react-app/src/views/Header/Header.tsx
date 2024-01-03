@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Header.module.css";
 import { ButtonWithPopover } from "../../components/ButtonWithPopover/ButtonWithPopover";
-import { Button, ButtonProps } from "../../components/button/Button";
+import { Button, ButtonProps, ButtonType} from "../../components/button/Button";
+import { NewSlideIcon } from "../../components/icons/newSlideIcon";
 
-const Header = () => {
+type HeaderProps = {
+    addSlideFunc: () => void
+}
+
+const Header = (props: HeaderProps) => {
     const [name, setName] = useState<string>("Презентация");
 
     const buttonsFile: Array<ButtonProps> = [
@@ -11,16 +16,19 @@ const Header = () => {
             onClick: () => console.log("xxxx"),
             title: "xxxx",
             id: "xxxx",
+            type: ButtonType.Text,
         },
         {
             onClick: () => console.log("SSSS"),
             title: "SSSS",
             id: "SSSS",
+            type: ButtonType.Text,
         },
         {
             onClick: () => console.log("SSQSS"),
             title: "SSQSS",
             id: "SSQSS",
+            type: ButtonType.Text,
         },
     ];
 
@@ -29,16 +37,19 @@ const Header = () => {
             onClick: () => console.log("xxxx"),
             title: "xxxx",
             id: "xxxx",
+            type: ButtonType.Text,
         },
         {
             onClick: () => console.log("SSSS"),
             title: "SSSS",
             id: "SSSS",
+            type: ButtonType.Text,
         },
         {
             onClick: () => console.log("SSQSS"),
             title: "SSQSS",
             id: "SSQSS",
+            type: ButtonType.Text,
         },
     ];
 
@@ -47,16 +58,19 @@ const Header = () => {
             onClick: () => console.log("xxxx"),
             title: "xxxx",
             id: "xxxx",
+            type: ButtonType.Text,
         },
         {
             onClick: () => console.log("SSSS"),
             title: "SSSS",
             id: "SSSS",
+            type: ButtonType.Text,
         },
         {
             onClick: () => console.log("SSQSS"),
             title: "SSQSS",
             id: "SSQSS",
+            type: ButtonType.Text,
         },
     ];
 
@@ -65,16 +79,19 @@ const Header = () => {
             onClick: () => console.log("xxxx"),
             title: "xxxx",
             id: "xxxx",
+            type: ButtonType.Text,
         },
         {
             onClick: () => console.log("SSSS"),
             title: "SSSS",
             id: "SSSS",
+            type: ButtonType.Text,
         },
         {
             onClick: () => console.log("SSQSS"),
             title: "SSQSS",
             id: "SSQSS",
+            type: ButtonType.Text,
         },
     ];
 
@@ -103,6 +120,7 @@ const Header = () => {
                             title={"Файл"}
                             buttons={buttonsFile}
                             id={"file"}
+                            type={ButtonType.Text}
                         />
                     </div>
                     <div className={styles.header__buttonsPopover}>
@@ -110,6 +128,7 @@ const Header = () => {
                             title={"Правка"}
                             buttons={buttonsCorrect}
                             id={"correct"}
+                            type={ButtonType.Text}
                         />
                     </div>
                     <div className={styles.header__buttonsPopover}>
@@ -117,6 +136,7 @@ const Header = () => {
                             title={"Вставка"}
                             buttons={buttonsInsert}
                             id={"insert"}
+                            type={ButtonType.Text}
                         />
                     </div>
                     <div className={styles.header__buttonsPopover}>
@@ -124,6 +144,7 @@ const Header = () => {
                             title={"Слайд"}
                             buttons={buttonsSlide}
                             id={"slide"}
+                            type={ButtonType.Text}
                         />
                     </div>
                 </div>
@@ -134,10 +155,20 @@ const Header = () => {
                         }}
                         title="Слайд шоу"
                         id="slideShow"
+                        type={ButtonType.Text}
                     />
                 </div>
             </div>
-            <div className={styles.header__necessary}></div>
+            <div className={styles.header__toolbox}>
+                        <div> 
+                            <Button
+                                onClick={() => {props.addSlideFunc()}}
+                                icon={<NewSlideIcon/>}
+                                id="newSlideIcon"
+                                type={ButtonType.Icon}
+                            />
+                        </div>
+            </div>
         </div>
     );
 };
