@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styles from "./Header.module.css";
 import { ButtonWithPopover } from "../../components/ButtonWithPopover/ButtonWithPopover";
 import { Button, ButtonProps, ButtonType} from "../../components/button/Button";
-import { NewSlideIcon } from "../../components/icons/newSlideIcon";
+import { CreateGeomFigureIcon, CreateImageIcon, CreateTextBoxIcon, NewSlideIcon, RedoIcon, UndoIcon, CreateLineIcon } from "../../components/icons/toolbarIcons";
 
 type HeaderProps = {
     addSlideFunc: () => void
@@ -160,14 +160,82 @@ const Header = (props: HeaderProps) => {
                 </div>
             </div>
             <div className={styles.header__toolbox}>
-                        <div> 
-                            <Button
-                                onClick={() => {props.addSlideFunc()}}
-                                icon={<NewSlideIcon/>}
-                                id="newSlideIcon"
-                                type={ButtonType.Icon}
-                            />
-                        </div>
+                <div className={styles.header__toolboxButton}> 
+                    <Button
+                        onClick={() => {props.addSlideFunc()}}
+                        icon={<NewSlideIcon/>}
+                        id="newSlideIcon"
+                        type={ButtonType.Icon}
+                    />
+                </div>
+                <div className={styles.header__toolboxSeparator}/>
+                <div className={styles.header__toolboxButton}>
+                    <Button
+                        onClick={() => {}}
+                        icon={<UndoIcon/>}
+                        id="UndoIcon"
+                        type={ButtonType.Icon}
+                    />
+                </div>
+                <div className={styles.header__toolboxButton}>
+                    <Button
+                        onClick={() => {}}
+                        icon={<RedoIcon/>}
+                        id="RedoIcon"
+                        type={ButtonType.Icon}
+                    />
+                </div>
+                <div className={styles.header__toolboxSeparator}/>
+                <div className={styles.header__toolboxButton}>
+                    <Button
+                        onClick={() => {}}
+                        icon={<CreateTextBoxIcon/>}
+                        id="CreateTextBoxIcon"
+                        type={ButtonType.Icon}
+                    />
+                </div>
+                <div className={styles.header__toolboxButton}>
+                    <Button
+                        onClick={() => {}}
+                        icon={<CreateImageIcon/>}
+                        id="CreateImageIcon"
+                        type={ButtonType.Icon}
+                    />
+                </div>
+                <div className={styles.header__toolboxButton}>
+                    <Button
+                        onClick={() => {}}
+                        icon={<CreateGeomFigureIcon/>}
+                        id="CreateGeomFigureIcon"
+                        type={ButtonType.Icon}
+                    />
+                </div>
+                <div className={styles.header__toolboxButton}>
+                    <Button
+                        onClick={() => {}}
+                        icon={<CreateLineIcon/>}
+                        id="CreateLineIcon"
+                        type={ButtonType.Icon}
+                    />
+                </div>
+                <div className={styles.header__toolboxSeparator}/>
+                <div className={styles.header__toolboxButton}>
+                    <Button
+                        onClick={() => {}}
+                        title="Фон"
+                        id="CreateLineIcon"
+                        type={ButtonType.Text}
+                    />
+                </div>
+                <div className={styles.header__toolboxSeparator}/>
+                <div className={styles.header__toolboxButton}>
+                    <Button
+                        onClick={() => {}}
+                        title="Переход"
+                        id="CreateLineIcon"
+                        type={ButtonType.Text}
+                    />
+                </div>
             </div>
         </div>
     );
