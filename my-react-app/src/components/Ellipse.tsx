@@ -1,9 +1,5 @@
 import React, { RefObject, useEffect, useRef, useState } from "react";
 import { Point } from "../model/types";
-import {
-	useDragAndDrop,
-	useDraggableWorkFieldProps,
-} from "../hooks/useDragAndDrop";
 
 type EllipseProps = {
 	id: string;
@@ -17,8 +13,6 @@ type EllipseProps = {
 	opacity: number;
 	radius: number;
 	centre: Point;
-	widthSlide: number;
-	heightSlide: number;
 };
 
 const EllipseView = (props: EllipseProps) => {
@@ -31,8 +25,6 @@ const EllipseView = (props: EllipseProps) => {
 		opacity,
 		radius,
 		centre,
-		widthSlide,
-		heightSlide,
 	} = props;
 	const [width] = useState<number>(radius * 2 + 10);
 	const [height] = useState<number>(radius * 2 + 10);
@@ -43,53 +35,25 @@ const EllipseView = (props: EllipseProps) => {
 	props.point.y = yPoint;
 	const { point } = props;
 
-	const [coords, setCoords] = useState<Point>(point);
-	const refObject = useRef<HTMLDivElement>(null);
-
-	const propsForDragAndDrop: useDraggableWorkFieldProps = {
-		refOnObject: refObject,
-		setCoords,
-		widthSlide,
-		heightSlide,
-		coords,
-	};
-	useEffect(() => {
-		useDragAndDrop(propsForDragAndDrop);
-	}, [coords]);
-
 	return (
-		<div
-			key={id}
-			ref={refObject}
+		<svg
 			style={{
-				position: "absolute",
-				top: `${coords.y}px`,
-				left: `${coords.x}px`,
 				width: width,
 				height: height,
-				transform: `rotate(${angleRotate})`,
 				opacity: opacity,
 			}}
 		>
-			<svg
+			<circle
+				cx={centre.x}
+				cy={centre.y}
+				r={radius}
 				style={{
-					width: width,
-					height: height,
-					opacity: opacity,
+					fill: color,
+					strokeWidth: borderThickness,
+					stroke: colorBorder,
 				}}
-			>
-				<circle
-					cx={centre.x}
-					cy={centre.y}
-					r={radius}
-					style={{
-						fill: color,
-						strokeWidth: borderThickness,
-						stroke: colorBorder,
-					}}
-				></circle>
-			</svg>
-		</div>
+			></circle>
+		</svg>
 	);
 };
 

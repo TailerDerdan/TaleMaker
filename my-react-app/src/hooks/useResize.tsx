@@ -1,17 +1,39 @@
 import { RefObject } from "react";
 import { Point } from "../model/types";
 
-export type useDraggableWorkFieldProps = {
+type parametersOfObject = {
+	leftObject: number;
+	topObject: number;
+	widthObject: number;
+	heightObject: number;
+	refOnResizeable: RefObject<HTMLDivElement>;
+};
+
+export type useResizeProps = parametersOfObject & {
 	refOnObject: RefObject<HTMLDivElement>;
 	widthSlide: number;
 	heightSlide: number;
 	coords: Point;
 	setCoords: (coords: Point) => void;
+	locationOnObject: string;
 };
 
-function useDragAndDrop(props: useDraggableWorkFieldProps) {
-	const { refOnObject, setCoords, coords, widthSlide, heightSlide } = props;
+function useResize(props: useResizeProps) {
+	const {
+		refOnObject,
+		setCoords,
+		coords,
+		widthSlide,
+		heightSlide,
+		locationOnObject,
+		leftObject,
+		topObject,
+		widthObject,
+		heightObject,
+		refOnResizeable,
+	} = props;
 	const item: HTMLDivElement = refOnObject.current!;
+	const object: HTMLDivElement = refOnResizeable.current!;
 	const OnMouseDown = (eventDown: MouseEvent) => {
 		const startCoords: Point = {
 			x: eventDown.pageX,
@@ -39,6 +61,24 @@ function useDragAndDrop(props: useDraggableWorkFieldProps) {
 			item.style.zIndex = "1";
 			item.style.top = `${newPos.y}px`;
 			item.style.left = `${newPos.x}px`;
+			switch (locationOnObject) {
+				case "left-top":
+					object.style.top = `${newPos.y}px`;
+					object.style.left = `${newPos.x}px`;
+					object.style.width = `${
+						object.getBoundingClientRect().right -
+						item.getBoundingClientRect().left +
+						item.getBoundingClientRect().width / 2
+					}px`;
+					object.style.width = `${
+						object.getBoundingClientRect().bottom -
+						item.getBoundingClientRect().top +
+						item.getBoundingClientRect().height / 2
+					}px`;
+					break;
+				default:
+					break;
+			}
 		};
 		const OnMouseUp = (eventUp: MouseEvent) => {
 			item.style.zIndex = "";
@@ -73,4 +113,4 @@ function useDragAndDrop(props: useDraggableWorkFieldProps) {
 	return () => item?.removeEventListener("mousedown", OnMouseDown);
 }
 
-export { useDragAndDrop };
+export { useResize };

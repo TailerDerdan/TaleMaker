@@ -1,9 +1,5 @@
 import React, { RefObject, useEffect, useRef, useState } from "react";
 import { Point } from "../model/types";
-import {
-	useDragAndDrop,
-	useDraggableWorkFieldProps,
-} from "../hooks/useDragAndDrop";
 
 type TriangleProps = {
 	id: string;
@@ -18,12 +14,9 @@ type TriangleProps = {
 	trianglePoint1: Point;
 	trianglePoint2: Point;
 	trianglePoint3: Point;
-	widthSlide: number;
-	heightSlide: number;
 };
 
 const TriangleView = (props: TriangleProps) => {
-	const refObject = useRef<HTMLDivElement>(null);
 	// console.log(refObject);
 	const {
 		id,
@@ -35,8 +28,6 @@ const TriangleView = (props: TriangleProps) => {
 		trianglePoint1,
 		trianglePoint2,
 		trianglePoint3,
-		widthSlide,
-		heightSlide,
 	} = props;
 	const [width, setWidth] = useState<number>(
 		Math.max(trianglePoint1.x, trianglePoint2.x, trianglePoint3.x) -
@@ -65,44 +56,17 @@ const TriangleView = (props: TriangleProps) => {
 		trianglePoint3.x - point.x
 	}, ${trianglePoint3.y - point.y}`;
 
-	const [coords, setCoords] = useState<Point>(point);
-
-	const propsForDragAndDrop: useDraggableWorkFieldProps = {
-		refOnObject: refObject,
-		setCoords,
-		widthSlide,
-		heightSlide,
-		coords,
-	};
-	useEffect(() => {
-		useDragAndDrop(propsForDragAndDrop);
-	}, [coords]);
-
 	return (
-		<div
-			ref={refObject}
-			key={id}
-			style={{
-				position: "absolute",
-				top: `${coords.y}px`,
-				left: `${coords.x}px`,
-				width: width,
-				height: height,
-				transform: `rotate(${angleRotate})`,
-				opacity: opacity,
-			}}
-		>
-			<svg style={{ width: width, height: height, opacity: opacity }}>
-				<polygon
-					points={points}
-					style={{
-						fill: color,
-						strokeWidth: borderThickness,
-						stroke: colorBorder,
-					}}
-				></polygon>
-			</svg>
-		</div>
+		<svg style={{ width: width, height: height, opacity: opacity }}>
+			<polygon
+				points={points}
+				style={{
+					fill: color,
+					strokeWidth: borderThickness,
+					stroke: colorBorder,
+				}}
+			></polygon>
+		</svg>
 	);
 };
 

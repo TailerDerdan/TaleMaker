@@ -34,13 +34,13 @@ type TextBlock = Block & {
 	chars: Array<Char>;
 	chosenCharIds: Array<string>;
 	alignment: Alignment;
+	opacity: number;
 };
 
 type GraphicObject = Block & {
 	color: string;
 	borderThickness: number;
 	colorBorder: string;
-	text: TextBlock;
 	opacity: number;
 };
 
@@ -64,16 +64,19 @@ type Triangle = GraphicObject & {
 type Image = Block & {
 	type: "image";
 	urlStr: string;
+	opacity: number;
 };
 
 type Video = Block & {
 	type: "video";
 	urlStr: string;
+	opacity: number;
 };
 
 type Audio = Block & {
 	type: "audio";
 	urlStr: string;
+	opacity: number;
 };
 
 type BackColor = {

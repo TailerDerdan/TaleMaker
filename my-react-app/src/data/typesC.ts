@@ -71,6 +71,7 @@ const textBlock: TextBlock = {
 	chosenCharIds: ["char1"],
 	alignment: 0,
 	angleRotate: 30,
+	opacity: 1,
 };
 
 const circle: Ellipse = {
@@ -82,18 +83,7 @@ const circle: Ellipse = {
 	color: "FF0000",
 	borderThickness: 2,
 	colorBorder: "#A5A3A3",
-	text: {
-		id: "block2text",
-		point: { x: 0, y: 0 },
-		width: 2,
-		height: 2,
-		type: "text",
-		chars: [char2],
-		chosenCharIds: ["char2"],
-		alignment: 0,
-		angleRotate: 0,
-	},
-	opacity: 100,
+	opacity: 1,
 	type: "ellipse",
 	radius: 5,
 	centre: { x: 7, y: 7 },
@@ -105,18 +95,7 @@ const rectangle: Rectangle = {
 	color: "#4AE613",
 	borderThickness: 2,
 	colorBorder: "#A0A59E",
-	text: {
-		id: "block3text",
-		type: "text",
-		point: { x: 20, y: 10 },
-		width: 8,
-		height: 148,
-		chars: [char1, char2],
-		chosenCharIds: ["char1"],
-		alignment: 0,
-		angleRotate: 0,
-	},
-	opacity: 100,
+	opacity: 1,
 	point: { x: 20, y: 10 },
 	width: 10,
 	height: 150,
@@ -131,18 +110,7 @@ const equilTriangle: Triangle = {
 	color: "#B8A74B",
 	borderThickness: 1,
 	colorBorder: "#000000",
-	text: {
-		id: "block4text",
-		type: "text",
-		point: { x: 1, y: 2 },
-		width: 5,
-		height: 7,
-		chars: [char3],
-		chosenCharIds: ["char3"],
-		alignment: 0,
-		angleRotate: 0,
-	},
-	opacity: 100,
+	opacity: 1,
 	angleRotate: 0,
 	type: "triangle",
 	trianglePoint1: { x: 0, y: 0 },
@@ -153,24 +121,13 @@ const equilTriangle: Triangle = {
 const rightTriangle: Triangle = {
 	id: "block5",
 	point: { x: 250, y: 50 },
-	width: 0,
-	height: 0,
+	width: 344,
+	height: 243,
 	angleRotate: 0,
 	color: "#F3FF00",
 	borderThickness: 3.5,
 	colorBorder: "#F3FF00",
-	text: {
-		id: "block5text",
-		type: "text",
-		point: { x: 4, y: 7 },
-		width: 5,
-		height: 5,
-		chars: [char3, char4],
-		chosenCharIds: ["char3", "char4"],
-		alignment: 0,
-		angleRotate: 0,
-	},
-	opacity: 100,
+	opacity: 1,
 	type: "triangle",
 	trianglePoint1: { x: 256, y: 293 },
 	trianglePoint2: { x: 400, y: 130 },
@@ -185,6 +142,7 @@ const imageBlock: Image = {
 	angleRotate: 0,
 	type: "image",
 	urlStr: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/React_Logo_SVG.svg/512px-React_Logo_SVG.svg.png",
+	opacity: 1,
 };
 
 const audioBlock: Audio = {
@@ -195,6 +153,7 @@ const audioBlock: Audio = {
 	angleRotate: 0,
 	type: "audio",
 	urlStr: "https://freesound.org/people/InspectorJ/sounds/405561/",
+	opacity: 1,
 };
 
 const videoBlock: Video = {
@@ -205,6 +164,7 @@ const videoBlock: Video = {
 	angleRotate: 0,
 	type: "video",
 	urlStr: "https://clck.ru/3vyXS",
+	opacity: 1,
 };
 
 const backgroundColor: BackColor = {

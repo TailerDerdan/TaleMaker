@@ -6,6 +6,7 @@ import { TriangleView } from "../Triangle";
 import { TextBlockView } from "../TextBlock";
 import { ImageView } from "../ImageView";
 import styles from "../slide/Slide.module.css";
+import { Wrapper } from "../WrapperForObjectOnSlide/Wrapper";
 
 type SlideProps = {
 	id: string;
@@ -16,6 +17,40 @@ type SlideProps = {
 	animations?: Array<Animation>;
 	width: number;
 	height: number;
+};
+
+type ObjectProps = {
+	objectOnSlide: ObjectOnSlide;
+	widthSlide: number;
+	heightSlide: number;
+};
+const Object = (props: ObjectProps) => {
+	const { objectOnSlide, widthSlide, heightSlide } = props;
+
+	const initialObject = () => {
+		switch (objectOnSlide.type) {
+			case "rectangle":
+				return <RectangleView {...objectOnSlide} />;
+			case "ellipse":
+				return <EllipseView {...objectOnSlide} />;
+			case "text":
+				return <TextBlockView {...objectOnSlide} />;
+			case "image":
+				return <ImageView {...objectOnSlide} />;
+			case "triangle":
+				return <TriangleView {...objectOnSlide} />;
+			default:
+				return <></>;
+		}
+	};
+	return (
+		<Wrapper
+			object={objectOnSlide}
+			widthSlide={widthSlide}
+			heightSlide={heightSlide}
+			initialObject={initialObject()}
+		/>
+	);
 };
 
 function SlideView(props: SlideProps) {
@@ -30,60 +65,26 @@ function SlideView(props: SlideProps) {
 		height,
 	} = props;
 
-	const widthS = width * document.documentElement.clientWidth;
-	const heightS = width * document.documentElement.clientHeight;
-
-	const slideElements = elements.map((el) => {
-		switch (el.type) {
-			case "rectangle":
-				return (
-					<RectangleView
-						{...el}
-						widthSlide={widthS}
-						heightSlide={heightS}
-					/>
-				);
-			case "ellipse":
-				return (
-					<EllipseView
-						{...el}
-						widthSlide={widthS}
-						heightSlide={heightS}
-					/>
-				);
-			case "text":
-				return <TextBlockView {...el} />;
-			case "image":
-				return (
-					<ImageView
-						{...el}
-						widthSlide={widthS}
-						heightSlide={heightS}
-					/>
-				);
-			case "triangle":
-				return (
-					<TriangleView
-						{...el}
-						widthSlide={widthS}
-						heightSlide={heightS}
-					/>
-				);
-			default:
-				return <></>;
-		}
-	});
+	const widthSlide = width * document.documentElement.clientWidth;
+	const heightSlide = height * document.documentElement.clientHeight;
 
 	return (
 		<div
 			key={id}
 			className={styles.slideStyles}
 			style={{
-				width: `${width * document.documentElement.clientWidth}px`,
-				height: `${height * document.documentElement.clientHeight}px`,
+				width: `${widthSlide}px`,
+				height: `${heightSlide}px`,
 			}}
 		>
-			{slideElements}
+			{elements.map((elem) => (
+				<Object
+					key={elem.id}
+					objectOnSlide={elem}
+					widthSlide={widthSlide}
+					heightSlide={heightSlide}
+				/>
+			))}
 		</div>
 	);
 }
