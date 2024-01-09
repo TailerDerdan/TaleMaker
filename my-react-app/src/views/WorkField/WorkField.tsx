@@ -1,14 +1,16 @@
 import React, { RefObject, useRef } from "react";
 import { SlideProps, SlideView } from "../../components/slide/Slide";
 import styles from "./WorkField.module.css";
+import { useAppActions, useAppSelector } from "../../redux/hooks";
 
 type WorkFieldProps = {
-	slides: Array<SlideProps>;
 	id: string;
 };
 
 export const WorkField = (props: WorkFieldProps) => {
-	const { slides, id } = props;
+	const { id } = props;
+
+	const slides = useAppSelector((state) => state.slides);
 
 	const slideUndefined = slides.find((el) => {
 		if (el.id == id) {
@@ -17,7 +19,6 @@ export const WorkField = (props: WorkFieldProps) => {
 	});
 
 	const slide = slideUndefined ? slideUndefined : slides[0];
-
 	const ref = useRef<HTMLDivElement>(null);
 
 	return (

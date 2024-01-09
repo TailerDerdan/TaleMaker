@@ -1,110 +1,141 @@
-import React, { RefObject, useEffect, useRef, useState } from "react";
+import React, { Ref, RefObject, useEffect, useRef, useState } from "react";
 import { useResize } from "../../hooks/useResize";
-import { Point } from "../../model/types";
+import { ObjectOnSlide, Point } from "../../model/types";
+import { TCircleForResize } from "../../data/PutCircleForResizeData";
+import { useAppActions } from "../../redux/hooks";
 
-export type CircleForResizeProps = {
-	locationOnObject: string;
-	leftObject: number;
-	topObject: number;
-	widthObject: number;
-	heightObject: number;
+type CircleForResizeProps = {
+	circleForResize: TCircleForResize;
+	object: ObjectOnSlide;
 	widthSlide: number;
 	heightSlide: number;
+	slideID: string;
 	refOnResizeable: RefObject<HTMLDivElement>;
 };
 export const CircleForResize = (props: CircleForResizeProps) => {
 	const {
-		locationOnObject,
-		leftObject,
-		topObject,
-		heightObject,
-		widthObject,
+		circleForResize,
 		refOnResizeable,
 		widthSlide,
 		heightSlide,
+		object,
+		slideID,
 	} = props;
 
-	const ref = useRef<HTMLDivElement>(null);
-	const DrawParameters = {
-		cx: 0,
-		cy: 0,
-		radius: 5.5,
-		color: "#7D426E",
-	};
-
-	switch (locationOnObject) {
-		case "left-top":
-			DrawParameters.cx = leftObject;
-			DrawParameters.cy = topObject;
-			break;
+	switch (circleForResize.locationOnObject) {
 		case "left-middle":
-			DrawParameters.cx = leftObject;
-			DrawParameters.cy = topObject + heightObject / 2;
+			circleForResize.point.x = 0 - circleForResize.radiusX;
+			circleForResize.point.y =
+				object.height / 2 - circleForResize.radiusY;
+			circleForResize.centre.x = 0;
+			circleForResize.centre.y = object.height / 2;
 			break;
 		case "left-bottom":
-			DrawParameters.cx = leftObject;
-			DrawParameters.cy = topObject + heightObject;
+			circleForResize.point.x = 0 - circleForResize.radiusX;
+			circleForResize.point.y = object.height - circleForResize.radiusY;
+			circleForResize.centre.x = 0;
+			circleForResize.centre.y = object.height;
 			break;
 		case "middle-top":
-			DrawParameters.cx = leftObject + widthObject / 2;
-			DrawParameters.cy = topObject;
+			circleForResize.point.x =
+				object.width / 2 - circleForResize.radiusX;
+			circleForResize.point.y = 0 - circleForResize.radiusY;
+			circleForResize.centre.x = object.width / 2;
+			circleForResize.centre.y = 0;
 			break;
 		case "middle-bottom":
-			DrawParameters.cx = leftObject + widthObject / 2;
-			DrawParameters.cy = topObject + heightObject;
+			circleForResize.point.x =
+				object.width / 2 - circleForResize.radiusX;
+			circleForResize.point.y = object.height - circleForResize.radiusY;
+			circleForResize.centre.x = object.width / 2;
+			circleForResize.centre.y = object.height;
 			break;
 		case "right-top":
-			DrawParameters.cx = leftObject + widthObject;
-			DrawParameters.cy = topObject;
+			circleForResize.point.x = object.width - circleForResize.radiusX;
+			circleForResize.point.y = 0 - circleForResize.radiusY;
+			circleForResize.centre.x = object.width;
+			circleForResize.centre.y = 0;
 			break;
 		case "right-middle":
-			DrawParameters.cx = leftObject + widthObject;
-			DrawParameters.cy = topObject + heightObject / 2;
+			circleForResize.point.x = object.width - circleForResize.radiusX;
+			circleForResize.point.y =
+				object.height / 2 - circleForResize.radiusY;
+			circleForResize.centre.x = object.width;
+			circleForResize.centre.y = object.height / 2;
 			break;
 		case "right-bottom":
-			DrawParameters.cx = leftObject + widthObject;
-			DrawParameters.cy = topObject + heightObject;
+			circleForResize.point.x = object.width - circleForResize.radiusX;
+			circleForResize.point.y = object.height - circleForResize.radiusY;
+			circleForResize.centre.x = object.width;
+			circleForResize.centre.y = object.height;
+			break;
+		case "rotate":
+			circleForResize.point.x =
+				object.width / 2 - circleForResize.radiusX;
+			circleForResize.point.y = 0 - circleForResize.radiusY * 3;
+			circleForResize.centre.x = object.width / 2;
+			circleForResize.centre.y = 0 - circleForResize.radiusY * 2;
+			break;
+		default:
 			break;
 	}
-	const [coords, setCoords] = useState<Point>({
-		x: DrawParameters.cx,
-		y: DrawParameters.cy,
-	});
+
+	const ref = useRef<HTMLDivElement>(null);
+	const {
+		createChangeBlockCoords,
+		createChangeBlockWidth,
+		createChangeBlockHeight,
+		createChangeEllipseCentre,
+		createChangeEllipseRadiusX,
+		createChangeEllipseRadiusY,
+		createChangeBlockAngleRotate,
+	} = useAppActions();
 
 	useEffect(() => {
 		useResize({
-			leftObject,
-			topObject,
-			widthObject,
-			heightObject,
+			slideID,
 			refOnResizeable,
 			refOnObject: ref,
+			widthObject: object.width,
+			heightObject: object.height,
 			widthSlide,
 			heightSlide,
-			coords,
-			setCoords,
-			locationOnObject,
+			coordsObject: object.point,
+			coordsCircle: circleForResize.point,
+			setCoords: createChangeBlockCoords,
+			setWidth: createChangeBlockWidth,
+			setHeight: createChangeBlockHeight,
+			blockResizeableID: object.id,
+			blockCircleID: circleForResize.id,
+			radiusCircle: circleForResize.radiusX,
+			locationOnObject: circleForResize.locationOnObject,
+			topObject: object.point.y,
+			leftObject: object.point.x,
 		});
-	}, [coords]);
+	}, [circleForResize.point]);
 
 	return (
 		<div
 			ref={ref}
 			style={{
 				position: "absolute",
-				width: DrawParameters.radius * 2,
-				height: DrawParameters.radius * 2,
+				width: circleForResize.width,
+				height: circleForResize.height,
+				top: `${circleForResize.point.y}px`,
+				left: `${circleForResize.point.x}px`,
+				zIndex: "100",
 			}}
 		>
 			<svg
-				width={DrawParameters.radius * 2}
-				height={DrawParameters.radius * 2}
+				width={circleForResize.width}
+				height={circleForResize.height}
+				style={{ position: "absolute" }}
 			>
 				<circle
-					cx={coords.x}
-					cy={coords.y}
-					r={DrawParameters.radius}
-					style={{ fill: DrawParameters.color }}
+					cx={"50%"}
+					cy={"50%"}
+					r={circleForResize.radiusX}
+					style={{ fill: circleForResize.color }}
 				></circle>
 			</svg>
 		</div>

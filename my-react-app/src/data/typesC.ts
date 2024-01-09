@@ -6,11 +6,9 @@ import {
 	Image,
 	Video,
 	Audio,
-	BackColor,
 	Slide,
 	Presentation,
 	MainEditor,
-	Background,
 	Char,
 	Animation,
 	TypeAnimation,
@@ -64,29 +62,32 @@ const char4: Char = {
 const textBlock: TextBlock = {
 	id: "block1",
 	point: { x: 0, y: 0 },
-	width: 20,
-	height: 20,
+	width: 40,
+	height: 40,
 	type: "text",
 	chars: [char1, char2, char3],
 	chosenCharIds: ["char1"],
 	alignment: 0,
 	angleRotate: 30,
 	opacity: 1,
+	isSelection: false,
 };
 
 const circle: Ellipse = {
 	id: "block2",
 	point: { x: 2, y: 12 },
-	width: 0,
-	height: 0,
+	width: 25,
+	height: 25,
 	angleRotate: 0,
 	color: "FF0000",
 	borderThickness: 2,
 	colorBorder: "#A5A3A3",
 	opacity: 1,
 	type: "ellipse",
-	radius: 5,
+	radiusX: 5,
+	radiusY: 5,
 	centre: { x: 7, y: 7 },
+	isSelection: false,
 };
 
 const rectangle: Rectangle = {
@@ -100,6 +101,7 @@ const rectangle: Rectangle = {
 	width: 10,
 	height: 150,
 	type: "rectangle",
+	isSelection: false,
 };
 
 const equilTriangle: Triangle = {
@@ -116,6 +118,7 @@ const equilTriangle: Triangle = {
 	trianglePoint1: { x: 0, y: 0 },
 	trianglePoint2: { x: 5, y: 0 },
 	trianglePoint3: { x: 2.5, y: 4.33 },
+	isSelection: false,
 };
 
 const rightTriangle: Triangle = {
@@ -132,6 +135,7 @@ const rightTriangle: Triangle = {
 	trianglePoint1: { x: 256, y: 293 },
 	trianglePoint2: { x: 400, y: 130 },
 	trianglePoint3: { x: 600, y: 50 },
+	isSelection: false,
 };
 
 const imageBlock: Image = {
@@ -143,6 +147,7 @@ const imageBlock: Image = {
 	type: "image",
 	urlStr: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/React_Logo_SVG.svg/512px-React_Logo_SVG.svg.png",
 	opacity: 1,
+	isSelection: false,
 };
 
 const audioBlock: Audio = {
@@ -154,6 +159,7 @@ const audioBlock: Audio = {
 	type: "audio",
 	urlStr: "https://freesound.org/people/InspectorJ/sounds/405561/",
 	opacity: 1,
+	isSelection: false,
 };
 
 const videoBlock: Video = {
@@ -165,15 +171,7 @@ const videoBlock: Video = {
 	type: "video",
 	urlStr: "https://clck.ru/3vyXS",
 	opacity: 1,
-};
-
-const backgroundColor: BackColor = {
-	type: "backColor",
-	color: "#699DF9",
-};
-
-const background: Background = {
-	type: backgroundColor,
+	isSelection: false,
 };
 
 const block1Animation: Animation = {
@@ -190,8 +188,9 @@ const block2Animtion: Animation = {
 
 const slide1: Slide = {
 	id: "slide1",
-	background, // вот так
-	elements: [textBlock, circle, rectangle, rightTriangle, imageBlock],
+	background: "#699DF9", // вот так
+	typeBackground: "color",
+	elements: [imageBlock],
 	chosenElements: ["block6"],
 	transition: TransionType.Default,
 	animations: [block1Animation],
@@ -201,8 +200,9 @@ const slide1: Slide = {
 
 const slide2: Slide = {
 	id: "slide2",
-	background, // вот так
-	elements: [rightTriangle, textBlock, circle],
+	background: "#699DF9", // вот так
+	typeBackground: "color", // вот так
+	elements: [rightTriangle, textBlock, circle, rectangle],
 	chosenElements: ["block5"],
 	transition: TransionType.Fading,
 	animations: [block2Animtion],

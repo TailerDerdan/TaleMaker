@@ -5,194 +5,95 @@ import React, {
 	useRef,
 	useState,
 } from "react";
-import { ObjectOnSlide, Point } from "../../model/types";
+import { Ellipse, ObjectOnSlide, Point } from "../../model/types";
 import {
 	useDragAndDrop,
 	useDraggableWorkFieldProps,
 } from "../../hooks/useDragAndDrop";
 import { useSelection } from "../../hooks/UseSelection";
-import { CircleForResize, CircleForResizeProps } from "./CircleForResize";
-
-type AddDataProps = {
-	circlesForResize: CircleForResizeProps[];
-	coords: Point;
-	object: ObjectOnSlide;
-	widthSlide: number;
-	heightSlide: number;
-	refObject: RefObject<HTMLDivElement>;
-};
-
-function AddData(props: AddDataProps) {
-	const {
-		circlesForResize,
-		object,
-		refObject,
-		widthSlide,
-		heightSlide,
-		coords,
-	} = props;
-	circlesForResize.push({
-		locationOnObject: "left-top",
-		leftObject: coords.x,
-		topObject: coords.y,
-		widthObject: object.width,
-		heightObject: object.height,
-		widthSlide: widthSlide,
-		heightSlide: heightSlide,
-		refOnResizeable: refObject,
-	});
-
-	circlesForResize.push({
-		locationOnObject: "left-middle",
-		leftObject: coords.x,
-		topObject: coords.y,
-		widthObject: object.width,
-		heightObject: object.height,
-		widthSlide: widthSlide,
-		heightSlide: heightSlide,
-		refOnResizeable: refObject,
-	});
-
-	circlesForResize.push({
-		locationOnObject: "left-bottom",
-		leftObject: coords.x,
-		topObject: coords.y,
-		widthObject: object.width,
-		heightObject: object.height,
-		widthSlide: widthSlide,
-		heightSlide: heightSlide,
-		refOnResizeable: refObject,
-	});
-
-	circlesForResize.push({
-		locationOnObject: "middle-top",
-		leftObject: coords.x,
-		topObject: coords.y,
-		widthObject: object.width,
-		heightObject: object.height,
-		widthSlide: widthSlide,
-		heightSlide: heightSlide,
-		refOnResizeable: refObject,
-	});
-
-	circlesForResize.push({
-		locationOnObject: "middle-bottom",
-		leftObject: coords.x,
-		topObject: coords.y,
-		widthObject: object.width,
-		heightObject: object.height,
-		widthSlide: widthSlide,
-		heightSlide: heightSlide,
-		refOnResizeable: refObject,
-	});
-
-	circlesForResize.push({
-		locationOnObject: "right-top",
-		leftObject: coords.x,
-		topObject: coords.y,
-		widthObject: object.width,
-		heightObject: object.height,
-		widthSlide: widthSlide,
-		heightSlide: heightSlide,
-		refOnResizeable: refObject,
-	});
-
-	circlesForResize.push({
-		locationOnObject: "right-middle",
-		leftObject: coords.x,
-		topObject: coords.y,
-		widthObject: object.width,
-		heightObject: object.height,
-		widthSlide: widthSlide,
-		heightSlide: heightSlide,
-		refOnResizeable: refObject,
-	});
-
-	circlesForResize.push({
-		locationOnObject: "right-bottom",
-		leftObject: coords.x,
-		topObject: coords.y,
-		widthObject: object.width,
-		heightObject: object.height,
-		widthSlide: widthSlide,
-		heightSlide: heightSlide,
-		refOnResizeable: refObject,
-	});
-}
+import { useAppActions, useAppSelector } from "../../redux/hooks";
+import { AddData, TCircleForResize } from "../../data/PutCircleForResizeData";
+import { CircleForResize } from "./CircleForResize";
 
 type WrapperProps = {
 	object: ObjectOnSlide;
+	slideID: string;
 	widthSlide: number;
 	heightSlide: number;
 	initialObject: ReactNode;
 };
 
-export type isDown = {
-	isDown: boolean;
-};
-
 export const Wrapper = (props: WrapperProps) => {
-	const { object, widthSlide, heightSlide, initialObject } = props;
+	const { object, widthSlide, heightSlide, initialObject, slideID } = props;
 
 	const refObject = useRef<HTMLDivElement>(null);
-	const [coords, setCoords] = useState<Point>(object.point);
-	const [isDown, setDown] = useState<isDown>({ isDown: false });
+	const refInitialOnObject = useRef<HTMLDivElement>(null);
+	const { createChangeBlockCoords } = useAppActions();
+	const { createChangeBlockSelection } = useAppActions();
 
 	const propsForDragAndDrop: useDraggableWorkFieldProps = {
+		refInitialOnObject,
 		refOnObject: refObject,
-		setCoords,
+		setCoords: createChangeBlockCoords,
 		widthSlide,
 		heightSlide,
-		coords,
+		coords: object.point,
+		blockID: object.id,
+		slideID,
 	};
+
+	const circlesForResize: TCircleForResize[] = [];
+
 	useEffect(() => {
-		useSelection({ refOnObject: refObject, setDown });
 		useDragAndDrop(propsForDragAndDrop);
-	}, [coords]);
-
-	const circlesForResize: CircleForResizeProps[] = [];
-
-	// console.log(isDown);
-
-	if (isDown) {
-		AddData({
-			circlesForResize,
-			object,
-			refObject,
-			widthSlide,
-			heightSlide,
-			coords,
+	}, [object.point]);
+	useEffect(() => {
+		useSelection({
+			slideID,
+			blockID: object.id,
+			refOnObject: refInitialOnObject,
+			setDown: createChangeBlockSelection,
 		});
+	}, [object.isSelection]);
+
+	if (object.isSelection) {
+		AddData(circlesForResize);
 	} else {
-		circlesForResize.length = 0;
+		circlesForResize.splice(0);
 	}
 
 	return (
 		<div
-			ref={refObject}
 			key={object.id}
+			ref={refInitialOnObject}
 			style={{
 				position: "absolute",
-				top: `${coords.y}px`,
-				left: `${coords.x}px`,
-				width: object.width,
-				height: object.height,
+				top: `${object.point.y}px`,
+				left: `${object.point.x}px`,
+				width: `${object.width}px`,
+				height: `${object.height}px`,
 				transform: `rotate(${object.angleRotate})`,
 				opacity: object.opacity,
+				border: object.isSelection
+					? "4px solid rgba(125, 66, 110, 1)"
+					: "",
 			}}
 		>
-			{initialObject}
+			<div
+				ref={refObject}
+				style={{ position: "absolute", width: "100%", height: "100%" }}
+			>
+				{initialObject}
+			</div>
 			{circlesForResize.map((elem) => (
 				<CircleForResize
+					slideID={slideID}
 					key={elem.locationOnObject}
-					locationOnObject={elem.locationOnObject}
-					leftObject={elem.leftObject}
-					topObject={elem.topObject}
-					widthObject={elem.widthObject}
-					heightObject={elem.heightObject}
-					widthSlide={elem.widthSlide}
-					heightSlide={elem.heightSlide}
-					refOnResizeable={elem.refOnResizeable}
+					circleForResize={elem}
+					object={object}
+					widthSlide={widthSlide}
+					heightSlide={heightSlide}
+					refOnResizeable={refInitialOnObject}
 				/>
 			))}
 		</div>

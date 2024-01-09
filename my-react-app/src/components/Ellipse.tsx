@@ -11,7 +11,8 @@ type EllipseProps = {
 	borderThickness: number;
 	colorBorder: string;
 	opacity: number;
-	radius: number;
+	radiusX: number;
+	radiusY: number;
 	centre: Point;
 };
 
@@ -19,40 +20,36 @@ const EllipseView = (props: EllipseProps) => {
 	const {
 		id,
 		angleRotate,
+		width,
+		height,
 		color,
 		borderThickness,
 		colorBorder,
 		opacity,
-		radius,
+		radiusX,
+		radiusY,
 		centre,
 	} = props;
-	const [width] = useState<number>(radius * 2 + 10);
-	const [height] = useState<number>(radius * 2 + 10);
-	const [xPoint] = useState<number>(centre.x - radius);
-	const [yPoint] = useState<number>(centre.y - radius);
-
-	props.point.x = xPoint;
-	props.point.y = yPoint;
-	const { point } = props;
 
 	return (
 		<svg
 			style={{
-				width: width,
-				height: height,
+				width: "100%",
+				height: "100%",
 				opacity: opacity,
 			}}
 		>
-			<circle
-				cx={centre.x}
-				cy={centre.y}
-				r={radius}
+			<ellipse
+				cx={"50%"}
+				cy={"50%"}
+				rx={"50%"}
+				ry={"50%"}
 				style={{
 					fill: color,
 					strokeWidth: borderThickness,
 					stroke: colorBorder,
 				}}
-			></circle>
+			></ellipse>
 		</svg>
 	);
 };

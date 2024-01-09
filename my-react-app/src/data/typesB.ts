@@ -4,11 +4,9 @@ import {
 	Rectangle,
 	Triangle,
 	Image,
-	BackColor,
 	Slide,
 	Presentation,
 	MainEditor,
-	Background,
 	Char,
 	Animation,
 	TypeAnimation,
@@ -37,6 +35,7 @@ const textBlock: TextBlock = {
 	alignment: 0,
 	angleRotate: 30,
 	opacity: 1,
+	isSelection: false,
 };
 
 const circle: Ellipse = {
@@ -50,8 +49,10 @@ const circle: Ellipse = {
 	colorBorder: "#A5A3A3",
 	opacity: 1,
 	type: "ellipse",
-	radius: 5,
+	radiusX: 5,
+	radiusY: 5,
 	centre: { x: 7, y: 7 },
+	isSelection: false,
 };
 
 const rectangle: Rectangle = {
@@ -65,6 +66,7 @@ const rectangle: Rectangle = {
 	width: 20,
 	height: 20,
 	type: "rectangle",
+	isSelection: false,
 };
 
 const equilTriangle: Triangle = {
@@ -81,6 +83,7 @@ const equilTriangle: Triangle = {
 	trianglePoint1: { x: 0, y: 0 },
 	trianglePoint2: { x: 5, y: 0 },
 	trianglePoint3: { x: 2.5, y: 4.33 },
+	isSelection: false,
 };
 
 const rightTriangle: Triangle = {
@@ -97,6 +100,7 @@ const rightTriangle: Triangle = {
 	trianglePoint1: { x: 4, y: 6 },
 	trianglePoint2: { x: 4, y: 8 },
 	trianglePoint3: { x: 6, y: 6 },
+	isSelection: false,
 };
 
 const imageBlock: Image = {
@@ -108,15 +112,7 @@ const imageBlock: Image = {
 	type: "image",
 	urlStr: "https://m.media-amazon.com/images/I/31enPn7dN+L.jpg",
 	opacity: 1,
-};
-
-const backgroundColor: BackColor = {
-	type: "backColor",
-	color: "#699DF9",
-};
-
-const background: Background = {
-	type: backgroundColor,
+	isSelection: false,
 };
 
 const block1Animation: Animation = {
@@ -127,7 +123,8 @@ const block1Animation: Animation = {
 
 const slide1: Slide = {
 	id: "slide1",
-	background: background, // вот так
+	background: "#699DF9", // вот так
+	typeBackground: "color", // вот так
 	elements: [textBlock, circle, rectangle, rightTriangle, imageBlock],
 	chosenElements: ["block6"],
 	transition: TransionType.Default,
@@ -138,7 +135,8 @@ const slide1: Slide = {
 
 const slide2: Slide = {
 	id: "slide2",
-	background: background, // вот так
+	background: "#699DF9", // вот так
+	typeBackground: "color", // вот так
 	elements: [rightTriangle],
 	chosenElements: ["block5"],
 	transition: TransionType.Fading,

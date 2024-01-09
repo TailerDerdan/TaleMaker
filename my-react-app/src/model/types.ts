@@ -27,6 +27,8 @@ type Block = {
 	width: number;
 	height: number;
 	angleRotate: number;
+	opacity: number;
+	isSelection: boolean;
 };
 
 type TextBlock = Block & {
@@ -34,20 +36,19 @@ type TextBlock = Block & {
 	chars: Array<Char>;
 	chosenCharIds: Array<string>;
 	alignment: Alignment;
-	opacity: number;
 };
 
 type GraphicObject = Block & {
 	color: string;
 	borderThickness: number;
 	colorBorder: string;
-	opacity: number;
 };
 
 type Ellipse = GraphicObject & {
-	type: "ellipse"; //как это рисовать то? Радиуса не достаточно
-	radius: number;
+	type: "ellipse";
+	radiusX: number;
 	centre: Point;
+	radiusY: number;
 };
 
 type Rectangle = GraphicObject & {
@@ -64,33 +65,16 @@ type Triangle = GraphicObject & {
 type Image = Block & {
 	type: "image";
 	urlStr: string;
-	opacity: number;
 };
 
 type Video = Block & {
 	type: "video";
 	urlStr: string;
-	opacity: number;
 };
 
 type Audio = Block & {
 	type: "audio";
 	urlStr: string;
-	opacity: number;
-};
-
-type BackColor = {
-	type: "backColor";
-	color: string;
-};
-
-type BackImage = {
-	type: "backImage";
-	urlStr: string;
-};
-
-type Background = {
-	type: BackColor | BackImage;
 };
 
 enum TransionType {
@@ -121,11 +105,12 @@ type ObjectOnSlide =
 
 type Slide = {
 	id: string;
-	background: Background;
+	background: string;
+	typeBackground: "image" | "color";
 	elements: Array<ObjectOnSlide>;
 	chosenElements: Array<string>;
 	transition: TransionType;
-	animations: Array<Animation>;
+	animations?: Array<Animation>;
 	width: number;
 	height: number;
 };
@@ -149,11 +134,9 @@ export type {
 	Rectangle,
 	Triangle,
 	Image,
-	BackColor,
 	Slide,
 	Presentation,
 	MainEditor,
-	Background,
 	Char,
 	Animation,
 	Video,

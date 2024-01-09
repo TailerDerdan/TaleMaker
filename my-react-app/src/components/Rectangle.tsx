@@ -27,14 +27,20 @@ const RectangleView = (props: RectangleProps) => {
 	} = props;
 
 	return (
-		<svg style={{ width: width, height: height, opacity: opacity }}>
+		<svg
+			style={{
+				width: "100%",
+				height: "100%",
+				opacity: opacity,
+			}}
+		>
 			<rect
+				width={"100%"}
+				height={"100%"}
 				style={{
 					fill: color,
 					strokeWidth: borderThickness,
 					stroke: colorBorder,
-					width: width,
-					height: height,
 				}}
 			></rect>
 		</svg>

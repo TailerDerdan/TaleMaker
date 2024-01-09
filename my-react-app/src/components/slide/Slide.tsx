@@ -1,5 +1,5 @@
 import React, { RefObject, useEffect, useRef, useState } from "react";
-import { Background, ObjectOnSlide, TransionType } from "../../model/types";
+import { ObjectOnSlide, Slide, TransionType } from "../../model/types";
 import { EllipseView } from "../Ellipse";
 import { RectangleView } from "../Rectangle";
 import { TriangleView } from "../Triangle";
@@ -8,24 +8,16 @@ import { ImageView } from "../ImageView";
 import styles from "../slide/Slide.module.css";
 import { Wrapper } from "../WrapperForObjectOnSlide/Wrapper";
 
-type SlideProps = {
-	id: string;
-	background: Background;
-	elements: Array<ObjectOnSlide>;
-	chosenElements: Array<string>;
-	transition: TransionType;
-	animations?: Array<Animation>;
-	width: number;
-	height: number;
-};
+type SlideProps = Slide;
 
 type ObjectProps = {
 	objectOnSlide: ObjectOnSlide;
 	widthSlide: number;
 	heightSlide: number;
+	slideID: string;
 };
 const Object = (props: ObjectProps) => {
-	const { objectOnSlide, widthSlide, heightSlide } = props;
+	const { objectOnSlide, widthSlide, heightSlide, slideID } = props;
 
 	const initialObject = () => {
 		switch (objectOnSlide.type) {
@@ -45,6 +37,7 @@ const Object = (props: ObjectProps) => {
 	};
 	return (
 		<Wrapper
+			slideID={slideID}
 			object={objectOnSlide}
 			widthSlide={widthSlide}
 			heightSlide={heightSlide}
@@ -57,6 +50,7 @@ function SlideView(props: SlideProps) {
 	const {
 		id,
 		background,
+		typeBackground,
 		elements,
 		chosenElements,
 		transition,
@@ -79,6 +73,7 @@ function SlideView(props: SlideProps) {
 		>
 			{elements.map((elem) => (
 				<Object
+					slideID={id}
 					key={elem.id}
 					objectOnSlide={elem}
 					widthSlide={widthSlide}

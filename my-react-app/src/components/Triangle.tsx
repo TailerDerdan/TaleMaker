@@ -29,12 +29,12 @@ const TriangleView = (props: TriangleProps) => {
 		trianglePoint2,
 		trianglePoint3,
 	} = props;
-	const [width, setWidth] = useState<number>(
+	const [width] = useState<number>(
 		Math.max(trianglePoint1.x, trianglePoint2.x, trianglePoint3.x) -
 			Math.min(trianglePoint1.x, trianglePoint2.x, trianglePoint3.x) +
 			5,
 	);
-	const [height, setHeight] = useState<number>(
+	const [height] = useState<number>(
 		Math.max(trianglePoint1.y, trianglePoint2.y, trianglePoint3.y) -
 			Math.min(trianglePoint1.y, trianglePoint2.y, trianglePoint3.y) +
 			5,

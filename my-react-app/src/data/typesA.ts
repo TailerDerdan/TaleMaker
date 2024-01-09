@@ -4,11 +4,9 @@ import {
 	Rectangle,
 	Triangle,
 	Image,
-	BackColor,
 	Slide,
 	Presentation,
 	MainEditor,
-	Background,
 } from "../model/types";
 
 const textBlock: TextBlock = {
@@ -22,6 +20,7 @@ const textBlock: TextBlock = {
 	alignment: 0,
 	angleRotate: 30,
 	opacity: 1,
+	isSelection: false,
 };
 
 const circle: Ellipse = {
@@ -35,8 +34,10 @@ const circle: Ellipse = {
 	opacity: 1,
 	angleRotate: 0,
 	type: "ellipse",
-	radius: 5,
+	radiusX: 5,
+	radiusY: 5,
 	centre: { x: 7, y: 7 },
+	isSelection: false,
 };
 
 const rectangle: Rectangle = {
@@ -50,6 +51,7 @@ const rectangle: Rectangle = {
 	width: 10,
 	height: 20,
 	type: "rectangle",
+	isSelection: false,
 };
 
 const equilTriangle: Triangle = {
@@ -66,6 +68,7 @@ const equilTriangle: Triangle = {
 	trianglePoint1: { x: 0, y: 0 },
 	trianglePoint2: { x: 5, y: 0 },
 	trianglePoint3: { x: 2.5, y: 4.33 },
+	isSelection: false,
 };
 
 const rightTriangle: Triangle = {
@@ -82,6 +85,7 @@ const rightTriangle: Triangle = {
 	trianglePoint1: { x: 4, y: 6 },
 	trianglePoint2: { x: 4, y: 8 },
 	trianglePoint3: { x: 6, y: 6 },
+	isSelection: false,
 };
 
 const imageBlock: Image = {
@@ -93,20 +97,13 @@ const imageBlock: Image = {
 	type: "image",
 	urlStr: "https://m.media-amazon.com/images/I/31enPn7dN+L.jpg",
 	opacity: 1,
-};
-
-const backgroundColor: BackColor = {
-	type: "backColor",
-	color: "#699DF9",
-};
-
-const background: Background = {
-	type: backgroundColor,
+	isSelection: false,
 };
 
 const slide1: Slide = {
 	id: "slide1",
-	background: background, // вот так
+	background: "#699DF9",
+	typeBackground: "color",
 	elements: [],
 	chosenElements: [],
 	transition: 0,

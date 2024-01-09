@@ -1,28 +1,29 @@
 import { RefObject } from "react";
-import { isDown } from "../components/WrapperForObjectOnSlide/Wrapper";
 
 type useSelectionProps = {
 	refOnObject: RefObject<HTMLDivElement>;
-	setDown: (isDown: isDown) => void;
+	blockID: string;
+	slideID: string;
+	setDown: (slideID: string, blockID: string, isSelection: boolean) => void;
 };
 
 export function useSelection(props: useSelectionProps) {
-	const { refOnObject, setDown } = props;
+	const { refOnObject, setDown, slideID, blockID } = props;
 	const item = refOnObject.current!;
 	const Selection = () => {
-		item.style.border = "4px solid rgba(125, 66, 110, 0.7)";
-		setDown({ isDown: true });
+		item.removeEventListener("mousedown", Selection);
+		setDown(slideID, blockID, true);
 		const UnSelection = () => {
-			setDown({ isDown: false });
-			item.style.border = "";
+			setDown(slideID, blockID, false);
 			item?.parentElement?.removeEventListener("mousedown", UnSelection);
 			item.removeEventListener("mousedown", Selection);
 		};
 		setTimeout(() => {
 			item?.parentElement?.addEventListener("mousedown", UnSelection);
 			item.removeEventListener("mousedown", Selection);
-		}, 1);
+		}, 100);
 		item.removeEventListener("mousedown", Selection);
+		item?.parentElement?.removeEventListener("mousedown", UnSelection);
 	};
 	item.addEventListener("mousedown", Selection);
 }

@@ -1,39 +1,50 @@
 import { RefObject } from "react";
-import { Point } from "../model/types";
+import { ObjectOnSlide, Point } from "../model/types";
 
-type parametersOfObject = {
-	leftObject: number;
-	topObject: number;
-	widthObject: number;
-	heightObject: number;
-	refOnResizeable: RefObject<HTMLDivElement>;
-};
-
-export type useResizeProps = parametersOfObject & {
+export type useResizeProps = {
 	refOnObject: RefObject<HTMLDivElement>;
+	refOnResizeable: RefObject<HTMLDivElement>;
 	widthSlide: number;
 	heightSlide: number;
-	coords: Point;
-	setCoords: (coords: Point) => void;
 	locationOnObject: string;
+	coordsObject: Point;
+	coordsCircle: Point;
+	radiusCircle: number;
+	widthObject: number;
+	heightObject: number;
+	blockResizeableID: string;
+	blockCircleID: string;
+	setWidth: (slideID: string, blockID: string, width: number) => void;
+	setHeight: (slideID: string, blockID: string, height: number) => void;
+	setCoords: (slideID: string, blockID: string, coords: Point) => void;
+	slideID: string;
+	topObject: number;
+	leftObject: number;
 };
 
 function useResize(props: useResizeProps) {
 	const {
 		refOnObject,
 		setCoords,
-		coords,
+		coordsCircle,
+		coordsObject,
+		radiusCircle,
+		locationOnObject,
 		widthSlide,
 		heightSlide,
-		locationOnObject,
-		leftObject,
-		topObject,
+		refOnResizeable,
+		setWidth,
+		setHeight,
+		blockResizeableID,
+		blockCircleID,
+		slideID,
 		widthObject,
 		heightObject,
-		refOnResizeable,
+		topObject,
+		leftObject,
 	} = props;
 	const item: HTMLDivElement = refOnObject.current!;
-	const object: HTMLDivElement = refOnResizeable.current!;
+	const objectOnSlideRef: HTMLDivElement = refOnResizeable.current!;
 	const OnMouseDown = (eventDown: MouseEvent) => {
 		const startCoords: Point = {
 			x: eventDown.pageX,
@@ -46,8 +57,8 @@ function useResize(props: useResizeProps) {
 				y: eventMove.pageY - startCoords.y,
 			};
 			const newPos: Point = {
-				x: coords.x + delta.x,
-				y: coords.y + delta.y,
+				x: coordsCircle.x + delta.x,
+				y: coordsCircle.y + delta.y,
 			};
 			if (newPos.x < 0) newPos.x = 0;
 			if (newPos.x > widthSlide - item.getBoundingClientRect().width) {
@@ -58,22 +69,86 @@ function useResize(props: useResizeProps) {
 				newPos.y = heightSlide - item.getBoundingClientRect().height;
 			}
 
-			item.style.zIndex = "1";
-			item.style.top = `${newPos.y}px`;
-			item.style.left = `${newPos.x}px`;
+			item.style.zIndex = "2";
 			switch (locationOnObject) {
 				case "left-top":
-					object.style.top = `${newPos.y}px`;
-					object.style.left = `${newPos.x}px`;
-					object.style.width = `${
-						object.getBoundingClientRect().right -
-						item.getBoundingClientRect().left +
-						item.getBoundingClientRect().width / 2
+					item.style.top = `${newPos.y}px`;
+					item.style.left = `${newPos.x}px`;
+					objectOnSlideRef.style.top = `${
+						delta.y + coordsObject.y
 					}px`;
-					object.style.width = `${
-						object.getBoundingClientRect().bottom -
-						item.getBoundingClientRect().top +
-						item.getBoundingClientRect().height / 2
+					objectOnSlideRef.style.left = `${
+						delta.x + coordsObject.x
+					}px`;
+					objectOnSlideRef.style.width = `${
+						-delta.x + widthObject
+					}px`;
+					objectOnSlideRef.style.height = `${
+						-delta.y + heightObject
+					}px`;
+					break;
+				case "left-middle":
+					item.style.top = `${newPos.y}px`;
+					item.style.left = `${newPos.x}px`;
+					objectOnSlideRef.style.left = `${
+						delta.x + coordsObject.x
+					}px`;
+					objectOnSlideRef.style.width = `${
+						-delta.x + widthObject
+					}px`;
+					break;
+				case "left-bottom":
+					item.style.top = `${newPos.y}px`;
+					item.style.left = `${newPos.x}px`;
+					objectOnSlideRef.style.left = `${
+						delta.x + coordsObject.x
+					}px`;
+					objectOnSlideRef.style.width = `${
+						-delta.x + widthObject
+					}px`;
+					objectOnSlideRef.style.height = `${
+						delta.y + heightObject
+					}px`;
+					break;
+				case "middle-top":
+					item.style.top = `${newPos.y}px`;
+					item.style.left = `${newPos.x}px`;
+					objectOnSlideRef.style.top = `${
+						delta.y + coordsObject.y
+					}px`;
+					objectOnSlideRef.style.height = `${
+						-delta.y + heightObject
+					}px`;
+					break;
+				case "middle-bottom":
+					item.style.top = `${newPos.y}px`;
+					item.style.left = `${newPos.x}px`;
+					objectOnSlideRef.style.height = `${
+						delta.y + heightObject
+					}px`;
+					break;
+				case "right-top":
+					item.style.top = `${newPos.y}px`;
+					item.style.left = `${newPos.x}px`;
+					objectOnSlideRef.style.top = `${
+						delta.y + coordsObject.y
+					}px`;
+					objectOnSlideRef.style.height = `${
+						-delta.y + heightObject
+					}px`;
+					objectOnSlideRef.style.width = `${delta.x + widthObject}px`;
+					break;
+				case "right-middle":
+					item.style.top = `${newPos.y}px`;
+					item.style.left = `${newPos.x}px`;
+					objectOnSlideRef.style.width = `${delta.x + widthObject}px`;
+					break;
+				case "right-bottom":
+					item.style.top = `${newPos.y}px`;
+					item.style.left = `${newPos.x}px`;
+					objectOnSlideRef.style.width = `${delta.x + widthObject}px`;
+					objectOnSlideRef.style.height = `${
+						delta.y + heightObject
 					}px`;
 					break;
 				default:
@@ -87,8 +162,8 @@ function useResize(props: useResizeProps) {
 			item?.removeEventListener("mousedown", OnMouseDown);
 
 			const newPos: Point = {
-				x: eventUp.pageX - startCoords.x + coords.x,
-				y: eventUp.pageY - startCoords.y + coords.y,
+				x: eventUp.pageX - startCoords.x + coordsCircle.x,
+				y: eventUp.pageY - startCoords.y + coordsCircle.y,
 			};
 
 			if (newPos.x < 0) newPos.x = 0;
@@ -100,10 +175,101 @@ function useResize(props: useResizeProps) {
 				newPos.y = heightSlide - item.getBoundingClientRect().height;
 			}
 
-			setCoords({
-				x: newPos.x,
-				y: newPos.y,
+			const CoordsForObject: Point = {
+				x: eventUp.pageX - eventDown.pageX,
+				y: eventUp.pageY - eventDown.pageY,
+			};
+
+			const PhysicalParametersOfObject = {
+				width: widthObject,
+				height: heightObject,
+				top: topObject,
+				left: leftObject,
+			};
+
+			switch (locationOnObject) {
+				case "left-top":
+					PhysicalParametersOfObject.top =
+						CoordsForObject.y + coordsObject.y;
+					PhysicalParametersOfObject.left =
+						CoordsForObject.x + coordsObject.x;
+
+					PhysicalParametersOfObject.width =
+						-CoordsForObject.x + widthObject;
+
+					PhysicalParametersOfObject.height =
+						-CoordsForObject.y + heightObject;
+					break;
+				case "left-middle":
+					PhysicalParametersOfObject.left =
+						CoordsForObject.x + coordsObject.x;
+
+					PhysicalParametersOfObject.width =
+						-CoordsForObject.x + widthObject;
+
+					break;
+				case "left-bottom":
+					PhysicalParametersOfObject.left =
+						CoordsForObject.x + coordsObject.x;
+
+					PhysicalParametersOfObject.width =
+						-CoordsForObject.x + widthObject;
+
+					PhysicalParametersOfObject.height =
+						CoordsForObject.y + heightObject;
+
+					break;
+				case "middle-top":
+					PhysicalParametersOfObject.top =
+						CoordsForObject.y + coordsObject.y;
+
+					PhysicalParametersOfObject.height =
+						-CoordsForObject.y + heightObject;
+
+					break;
+				case "middle-bottom":
+					PhysicalParametersOfObject.height =
+						CoordsForObject.y + heightObject;
+
+					break;
+				case "right-top":
+					PhysicalParametersOfObject.top =
+						CoordsForObject.y + coordsObject.y;
+					PhysicalParametersOfObject.height =
+						-CoordsForObject.y + heightObject;
+					PhysicalParametersOfObject.width =
+						CoordsForObject.x + widthObject;
+					break;
+				case "right-middle":
+					PhysicalParametersOfObject.width =
+						CoordsForObject.x + widthObject;
+					break;
+				case "right-bottom":
+					PhysicalParametersOfObject.width =
+						CoordsForObject.x + widthObject;
+
+					PhysicalParametersOfObject.height =
+						CoordsForObject.y + heightObject;
+
+					break;
+				default:
+					break;
+			}
+			setCoords(slideID, blockCircleID, { x: newPos.x, y: newPos.y });
+			setCoords(slideID, blockResizeableID, {
+				x: PhysicalParametersOfObject.left,
+				y: PhysicalParametersOfObject.top,
 			});
+			setWidth(
+				slideID,
+				blockResizeableID,
+				PhysicalParametersOfObject.width,
+			);
+			setHeight(
+				slideID,
+				blockResizeableID,
+				PhysicalParametersOfObject.height,
+			);
 		};
 
 		window.addEventListener("mousemove", OnMouseMove);

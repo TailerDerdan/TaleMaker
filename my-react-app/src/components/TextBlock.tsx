@@ -50,8 +50,8 @@ function TextBlockView(props: TextBlockViewProps) {
 				width: width,
 				height: height,
 				position: "absolute",
-				top: point.x,
-				left: point.y,
+				top: point.y,
+				left: point.x,
 				transform: `rotate(${angleRotate})`,
 			}}
 		>
