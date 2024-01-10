@@ -54,11 +54,22 @@ function App() {
     const [slides, setSlides] = useState([slide1, slide2]);
     return (
         <>
-            <Header addSlideFunc={() => {
-                const newSlide = {...defaultSlide}
-                setSlides([...slides, newSlide])
-                console.log(slides)
-                }} />
+            <Header
+                addSlideFunc={() => {
+                    const newSlide = { ...defaultSlide };
+                    setSlides([...slides, newSlide]);
+                    console.log(slides);
+                }}
+                SaveFunc={() => {
+                    const temp = document.createElement("a")
+                    const file = new Blob([JSON.stringify(slides)], {type: "text/plain"})
+                    temp.href = URL.createObjectURL(file)
+                    temp.download = "presentation.json"
+                    document.body.appendChild(temp)
+                    temp.click()
+                    temp.remove()
+                }}
+            />
             <div className={styles.two__panel__layout}>
                 <ListOfSLide slides={slides} />
                 <WorkField slides={slides} id="slide2" />

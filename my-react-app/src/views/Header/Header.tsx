@@ -1,33 +1,41 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Header.module.css";
 import { ButtonWithPopover } from "../../components/ButtonWithPopover/ButtonWithPopover";
-import { Button, ButtonProps, ButtonType} from "../../components/button/Button";
-import { CreateGeomFigureIcon, CreateImageIcon, CreateTextBoxIcon, NewSlideIcon, RedoIcon, UndoIcon, CreateLineIcon } from "../../components/icons/toolbarIcons";
+import {
+    Button,
+    ButtonProps,
+    ButtonType,
+} from "../../components/button/Button";
+import {
+    CreateGeomFigureIcon,
+    CreateImageIcon,
+    CreateTextBoxIcon,
+    NewSlideIcon,
+    RedoIcon,
+    UndoIcon,
+    CreateLineIcon,
+} from "../../components/icons/toolbarIcons";
 
 type HeaderProps = {
-    addSlideFunc: () => void
-}
+    addSlideFunc: () => void;
+    SaveFunc: () => void;
+};
 
 const Header = (props: HeaderProps) => {
     const [name, setName] = useState<string>("Презентация");
 
     const buttonsFile: Array<ButtonProps> = [
         {
-            onClick: () => console.log("xxxx"),
-            title: "xxxx",
-            id: "xxxx",
+            onClick: () => {             
+            },
+            title: "Открыть",
+            id: "OpenButton",
             type: ButtonType.Text,
         },
         {
-            onClick: () => console.log("SSSS"),
-            title: "SSSS",
-            id: "SSSS",
-            type: ButtonType.Text,
-        },
-        {
-            onClick: () => console.log("SSQSS"),
-            title: "SSQSS",
-            id: "SSQSS",
+            onClick: () => {props.SaveFunc()},
+            title: "Сохранить",
+            id: "SaveButton",
             type: ButtonType.Text,
         },
     ];
@@ -160,19 +168,21 @@ const Header = (props: HeaderProps) => {
                 </div>
             </div>
             <div className={styles.header__toolbox}>
-                <div className={styles.header__toolboxButton}> 
+                <div className={styles.header__toolboxButton}>
                     <Button
-                        onClick={() => {props.addSlideFunc()}}
-                        icon={<NewSlideIcon/>}
+                        onClick={() => {
+                            props.addSlideFunc();
+                        }}
+                        icon={<NewSlideIcon />}
                         id="newSlideIcon"
                         type={ButtonType.Icon}
                     />
                 </div>
-                <div className={styles.header__toolboxSeparator}/>
+                <div className={styles.header__toolboxSeparator} />
                 <div className={styles.header__toolboxButton}>
                     <Button
                         onClick={() => {}}
-                        icon={<UndoIcon/>}
+                        icon={<UndoIcon />}
                         id="UndoIcon"
                         type={ButtonType.Icon}
                     />
@@ -180,16 +190,16 @@ const Header = (props: HeaderProps) => {
                 <div className={styles.header__toolboxButton}>
                     <Button
                         onClick={() => {}}
-                        icon={<RedoIcon/>}
+                        icon={<RedoIcon />}
                         id="RedoIcon"
                         type={ButtonType.Icon}
                     />
                 </div>
-                <div className={styles.header__toolboxSeparator}/>
+                <div className={styles.header__toolboxSeparator} />
                 <div className={styles.header__toolboxButton}>
                     <Button
                         onClick={() => {}}
-                        icon={<CreateTextBoxIcon/>}
+                        icon={<CreateTextBoxIcon />}
                         id="CreateTextBoxIcon"
                         type={ButtonType.Icon}
                     />
@@ -197,7 +207,7 @@ const Header = (props: HeaderProps) => {
                 <div className={styles.header__toolboxButton}>
                     <Button
                         onClick={() => {}}
-                        icon={<CreateImageIcon/>}
+                        icon={<CreateImageIcon />}
                         id="CreateImageIcon"
                         type={ButtonType.Icon}
                     />
@@ -205,7 +215,7 @@ const Header = (props: HeaderProps) => {
                 <div className={styles.header__toolboxButton}>
                     <Button
                         onClick={() => {}}
-                        icon={<CreateGeomFigureIcon/>}
+                        icon={<CreateGeomFigureIcon />}
                         id="CreateGeomFigureIcon"
                         type={ButtonType.Icon}
                     />
@@ -213,12 +223,12 @@ const Header = (props: HeaderProps) => {
                 <div className={styles.header__toolboxButton}>
                     <Button
                         onClick={() => {}}
-                        icon={<CreateLineIcon/>}
+                        icon={<CreateLineIcon />}
                         id="CreateLineIcon"
                         type={ButtonType.Icon}
                     />
                 </div>
-                <div className={styles.header__toolboxSeparator}/>
+                <div className={styles.header__toolboxSeparator} />
                 <div className={styles.header__toolboxButton}>
                     <Button
                         onClick={() => {}}
@@ -227,7 +237,7 @@ const Header = (props: HeaderProps) => {
                         type={ButtonType.Text}
                     />
                 </div>
-                <div className={styles.header__toolboxSeparator}/>
+                <div className={styles.header__toolboxSeparator} />
                 <div className={styles.header__toolboxButton}>
                     <Button
                         onClick={() => {}}

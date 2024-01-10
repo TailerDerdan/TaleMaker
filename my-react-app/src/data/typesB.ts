@@ -207,5 +207,4 @@ const user: MainEditor = {
     presentation: presentation1,
     history: [presentation0, presentation1],
     viewingMode: "editor",
-
 };

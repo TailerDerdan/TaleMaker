@@ -16,26 +16,33 @@ type ButtonProps = {
 
 const Button = (props: ButtonProps) => {
     const ButtonProps = props;
-    if (ButtonProps.type == ButtonType.Text){
+    if (ButtonProps.type == ButtonType.Text) {
         return (
             <div key={ButtonProps.id} className={styles.buttonWrapper}>
-                <button key={ButtonProps.id} onClick={ButtonProps.onClick} className={styles.button}>
+                <button
+                    key={ButtonProps.id}
+                    onClick={ButtonProps.onClick}
+                    className={styles.button}
+                >
                     {ButtonProps.title}
                 </button>
             </div>
         );
     }
-    if (ButtonProps.type == ButtonType.Icon){
+    if (ButtonProps.type == ButtonType.Icon) {
         return (
             <div key={ButtonProps.id} className={styles.buttonWrapper}>
-                <button key={ButtonProps.id} onClick={ButtonProps.onClick} className={styles.buttonIcon}>
+                <button
+                    key={ButtonProps.id}
+                    onClick={ButtonProps.onClick}
+                    className={styles.buttonIcon}
+                >
                     {ButtonProps.icon}
                 </button>
-
             </div>
-        )
+        );
     }
-    return <>12</>
+    return <>12</>;
 };
 
 export { Button, ButtonType };

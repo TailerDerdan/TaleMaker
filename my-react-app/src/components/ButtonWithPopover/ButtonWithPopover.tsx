@@ -3,7 +3,7 @@ import { Button, ButtonProps, ButtonType } from "../button/Button";
 import styles from "./ButtonWithPopover.module.css";
 import { type } from "os";
 
-type ButtonWithPopoverProps ={
+type ButtonWithPopoverProps = {
     buttons: Array<ButtonProps>;
     title?: string;
     id: string;
@@ -12,11 +12,16 @@ type ButtonWithPopoverProps ={
 };
 
 const ButtonWithPopover = (props: ButtonWithPopoverProps) => {
-    const { title, buttons, id, type} = props;
+    const { title, buttons, id, type } = props;
     const [opened, setOpened] = useState<boolean>(false);
     return (
         <>
-            <Button title={title} onClick={() => setOpened(!opened)} id={id} type={type}/>
+            <Button
+                title={title}
+                onClick={() => setOpened(!opened)}
+                id={id}
+                type={type}
+            />
             {opened ? (
                 <div className={styles.popover}>
                     {buttons.map((el) => (
