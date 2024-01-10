@@ -4,11 +4,9 @@ import {
 	Rectangle,
 	Triangle,
 	Image,
-	BackColor,
 	Slide,
 	Presentation,
 	MainEditor,
-	Background,
 	Char,
 	Animation,
 	TypeAnimation,
@@ -23,132 +21,98 @@ const char1: Char = {
 	color: "#000000",
 	bold: false,
 	underlined: false,
-	opacity: 100,
+	opacity: 1,
 };
 
 const textBlock: TextBlock = {
 	id: "block1",
-	point1: { x: 0, y: 0 },
-	point2: { x: 10, y: 10 },
+	point: { x: 0, y: 0 },
+	width: 10,
+	height: 10,
 	type: "text",
 	chars: [char1],
 	chosenCharIds: ["char1"],
 	alignment: 0,
-	angelRotate: 30,
+	angleRotate: 30,
+	opacity: 1,
+	isSelection: false,
 };
 
 const circle: Ellipse = {
 	id: "block2",
-	point1: { x: 2, y: 12 },
-	point2: { x: 12, y: 2 },
-	angelRotate: 0,
+	point: { x: 2, y: 12 },
+	width: 10,
+	height: 10,
+	angleRotate: 0,
 	color: "FF0000",
 	borderThickness: 2,
 	colorBorder: "#A5A3A3",
-	text: {
-		id: "",
-		point1: { x: 0, y: 0 },
-		point2: { x: 1, y: 1 },
-		type: "text",
-		chars: [],
-		chosenCharIds: [],
-		alignment: 0,
-		angelRotate: 0,
-	},
-	opacity: 100,
+	opacity: 1,
 	type: "ellipse",
-	radius: 5,
+	radiusX: 5,
+	radiusY: 5,
 	centre: { x: 7, y: 7 },
+	isSelection: false,
 };
 
 const rectangle: Rectangle = {
 	id: "block3",
-	angelRotate: 0,
+	angleRotate: 0,
 	color: "#4AE613",
 	borderThickness: 2,
 	colorBorder: "#A0A59E",
-	text: {
-		id: "i",
-		type: "text",
-		point1: { x: 20, y: 10 },
-		point2: { x: 30, y: 0 },
-		chars: [],
-		chosenCharIds: [],
-		alignment: 0,
-		angelRotate: 0,
-	},
-	opacity: 100,
-	point1: { x: 20, y: 10 },
-	point2: { x: 30, y: 0 },
+	opacity: 1,
+	point: { x: 20, y: 10 },
+	width: 20,
+	height: 20,
 	type: "rectangle",
+	isSelection: false,
 };
 
 const equilTriangle: Triangle = {
 	id: "block4",
-	point1: { x: 0, y: 5 },
-	point2: { x: 5, y: 0 },
+	point: { x: 0, y: 5 },
+	width: 5,
+	height: 5,
 	color: "",
 	borderThickness: 1,
 	colorBorder: "#000000",
-	text: {
-		id: "",
-		type: "text",
-		point1: { x: 1, y: 2 },
-		point2: { x: 4, y: 1 },
-		chars: [],
-		chosenCharIds: [],
-		alignment: 0,
-		angelRotate: 0,
-	},
-	opacity: 100,
-	angelRotate: 0,
-	type: "Triangle",
+	opacity: 1,
+	angleRotate: 0,
+	type: "triangle",
 	trianglePoint1: { x: 0, y: 0 },
 	trianglePoint2: { x: 5, y: 0 },
 	trianglePoint3: { x: 2.5, y: 4.33 },
+	isSelection: false,
 };
 
 const rightTriangle: Triangle = {
 	id: "block5",
-	point1: { x: 4, y: 8 },
-	point2: { x: 6, y: 6 },
-	angelRotate: 0,
+	point: { x: 4, y: 8 },
+	width: 5,
+	height: 5,
+	angleRotate: 0,
 	color: "#F3FF00",
 	borderThickness: 3.5,
 	colorBorder: "#F3FF00",
-	text: {
-		id: "",
-		type: "text",
-		point1: { x: 4, y: 7 },
-		point2: { x: 5, y: 6 },
-		chars: [],
-		chosenCharIds: [],
-		alignment: 0,
-		angelRotate: 0,
-	},
-	opacity: 100,
-	type: "Triangle",
+	opacity: 1,
+	type: "triangle",
 	trianglePoint1: { x: 4, y: 6 },
 	trianglePoint2: { x: 4, y: 8 },
 	trianglePoint3: { x: 6, y: 6 },
+	isSelection: false,
 };
 
 const imageBlock: Image = {
 	id: "block6",
-	point1: { x: 100, y: 100 },
-	point2: { x: 150, y: 125 },
-	angelRotate: 0,
+	point: { x: 100, y: 100 },
+	width: 100,
+	height: 100,
+	angleRotate: 0,
 	type: "image",
 	urlStr: "https://m.media-amazon.com/images/I/31enPn7dN+L.jpg",
-};
-
-const backgroundColor: BackColor = {
-	type: "backColor",
-	color: "#699DF9",
-};
-
-const background: Background = {
-	type: backgroundColor,
+	opacity: 1,
+	isSelection: false,
 };
 
 const block1Animation: Animation = {
@@ -159,25 +123,29 @@ const block1Animation: Animation = {
 
 const slide1: Slide = {
 	id: "slide1",
-	background: background, // вот так
+	background: "#699DF9", // вот так
+	typeBackground: "color", // вот так
 	elements: [textBlock, circle, rectangle, rightTriangle, imageBlock],
 	chosenElements: ["block6"],
 	transition: TransionType.Default,
 	animations: [block1Animation],
+	width: 1262,
+	height: 692,
 };
 
 const slide2: Slide = {
 	id: "slide2",
-	background: background, // вот так
+	background: "#699DF9", // вот так
+	typeBackground: "color", // вот так
 	elements: [rightTriangle],
 	chosenElements: ["block5"],
 	transition: TransionType.Fading,
 	animations: [],
+	width: 1262,
+	height: 692,
 };
 
 const presentation0: Presentation = {
-	height: 500,
-	width: 600,
 	versionId: "1",
 	name: "React",
 	slides: [slide1],
@@ -185,8 +153,6 @@ const presentation0: Presentation = {
 };
 
 const presentation1: Presentation = {
-	height: 500,
-	width: 600,
 	versionId: "1",
 	name: "React",
 	slides: [slide1, slide2],

@@ -1,0 +1,6 @@
+.two__panel__layout {
+	display: flex;
+	border-collapse: collapse;
+	width: 100%;
+	min-height: 75vh;
+}

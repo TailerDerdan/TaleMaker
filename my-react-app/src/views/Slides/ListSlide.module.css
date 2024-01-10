@@ -1,0 +1,15 @@
+.listOfSlide {
+	height: inherit;
+	display: flex;
+	flex-flow: column nowrap;
+	max-width: inherit;
+	padding: 2% 1% 0;
+	border-right: 1px solid #000;
+	background-color: rgb(141 140 182 / 10%);
+}
+
+.slide {
+	transform-origin: top left;
+	margin-bottom: 1rem;
+	max-width: inherit;
+}
