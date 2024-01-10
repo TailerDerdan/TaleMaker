@@ -14,7 +14,14 @@ const ImageView = (props: ImageProps) => {
 	const { urlStr, id, angleRotate, point, width, height } = props;
 
 	return (
-		<img src={urlStr} alt={urlStr} key={id} width={width} height={height} />
+		<img
+			src={urlStr}
+			alt={urlStr}
+			key={id}
+			width={width}
+			height={height}
+			draggable={false}
+		/>
 	);
 };
 

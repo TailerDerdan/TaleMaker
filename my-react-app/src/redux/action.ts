@@ -236,6 +236,7 @@ type ChangeBackgroundColor = {
 enum SlideActions {
 	ADD_SLIDE = "ADD_SLIDE",
 	DELETE_SLIDE = "DELETE_SLIDE",
+	CHANGE_ORDER = "CHANGE_ORDER",
 }
 type AddSlide = {
 	type: SlideActions.ADD_SLIDE;
@@ -247,6 +248,14 @@ type DeleteSlide = {
 	slideID: string;
 	payload: {
 		slideID: string;
+	};
+};
+type ChangeOrder = {
+	type: SlideActions.CHANGE_ORDER;
+	slideID: string;
+	payload: {
+		from: number;
+		to: number;
 	};
 };
 
@@ -276,7 +285,8 @@ type Actions =
 	| ChangeBlockSelection
 	| ChangeGraphicObjectBorderColor
 	| ChangeGraphicObjectBorderThickness
-	| ChangeGraphicObjectColor;
+	| ChangeGraphicObjectColor
+	| ChangeOrder;
 
 export {
 	type Actions,

@@ -53,6 +53,7 @@ function TextBlockView(props: TextBlockViewProps) {
 				top: point.y,
 				left: point.x,
 				transform: `rotate(${angleRotate})`,
+				userSelect: "none",
 			}}
 		>
 			{spanArr}

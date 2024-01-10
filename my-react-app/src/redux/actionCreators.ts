@@ -317,6 +317,15 @@ function createDeleteSlide(slideID: string) {
 		},
 	};
 }
+function createChangeOrder(from: number, to: number) {
+	return {
+		type: SlideActions.CHANGE_ORDER,
+		payload: {
+			from,
+			to,
+		},
+	};
+}
 
 export {
 	createAddAudio,
@@ -345,4 +354,5 @@ export {
 	createChangeGraphicObjectColor,
 	createChangeGraphicObjectBorderThickness,
 	createChangeGraphicObjectBorderColor,
+	createChangeOrder,
 };

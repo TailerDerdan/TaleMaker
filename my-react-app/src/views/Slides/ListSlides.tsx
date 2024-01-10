@@ -1,19 +1,23 @@
-import React from "react";
+import React, { useRef } from "react";
 import styles from "./ListSlide.module.css";
-import { SlideProps, SlideView } from "../../components/slide/Slide";
+import { SlideView } from "../../components/slide/Slide";
+import { useAppActions, useAppSelector } from "../../redux/hooks";
+import { Slide } from "../../model/types";
+import { useDraggableList } from "../../hooks/useDdDForSlideBar";
 
-type MinSlidesProps = {
-	slides: Array<SlideProps>;
-};
-
-const ListOfSLide = (props: MinSlidesProps) => {
-	const { slides } = props;
-
+const ListOfSLide = () => {
+	const slides = useAppSelector((state) => state.slides);
 	const widthSlide = slides[0].width * document.documentElement.clientWidth;
 
 	const scale: number = 300 / widthSlide;
 
-	const viewsMinSlides = slides.map((slide: SlideProps) => {
+	const refOnList = useRef<HTMLDivElement>(null);
+	const { createChangeOrder } = useAppActions();
+	const { registerDndItem } = useDraggableList({
+		onOrderChange: createChangeOrder,
+	});
+
+	const viewsMinSlides = slides.map((slide: Slide, index) => {
 		return (
 			<div
 				className={styles.slide}
@@ -30,12 +34,21 @@ const ListOfSLide = (props: MinSlidesProps) => {
 						scale,
 				}}
 			>
-				<SlideView {...slide} key={slide.id} />
+				<SlideView
+					{...slide}
+					key={slide.id}
+					registerDndItem={registerDndItem}
+					index={index}
+				/>
 			</div>
 		);
 	});
 
-	return <div className={styles.listOfSlide}>{viewsMinSlides}</div>;
+	return (
+		<div ref={refOnList} className={styles.listOfSlide}>
+			{viewsMinSlides}
+		</div>
+	);
 };
 
 export { ListOfSLide };

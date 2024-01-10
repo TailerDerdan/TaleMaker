@@ -273,6 +273,12 @@ const slideReducer = (state: Slide[] = allSlides, action: Actions) => {
 			return [...state, action.payload];
 		case SlideActions.DELETE_SLIDE:
 			return state.filter((obj) => obj.id !== action.payload.slideID);
+		case SlideActions.CHANGE_ORDER: {
+			const newSlides = [...state];
+			const removed = newSlides.splice(action.payload.from, 1);
+			newSlides.splice(action.payload.to, 0, removed[0]);
+			return newSlides;
+		}
 		case BackgroundActions.CHANGE_BACKGROUND_COLOR:
 			return state.map((object) => {
 				if (object?.id == action.payload.slideID) {

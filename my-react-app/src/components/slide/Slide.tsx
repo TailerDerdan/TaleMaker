@@ -7,8 +7,7 @@ import { TextBlockView } from "../TextBlock";
 import { ImageView } from "../ImageView";
 import styles from "../slide/Slide.module.css";
 import { Wrapper } from "../WrapperForObjectOnSlide/Wrapper";
-
-type SlideProps = Slide;
+import { RegisterDndItemFn } from "../../hooks/useDdDForSlideBar";
 
 type ObjectProps = {
 	objectOnSlide: ObjectOnSlide;
@@ -46,6 +45,11 @@ const Object = (props: ObjectProps) => {
 	);
 };
 
+type SlideProps = Slide & {
+	registerDndItem?: RegisterDndItemFn;
+	index?: number;
+};
+
 function SlideView(props: SlideProps) {
 	const {
 		id,
@@ -57,14 +61,47 @@ function SlideView(props: SlideProps) {
 		animations,
 		width,
 		height,
+		registerDndItem,
+		index,
 	} = props;
 
 	const widthSlide = width * document.documentElement.clientWidth;
 	const heightSlide = height * document.documentElement.clientHeight;
 
+	const ref = useRef<HTMLDivElement>(null);
+	if (registerDndItem && index) {
+		useEffect(() => {
+			const { onDragStart } = registerDndItem(index, {
+				elementRef: ref,
+			});
+			const onMouseDown = (mouseDownEvent: MouseEvent) => {
+				onDragStart({
+					onDrag: (dragEvent) => {
+						ref.current!.style.position = "absolute";
+						ref.current!.style.zIndex = "1";
+						ref.current!.style.boxShadow = "black 2px 2px 4px";
+						ref.current!.style.top = `${
+							dragEvent.pageY - mouseDownEvent.pageY
+						}px`;
+					},
+					onDrop: (dropEvent) => {
+						ref.current!.style.position = "";
+						ref.current!.style.zIndex = "";
+						ref.current!.style.boxShadow = "";
+						ref.current!.style.top = "";
+					},
+				});
+			};
+			const control = ref.current!;
+			control.addEventListener("mousedown", onMouseDown);
+			return () => control.removeEventListener("mousedown", onMouseDown);
+		}, [index, registerDndItem]);
+	}
+
 	return (
 		<div
 			key={id}
+			ref={ref}
 			className={styles.slideStyles}
 			style={{
 				width: `${widthSlide}px`,

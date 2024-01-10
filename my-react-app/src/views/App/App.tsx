@@ -1,5 +1,4 @@
 import React from "react";
-import { user } from "../../data/typesC";
 import { Header } from "../Header/Header";
 import { ListOfSLide } from "../Slides/ListSlides";
 import styles from "./App.module.css";
@@ -10,8 +9,8 @@ function App() {
 		<>
 			<Header />
 			<div className={styles.two__panel__layout}>
-				<ListOfSLide slides={user.presentation.slides} />
-				<WorkField id="slide2" />
+				<ListOfSLide />
+				<WorkField id="slide1" />
 			</div>
 		</>
 	);
