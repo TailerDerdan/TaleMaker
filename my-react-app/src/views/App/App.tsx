@@ -1,4 +1,15 @@
 import React from "react";
+import React, { useState } from "react";
+import { TransionType, BackColor, Background } from "../../model/types";
+import { SlideProps } from "../../components/slide/Slide";
+import {
+    textBlock,
+    circle,
+    rectangle,
+    rightTriangle,
+    imageBlock,
+    presentation1,
+} from "../../data/typesC";
 import { Header } from "../Header/Header";
 import { ListOfSLide } from "../Slides/ListSlides";
 import styles from "./App.module.css";
@@ -14,6 +25,67 @@ function App() {
 			</div>
 		</>
 	);
+    const backgroundColor: BackColor = {
+        type: "backColor",
+        color: "#699DF9",
+    };
+    const background: Background = {
+        type: backgroundColor,
+    };
+    const slide1: SlideProps = {
+        id: "slide1",
+        background: background,
+        elements: [rightTriangle, imageBlock],
+        chosenElements: ["block6"],
+        transition: TransionType.Default,
+        width: 0.66,
+        height: 0.64,
+    };
+    const slide2: SlideProps = {
+        id: "slide2",
+        background,
+        elements: [rightTriangle, textBlock, circle, rectangle],
+        chosenElements: ["block5"],
+        transition: TransionType.Fading,
+        width: 0.66,
+        height: 0.64,
+    };
+
+    const defaultSlide: SlideProps = {
+        id: "",
+        background,
+        elements: [],
+        chosenElements: [],
+        transition: TransionType.Default,
+        width: 0.66,
+        height: 0.64,
+    };
+
+    const [slides, setSlides] = useState([slide1, slide2]);
+    return (
+        <>
+            <Header
+                addSlideFunc={() => {
+                    const newSlide = { ...defaultSlide };
+                    setSlides([...slides, newSlide]);
+                    console.log(slides);
+                }}
+                SaveFunc={() => {
+                    const temp = document.createElement("a")
+                    const file = new Blob([JSON.stringify(slides)], {type: "text/plain"})
+                    temp.href = URL.createObjectURL(file)
+                    temp.download = "presentation.json"
+                    document.body.appendChild(temp)
+                    temp.click()
+                    temp.remove()
+                }}
+            />
+            <div className={styles.two__panel__layout}>
+                <ListOfSLide slides={slides} />
+                <WorkField slides={slides} id="slide2" />
+            </div>
+        </>
+    );
 }
 
 export default App;
