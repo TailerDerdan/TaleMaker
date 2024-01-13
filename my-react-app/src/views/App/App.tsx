@@ -60,15 +60,7 @@ function App() {
                     setSlides([...slides, newSlide]);
                     console.log(slides);
                 }}
-                SaveFunc={() => {
-                    const temp = document.createElement("a")
-                    const file = new Blob([JSON.stringify(slides)], {type: "text/plain"})
-                    temp.href = URL.createObjectURL(file)
-                    temp.download = "presentation.json"
-                    document.body.appendChild(temp)
-                    temp.click()
-                    temp.remove()
-                }}
+                slides={slides}
             />
             <div className={styles.two__panel__layout}>
                 <ListOfSLide slides={slides} />

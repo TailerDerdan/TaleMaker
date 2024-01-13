@@ -15,28 +15,32 @@ import {
     UndoIcon,
     CreateLineIcon,
 } from "../../components/icons/toolbarIcons";
+import { Slide } from "../../model/types";
+import { SlideProps } from "../../components/slide/Slide";
 
 type HeaderProps = {
     addSlideFunc: () => void;
-    SaveFunc: () => void;
+    slides: SlideProps[];
 };
 
 const Header = (props: HeaderProps) => {
     const [name, setName] = useState<string>("Презентация");
+    const file = new Blob([JSON.stringify(props.slides)], {type: "text/plain"})
 
     const buttonsFile: Array<ButtonProps> = [
         {
-            onClick: () => {             
-            },
+            onClick: () => {},
             title: "Открыть",
             id: "OpenButton",
-            type: ButtonType.Text,
+            type: ButtonType.Link,
+            json: file,
+
         },
         {
-            onClick: () => {props.SaveFunc()},
+            onClick: () => {},
             title: "Сохранить",
             id: "SaveButton",
-            type: ButtonType.Text,
+            type: ButtonType.InputField,
         },
     ];
 
