@@ -178,7 +178,7 @@ const Header = (props: HeaderProps) => {
                             props.addSlideFunc();
                         }}
                         icon={<NewSlideIcon />}
-                        id="newSlideIcon"
+                        id="newSlideButton"
                         type={ButtonType.Icon}
                     />
                 </div>
@@ -187,7 +187,7 @@ const Header = (props: HeaderProps) => {
                     <Button
                         onClick={() => {}}
                         icon={<UndoIcon />}
-                        id="UndoIcon"
+                        id="UndoButton"
                         type={ButtonType.Icon}
                     />
                 </div>
@@ -195,7 +195,7 @@ const Header = (props: HeaderProps) => {
                     <Button
                         onClick={() => {}}
                         icon={<RedoIcon />}
-                        id="RedoIcon"
+                        id="RedoButton"
                         type={ButtonType.Icon}
                     />
                 </div>
@@ -204,7 +204,7 @@ const Header = (props: HeaderProps) => {
                     <Button
                         onClick={() => {}}
                         icon={<CreateTextBoxIcon />}
-                        id="CreateTextBoxIcon"
+                        id="CreateTextBoxButton"
                         type={ButtonType.Icon}
                     />
                 </div>
@@ -212,7 +212,7 @@ const Header = (props: HeaderProps) => {
                     <Button
                         onClick={() => {}}
                         icon={<CreateImageIcon />}
-                        id="CreateImageIcon"
+                        id="CreateImageButton"
                         type={ButtonType.Icon}
                     />
                 </div>
@@ -220,7 +220,7 @@ const Header = (props: HeaderProps) => {
                     <Button
                         onClick={() => {}}
                         icon={<CreateGeomFigureIcon />}
-                        id="CreateGeomFigureIcon"
+                        id="CreateGeomFigureButton"
                         type={ButtonType.Icon}
                     />
                 </div>
@@ -228,7 +228,7 @@ const Header = (props: HeaderProps) => {
                     <Button
                         onClick={() => {}}
                         icon={<CreateLineIcon />}
-                        id="CreateLineIcon"
+                        id="CreateLineButton"
                         type={ButtonType.Icon}
                     />
                 </div>
@@ -237,8 +237,8 @@ const Header = (props: HeaderProps) => {
                     <Button
                         onClick={() => {}}
                         title="Фон"
-                        id="CreateLineIcon"
-                        type={ButtonType.Text}
+                        id="BackgroundButton"
+                        type={ButtonType.ToolBButton}
                     />
                 </div>
                 <div className={styles.header__toolboxSeparator} />
@@ -246,8 +246,8 @@ const Header = (props: HeaderProps) => {
                     <Button
                         onClick={() => {}}
                         title="Переход"
-                        id="CreateLineIcon"
-                        type={ButtonType.Text}
+                        id="TrasitionButtton"
+                        type={ButtonType.ToolBButton}
                     />
                 </div>
             </div>

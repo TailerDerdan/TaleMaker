@@ -7,7 +7,10 @@ enum ButtonType {
     Text,
     Link,
     InputField,
+    ToolBButton,
 }
+
+const downloadName = "presentation.json"
 
 type ButtonProps = {
     onClick: () => void;
@@ -33,6 +36,19 @@ const Button = (props: ButtonProps) => {
             </div>
         );
     }
+    if (ButtonProps.type == ButtonType.ToolBButton) {
+        return (
+            <div key={ButtonProps.id} className={styles.buttonWrapper}>
+                <button
+                    key={ButtonProps.id}
+                    onClick={ButtonProps.onClick}
+                    className={styles.buttonIcon}
+                >
+                    {ButtonProps.title}
+                </button>
+            </div>
+        );
+    }
     if (ButtonProps.type == ButtonType.Icon) {
         return (
             <div key={ButtonProps.id} className={styles.buttonWrapper}>
@@ -49,16 +65,18 @@ const Button = (props: ButtonProps) => {
     if (ButtonProps.type == ButtonType.Link) {
         if (ButtonProps.json != null) {
             return (
-                <a download={"presentation.json"} id={"downloadLink"} href={URL.createObjectURL(ButtonProps.json)}>Скачать</a>
+                <div key={ButtonProps.id} className={styles.buttonWrapper}>
+                    <a download={downloadName} id={ButtonProps.id} href={URL.createObjectURL(ButtonProps.json)} className={styles.buttonLink}>Скачать</a>
+                </div>
             )
         }
     }
     if (ButtonProps.type == ButtonType.InputField) {
         return (
             <label>
-                Скачать
                 <input
                     type={"file"}
+                    title={"Сохранить"}
                     accept={".json"}
                     id={"OpenJson"}
                     onChange={() => {
@@ -71,7 +89,7 @@ const Button = (props: ButtonProps) => {
                         }
                     }
                     } 
-                    className={styles.header__hui} />
+                />
             </label>
         )
     }
