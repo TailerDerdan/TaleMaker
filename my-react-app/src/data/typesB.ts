@@ -7,30 +7,24 @@ import {
 	Slide,
 	Presentation,
 	MainEditor,
-	Char,
 	Animation,
 	TypeAnimation,
 	TransionType,
+	Background,
 } from "../model/types";
-
-const char1: Char = {
-	id: "char1",
-	value: "q",
-	fontSize: 14,
-	fontFamily: "Comic Sans MS",
-	color: "#000000",
-	bold: false,
-	underlined: false,
-	opacity: 1,
-};
 
 const textBlock: TextBlock = {
 	id: "block1",
 	point: { x: 0, y: 0 },
-	width: 10,
-	height: 10,
+	width: 40,
+	height: 40,
 	type: "text",
-	chars: [char1],
+	value: "fqfqfq",
+	fontSize: 16,
+	fontFamily: "Comic Sans",
+	color: "#891231",
+	bold: false,
+	underlined: false,
 	chosenCharIds: ["char1"],
 	alignment: 0,
 	angleRotate: 30,
@@ -124,25 +118,27 @@ const block1Animation: Animation = {
 const slide1: Slide = {
 	id: "slide1",
 	background: "#699DF9", // вот так
-	typeBackground: "color", // вот так
+	typeBackground: Background.Color, // вот так
 	elements: [textBlock, circle, rectangle, rightTriangle, imageBlock],
 	chosenElements: ["block6"],
 	transition: TransionType.Default,
 	animations: [block1Animation],
 	width: 1262,
 	height: 692,
+	mainSlideID: "slide1",
 };
 
 const slide2: Slide = {
 	id: "slide2",
 	background: "#699DF9", // вот так
-	typeBackground: "color", // вот так
+	typeBackground: Background.Color, // вот так
 	elements: [rightTriangle],
 	chosenElements: ["block5"],
 	transition: TransionType.Fading,
 	animations: [],
 	width: 1262,
 	height: 692,
+	mainSlideID: "slide1",
 };
 
 const presentation0: Presentation = {

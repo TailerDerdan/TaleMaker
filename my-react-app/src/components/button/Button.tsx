@@ -42,7 +42,7 @@ const Button = (props: ButtonProps) => {
 			</div>
 		);
 	}
-	return <>12</>;
+	return <></>;
 };
 
 export { Button };

@@ -1,63 +1,19 @@
 import {
-	TextBlock,
-	Ellipse,
-	Rectangle,
-	Triangle,
-	Image,
-	Video,
-	Audio,
-	Slide,
-	Presentation,
-	MainEditor,
-	Char,
 	Animation,
-	TypeAnimation,
+	Audio,
+	Background,
+	Ellipse,
+	Image,
+	MainEditor,
+	Presentation,
+	Rectangle,
+	Slide,
+	TextBlock,
 	TransionType,
+	Triangle,
+	TypeAnimation,
+	Video,
 } from "../model/types";
-
-const char1: Char = {
-	id: "char1",
-	value: "q",
-	fontSize: 14,
-	fontFamily: "Comic Sans MS",
-	color: "#000000",
-	bold: false,
-	underlined: false,
-	opacity: 100,
-};
-
-const char2: Char = {
-	id: "char2",
-	value: "w",
-	fontSize: 14,
-	fontFamily: "Comic Sans MS",
-	color: "#000000",
-	bold: false,
-	underlined: false,
-	opacity: 100,
-};
-
-const char3: Char = {
-	id: "char3",
-	value: "w",
-	fontSize: 20,
-	fontFamily: "Comic Sans MS",
-	color: "#000000",
-	bold: true,
-	underlined: false,
-	opacity: 100,
-};
-
-const char4: Char = {
-	id: "char4",
-	value: "w",
-	fontSize: 20,
-	fontFamily: "Comic Sans MS",
-	color: "#000000",
-	bold: false,
-	underlined: true,
-	opacity: 100,
-};
 
 const textBlock: TextBlock = {
 	id: "block1",
@@ -65,7 +21,12 @@ const textBlock: TextBlock = {
 	width: 40,
 	height: 40,
 	type: "text",
-	chars: [char1, char2, char3],
+	value: "qswe",
+	fontSize: 16,
+	fontFamily: "Comic Sans",
+	color: "#891231",
+	bold: false,
+	underlined: false,
 	chosenCharIds: ["char1"],
 	alignment: 0,
 	angleRotate: 30,
@@ -189,25 +150,27 @@ const block2Animtion: Animation = {
 const slide1: Slide = {
 	id: "slide1",
 	background: "#699DF9", // вот так
-	typeBackground: "color",
+	typeBackground: Background.Color,
 	elements: [imageBlock],
 	chosenElements: ["block6"],
 	transition: TransionType.Default,
 	animations: [block1Animation],
 	width: 0.66,
 	height: 0.64,
+	mainSlideID: "slide1",
 };
 
 const slide2: Slide = {
 	id: "slide2",
 	background: "#699DF9", // вот так
-	typeBackground: "color", // вот так
+	typeBackground: Background.Color, // вот так
 	elements: [rightTriangle, textBlock, circle, rectangle],
 	chosenElements: ["block5"],
 	transition: TransionType.Fading,
 	animations: [block2Animtion],
 	width: 0.66,
 	height: 0.64,
+	mainSlideID: "slide1",
 };
 
 const presentation0: Presentation = {

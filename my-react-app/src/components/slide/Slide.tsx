@@ -3,7 +3,7 @@ import { ObjectOnSlide, Slide, TransionType } from "../../model/types";
 import { EllipseView } from "../Ellipse";
 import { RectangleView } from "../Rectangle";
 import { TriangleView } from "../Triangle";
-import { TextBlockView } from "../TextBlock";
+import { TextBlockView } from "../TextBlock/TextBlock";
 import { ImageView } from "../ImageView";
 import styles from "../slide/Slide.module.css";
 import { Wrapper } from "../WrapperForObjectOnSlide/Wrapper";
@@ -25,7 +25,7 @@ const Object = (props: ObjectProps) => {
 			case "ellipse":
 				return <EllipseView {...objectOnSlide} />;
 			case "text":
-				return <TextBlockView {...objectOnSlide} />;
+				return <TextBlockView {...objectOnSlide} slideID={slideID} />;
 			case "image":
 				return <ImageView {...objectOnSlide} />;
 			case "triangle":
@@ -48,6 +48,7 @@ const Object = (props: ObjectProps) => {
 type SlideProps = Slide & {
 	registerDndItem?: RegisterDndItemFn;
 	index?: number;
+	scale?: number;
 };
 
 function SlideView(props: SlideProps) {
@@ -63,13 +64,14 @@ function SlideView(props: SlideProps) {
 		height,
 		registerDndItem,
 		index,
+		scale,
 	} = props;
 
 	const widthSlide = width * document.documentElement.clientWidth;
 	const heightSlide = height * document.documentElement.clientHeight;
 
 	const ref = useRef<HTMLDivElement>(null);
-	if (registerDndItem && index) {
+	if (registerDndItem && index !== undefined && scale !== undefined) {
 		useEffect(() => {
 			const { onDragStart } = registerDndItem(index, {
 				elementRef: ref,
@@ -81,7 +83,7 @@ function SlideView(props: SlideProps) {
 						ref.current!.style.zIndex = "1";
 						ref.current!.style.boxShadow = "black 2px 2px 4px";
 						ref.current!.style.top = `${
-							dragEvent.pageY - mouseDownEvent.pageY
+							(dragEvent.pageY - mouseDownEvent.pageY) / scale
 						}px`;
 					},
 					onDrop: (dropEvent) => {
@@ -98,15 +100,18 @@ function SlideView(props: SlideProps) {
 		}, [index, registerDndItem]);
 	}
 
+	const stylesForSlide = {
+		width: `${widthSlide}px`,
+		height: `${heightSlide}px`,
+		backgroundImage: typeBackground == "image" ? background : "",
+		backgroundColor: typeBackground == "color" ? background : "",
+	};
 	return (
 		<div
 			key={id}
 			ref={ref}
 			className={styles.slideStyles}
-			style={{
-				width: `${widthSlide}px`,
-				height: `${heightSlide}px`,
-			}}
+			style={stylesForSlide}
 		>
 			{elements.map((elem) => (
 				<Object

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styles from "./Header.module.css";
 import { ButtonWithPopover } from "../../components/ButtonWithPopover/ButtonWithPopover";
 import {
@@ -9,26 +9,23 @@ import {
 import {
 	CreateGeomFigureIcon,
 	CreateImageIcon,
+	CreateLineIcon,
 	CreateTextBoxIcon,
 	NewSlideIcon,
 	RedoIcon,
 	UndoIcon,
-	CreateLineIcon,
 } from "../../components/icons/toolbarIcons";
-import { Slide, TransionType } from "../../model/types";
-import { SlideProps } from "../../components/slide/Slide";
+import { Slide } from "../../model/types";
 import { useAppActions, useAppSelector } from "../../redux/hooks";
-
-const defaultSlide: Slide = {
-	typeBackground: "color",
-	background: "#699DF9",
-	id: "",
-	elements: [],
-	chosenElements: [],
-	transition: TransionType.Default,
-	width: 0.66,
-	height: 0.64,
-};
+import {
+	CreateDefaultEllipseBlock,
+	CreateDefaultImageBlock,
+	CreateDefaultRectangleBlock,
+	CreateDefaultSlide,
+	CreateDefaultTextBlock,
+	CreateDefaultTriangleBlock,
+} from "../../data/createDefaultObject";
+import { Modal } from "../../components/modalWindow/modalWindow";
 
 function SaveFunc(slides: Slide[]) {
 	const temp = document.createElement("a");
@@ -45,9 +42,26 @@ function SaveFunc(slides: Slide[]) {
 const Header = () => {
 	const [name, setName] = useState<string>("Презентация");
 	const slides = useAppSelector((state) => state.slides);
+	const {
+		createAddSlide,
+		createAddTextBlock,
+		createAddRectangle,
+		createAddTriangle,
+		createAddEllipse,
+		createAddImage,
+		createChangeBackgroundColor,
+		createChangeBackgroundImage,
+	} = useAppActions();
+	const [modalActiveForImage, setModalActiveForImage] = useState(false);
+	const [modalActiveForBackground, setModalActiveForBackground] =
+		useState(false);
+	const [inputForImage, setInputForImage] = useState("");
+	const [inputForBackgroundImage, setinputForBackgroundImage] = useState("");
+	const [inputForBackgroundColor, setinputForBackgroundColor] = useState("");
 
-	const { createAddSlide } = useAppActions();
-	const newSlide = { ...defaultSlide };
+	if (slides.length == 0) {
+		createAddSlide(CreateDefaultSlide(slides));
+	}
 
 	const buttonsFile: Array<ButtonProps> = [
 		{
@@ -67,7 +81,6 @@ const Header = () => {
 			type: ButtonType.Text,
 		},
 	];
-
 	const buttonsCorrect: Array<ButtonProps> = [
 		{
 			onClick: () => console.log("xxxx"),
@@ -88,7 +101,6 @@ const Header = () => {
 			type: ButtonType.Text,
 		},
 	];
-
 	const buttonsInsert: Array<ButtonProps> = [
 		{
 			onClick: () => console.log("xxxx"),
@@ -109,7 +121,6 @@ const Header = () => {
 			type: ButtonType.Text,
 		},
 	];
-
 	const buttonsSlide: Array<ButtonProps> = [
 		{
 			onClick: () => console.log("xxxx"),
@@ -131,6 +142,42 @@ const Header = () => {
 		},
 	];
 
+	const buttonsShape: Array<ButtonProps> = [
+		{
+			onClick: () => {
+				createAddRectangle(
+					slides[0].mainSlideID,
+					CreateDefaultRectangleBlock(slides),
+				);
+			},
+			title: "Прямоугольник",
+			id: "buttonRectangle",
+			type: ButtonType.Text,
+		},
+		{
+			onClick: () => {
+				createAddEllipse(
+					slides[0].mainSlideID,
+					CreateDefaultEllipseBlock(slides),
+				);
+			},
+			title: "Эллипс",
+			id: "buttonEllipse",
+			type: ButtonType.Text,
+		},
+		{
+			onClick: () => {
+				createAddTriangle(
+					slides[0].mainSlideID,
+					CreateDefaultTriangleBlock(slides),
+				);
+			},
+			title: "Треугольник",
+			id: "buttonTriangle",
+			type: ButtonType.Text,
+		},
+	];
+
 	return (
 		<div className={styles.header}>
 			<div
@@ -141,7 +188,6 @@ const Header = () => {
 					value={name}
 					onChange={(change) => {
 						setName(change.target.value);
-						console.log(name.length);
 					}}
 					className={styles.titlePresentation}
 					style={{
@@ -199,7 +245,7 @@ const Header = () => {
 				<div className={styles.header__toolboxButton}>
 					<Button
 						onClick={() => {
-							createAddSlide(newSlide);
+							createAddSlide(CreateDefaultSlide(slides));
 						}}
 						icon={<NewSlideIcon />}
 						id="newSlideIcon"
@@ -231,7 +277,10 @@ const Header = () => {
 				<div className={styles.header__toolboxButton}>
 					<Button
 						onClick={() => {
-							console.log(1);
+							createAddTextBlock(
+								slides[0].mainSlideID,
+								CreateDefaultTextBlock(slides),
+							);
 						}}
 						icon={<CreateTextBoxIcon />}
 						id="CreateTextBoxIcon"
@@ -241,21 +290,47 @@ const Header = () => {
 				<div className={styles.header__toolboxButton}>
 					<Button
 						onClick={() => {
-							console.log(1);
+							setModalActiveForImage(true);
 						}}
 						icon={<CreateImageIcon />}
 						id="CreateImageIcon"
 						type={ButtonType.Icon}
 					/>
+					<Modal active={modalActiveForImage}>
+						<input
+							placeholder={"Вставьте ссылку на изображение"}
+							value={inputForImage}
+							onChange={(event) =>
+								setInputForImage(event.target.value)
+							}
+						></input>
+						<button
+							onClick={() => {
+								// if (checkImage(inputForImage)) {
+								createAddImage(
+									slides[0].mainSlideID,
+									CreateDefaultImageBlock(
+										slides,
+										inputForImage,
+									),
+								);
+								setModalActiveForImage(false);
+								// }
+							}}
+						>
+							Вставить картинку
+						</button>
+						<button onClick={() => setModalActiveForImage(false)}>
+							Отмена
+						</button>
+					</Modal>
 				</div>
 				<div className={styles.header__toolboxButton}>
-					<Button
-						onClick={() => {
-							console.log(1);
-						}}
+					<ButtonWithPopover
+						buttons={buttonsShape}
 						icon={<CreateGeomFigureIcon />}
-						id="CreateGeomFigureIcon"
 						type={ButtonType.Icon}
+						id="CreateGeomFigureIcon"
 					/>
 				</div>
 				<div className={styles.header__toolboxButton}>
@@ -272,12 +347,55 @@ const Header = () => {
 				<div className={styles.header__toolboxButton}>
 					<Button
 						onClick={() => {
-							console.log(1);
+							setModalActiveForBackground(true);
 						}}
 						title="Фон"
 						id="CreateLineIcon"
 						type={ButtonType.Text}
 					/>
+					<Modal active={modalActiveForBackground}>
+						<input
+							placeholder={"Вставьте ссылку на изображение"}
+							value={inputForBackgroundImage}
+							onChange={(event) =>
+								setinputForBackgroundImage(event.target.value)
+							}
+						></input>
+						<button
+							onClick={() => {
+								createChangeBackgroundImage(
+									slides[0].mainSlideID,
+									inputForBackgroundImage,
+								);
+								setModalActiveForBackground(false);
+							}}
+						>
+							Вставить картинку
+						</button>
+						<input
+							type={"color"}
+							value={inputForBackgroundColor}
+							onChange={(event) =>
+								setinputForBackgroundColor(event.target.value)
+							}
+						></input>
+						<button
+							onClick={() => {
+								createChangeBackgroundColor(
+									slides[0].mainSlideID,
+									inputForBackgroundColor,
+								);
+								setModalActiveForBackground(false);
+							}}
+						>
+							Установить цвет
+						</button>
+						<button
+							onClick={() => setModalActiveForBackground(false)}
+						>
+							Отмена
+						</button>
+					</Modal>
 				</div>
 				<div className={styles.header__toolboxSeparator} />
 				<div className={styles.header__toolboxButton}>

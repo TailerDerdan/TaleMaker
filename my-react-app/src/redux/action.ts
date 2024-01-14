@@ -1,6 +1,5 @@
 import {
 	Audio,
-	Char,
 	Ellipse,
 	Image,
 	Point,
@@ -15,7 +14,7 @@ enum BlockActions {
 	CHANGE_WIDTH = "CHANGE_WIDTH",
 	CHANGE_HEIGHT = "CHANGE_HEIGHT",
 	CHANGE_ANGLE_ROTATE = "CHANGE_ANGLE_ROTATE",
-	CHANGE_COORDS = "CHANGE_ORDER",
+	CHANGE_COORDS = "CHANGE_COORDS",
 	CHANGE_OPACITY = "CHANGE_OPACITY",
 	DELETE_BLOCK = "DELETE_BLOCK",
 	CHANGE_SELECTION = "CHANGE_SELECTION",
@@ -115,7 +114,7 @@ type ChangeTextBlockText = {
 	slideID: string;
 	payload: {
 		textBlockID: string;
-		newText: Array<Char>;
+		newText: string;
 	};
 };
 type AddTextBlock = {

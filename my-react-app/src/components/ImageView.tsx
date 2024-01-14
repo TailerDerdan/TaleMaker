@@ -15,6 +15,7 @@ const ImageView = (props: ImageProps) => {
 
 	return (
 		<img
+			style={{ userSelect: "none" }}
 			src={urlStr}
 			alt={urlStr}
 			key={id}

@@ -1,4 +1,11 @@
-import React, { Ref, RefObject, useEffect, useRef, useState } from "react";
+import React, {
+	MutableRefObject,
+	Ref,
+	RefObject,
+	useEffect,
+	useRef,
+	useState,
+} from "react";
 import { useResize } from "../../hooks/useResize";
 import { ObjectOnSlide, Point } from "../../model/types";
 import { TCircleForResize } from "../../data/PutCircleForResizeData";
@@ -89,30 +96,30 @@ export const CircleForResize = (props: CircleForResizeProps) => {
 		createChangeEllipseRadiusX,
 		createChangeEllipseRadiusY,
 		createChangeBlockAngleRotate,
+		createChangeBlockSelection,
 	} = useAppActions();
 
-	useEffect(() => {
-		useResize({
-			slideID,
-			refOnResizeable,
-			refOnObject: ref,
-			widthObject: object.width,
-			heightObject: object.height,
-			widthSlide,
-			heightSlide,
-			coordsObject: object.point,
-			coordsCircle: circleForResize.point,
-			setCoords: createChangeBlockCoords,
-			setWidth: createChangeBlockWidth,
-			setHeight: createChangeBlockHeight,
-			blockResizeableID: object.id,
-			blockCircleID: circleForResize.id,
-			radiusCircle: circleForResize.radiusX,
-			locationOnObject: circleForResize.locationOnObject,
-			topObject: object.point.y,
-			leftObject: object.point.x,
-		});
-	}, [circleForResize.point]);
+	useResize({
+		slideID,
+		refOnResizeable,
+		refOnObject: ref,
+		widthObject: object.width,
+		heightObject: object.height,
+		widthSlide,
+		heightSlide,
+		coordsObject: object.point,
+		coordsCircle: circleForResize.point,
+		setCoords: createChangeBlockCoords,
+		setWidth: createChangeBlockWidth,
+		setHeight: createChangeBlockHeight,
+		blockResizeableID: object.id,
+		blockCircleID: circleForResize.id,
+		radiusCircle: circleForResize.radiusX,
+		locationOnObject: circleForResize.locationOnObject,
+		topObject: object.point.y,
+		leftObject: object.point.x,
+		setSelection: createChangeBlockSelection,
+	});
 
 	return (
 		<div

@@ -1,14 +1,3 @@
-type Char = {
-	id: string;
-	value: string;
-	fontSize: number;
-	fontFamily: string;
-	color: string;
-	bold: boolean;
-	underlined: boolean;
-	opacity: number;
-};
-
 enum Alignment {
 	Without,
 	Left,
@@ -33,7 +22,12 @@ type Block = {
 
 type TextBlock = Block & {
 	type: "text";
-	chars: Array<Char>;
+	value: string;
+	fontSize: number;
+	fontFamily: string;
+	color: string;
+	bold: boolean;
+	underlined: boolean;
 	chosenCharIds: Array<string>;
 	alignment: Alignment;
 };
@@ -103,16 +97,22 @@ type ObjectOnSlide =
 	| Video
 	| Audio;
 
+enum Background {
+	Image = "image",
+	Color = "color",
+}
+
 type Slide = {
 	id: string;
 	background: string;
-	typeBackground: "image" | "color";
+	typeBackground: Background;
 	elements: Array<ObjectOnSlide>;
 	chosenElements: Array<string>;
 	transition: TransionType;
 	animations?: Array<Animation>;
 	width: number;
 	height: number;
+	mainSlideID: string;
 };
 
 type Presentation = {
@@ -137,7 +137,6 @@ export type {
 	Slide,
 	Presentation,
 	MainEditor,
-	Char,
 	Animation,
 	Video,
 	Audio,
@@ -146,4 +145,4 @@ export type {
 	Block,
 };
 
-export { Alignment, TransionType, TypeAnimation };
+export { Alignment, TransionType, TypeAnimation, Background };

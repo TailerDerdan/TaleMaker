@@ -28,36 +28,13 @@ const TriangleView = (props: TriangleProps) => {
 		trianglePoint1,
 		trianglePoint2,
 		trianglePoint3,
+		width,
+		height,
 	} = props;
-	const [width] = useState<number>(
-		Math.max(trianglePoint1.x, trianglePoint2.x, trianglePoint3.x) -
-			Math.min(trianglePoint1.x, trianglePoint2.x, trianglePoint3.x) +
-			5,
-	);
-	const [height] = useState<number>(
-		Math.max(trianglePoint1.y, trianglePoint2.y, trianglePoint3.y) -
-			Math.min(trianglePoint1.y, trianglePoint2.y, trianglePoint3.y) +
-			5,
-	);
-	props.point.x = Math.min(
-		trianglePoint1.x,
-		trianglePoint2.x,
-		trianglePoint3.x,
-	);
-	props.point.y = Math.min(
-		trianglePoint1.y,
-		trianglePoint2.y,
-		trianglePoint3.y,
-	);
-	const { point } = props;
-	const points = `${trianglePoint1.x - point.x}, ${
-		trianglePoint1.y - point.y
-	} ${trianglePoint2.x - point.x}, ${trianglePoint2.y - point.y} ${
-		trianglePoint3.x - point.x
-	}, ${trianglePoint3.y - point.y}`;
+	const points = `${width / 2}, 0 0, ${height} ${width}, ${height}`;
 
 	return (
-		<svg style={{ width: width, height: height, opacity: opacity }}>
+		<svg style={{ width: "100%", height: "100%", opacity: opacity }}>
 			<polygon
 				points={points}
 				style={{

@@ -1,8 +1,8 @@
 import React from "react";
 import { Header } from "../Header/Header";
 import { ListOfSLide } from "../Slides/ListSlides";
-import styles from "./App.module.css";
 import { WorkField } from "../WorkField/WorkField";
+import styles from "./App.module.css";
 
 function App() {
 	return (

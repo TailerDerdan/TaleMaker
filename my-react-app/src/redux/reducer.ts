@@ -1,4 +1,4 @@
-import { Slide } from "../model/types";
+import { Background, Slide } from "../model/types";
 import { user } from "../data/typesC";
 import {
 	Actions,
@@ -260,7 +260,7 @@ const slideReducer = (state: Slide[] = allSlides, action: Actions) => {
 							if (elem.id == action.payload.textBlockID) {
 								return {
 									...elem,
-									chars: action.payload.newText,
+									value: action.payload.newText,
 								};
 							}
 							return elem;
@@ -275,8 +275,10 @@ const slideReducer = (state: Slide[] = allSlides, action: Actions) => {
 			return state.filter((obj) => obj.id !== action.payload.slideID);
 		case SlideActions.CHANGE_ORDER: {
 			const newSlides = [...state];
+			console.log(newSlides);
 			const removed = newSlides.splice(action.payload.from, 1);
 			newSlides.splice(action.payload.to, 0, removed[0]);
+			console.log(newSlides);
 			return newSlides;
 		}
 		case BackgroundActions.CHANGE_BACKGROUND_COLOR:
@@ -284,6 +286,7 @@ const slideReducer = (state: Slide[] = allSlides, action: Actions) => {
 				if (object?.id == action.payload.slideID) {
 					return {
 						...object,
+						typeBackground: Background.Color,
 						background: action.payload.newBackgroundColor,
 					};
 				}
@@ -294,6 +297,7 @@ const slideReducer = (state: Slide[] = allSlides, action: Actions) => {
 				if (object?.id == action.payload.slideID) {
 					return {
 						...object,
+						typeBackground: Background.Image,
 						background: action.payload.newBackgroundImage,
 					};
 				}

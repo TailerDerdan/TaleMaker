@@ -1,4 +1,4 @@
-import { RefObject } from "react";
+import { RefObject, useEffect } from "react";
 
 type useSelectionProps = {
 	refOnObject: RefObject<HTMLDivElement>;
@@ -13,14 +13,19 @@ export function useSelection(props: useSelectionProps) {
 	const Selection = () => {
 		item.removeEventListener("mousedown", Selection);
 		setDown(slideID, blockID, true);
+		const stopProp = (event: MouseEvent) => {
+			event.stopPropagation();
+		};
 		const UnSelection = () => {
 			setDown(slideID, blockID, false);
 			item?.parentElement?.removeEventListener("mousedown", UnSelection);
 			item.removeEventListener("mousedown", Selection);
+			item.removeEventListener("mousedown", stopProp);
 		};
 		setTimeout(() => {
 			item?.parentElement?.addEventListener("mousedown", UnSelection);
 			item.removeEventListener("mousedown", Selection);
+			item.addEventListener("mousedown", stopProp);
 		}, 100);
 		item.removeEventListener("mousedown", Selection);
 		item?.parentElement?.removeEventListener("mousedown", UnSelection);

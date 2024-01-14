@@ -2,7 +2,6 @@ import { RefObject } from "react";
 import { Point } from "../model/types";
 
 export type useDraggableWorkFieldProps = {
-	refOnObject: RefObject<HTMLDivElement>;
 	refInitialOnObject: RefObject<HTMLDivElement>;
 	widthSlide: number;
 	heightSlide: number;
@@ -10,11 +9,11 @@ export type useDraggableWorkFieldProps = {
 	setCoords: (slideID: string, blockID: string, coords: Point) => void;
 	blockID: string;
 	slideID: string;
+	refObject: RefObject<HTMLDivElement>;
 };
 
 function useDragAndDrop(props: useDraggableWorkFieldProps) {
 	const {
-		refOnObject,
 		refInitialOnObject,
 		setCoords,
 		blockID,
@@ -22,9 +21,10 @@ function useDragAndDrop(props: useDraggableWorkFieldProps) {
 		widthSlide,
 		heightSlide,
 		slideID,
+		refObject,
 	} = props;
-	const item: HTMLDivElement = refOnObject.current!;
 	const initialItem: HTMLDivElement = refInitialOnObject.current!;
+	const draggableItem: HTMLDivElement = refObject.current!;
 	const OnMouseDown = (eventDown: MouseEvent) => {
 		const startCoords: Point = {
 			x: eventDown.pageX,
@@ -65,7 +65,7 @@ function useDragAndDrop(props: useDraggableWorkFieldProps) {
 			initialItem.style.zIndex = "";
 			window.removeEventListener("mouseup", OnMouseUp);
 			window.removeEventListener("mousemove", OnMouseMove);
-			item?.removeEventListener("mousedown", OnMouseDown);
+			draggableItem?.removeEventListener("mousedown", OnMouseDown);
 			const newPos: Point = {
 				x: eventUp.pageX - startCoords.x + coords.x,
 				y: eventUp.pageY - startCoords.y + coords.y,
@@ -96,8 +96,8 @@ function useDragAndDrop(props: useDraggableWorkFieldProps) {
 		window.addEventListener("mousemove", OnMouseMove);
 		window.addEventListener("mouseup", OnMouseUp);
 	};
-	item?.addEventListener("mousedown", OnMouseDown);
-	return () => item?.removeEventListener("mousedown", OnMouseDown);
+	draggableItem?.addEventListener("mousedown", OnMouseDown);
+	return () => draggableItem?.removeEventListener("mousedown", OnMouseDown);
 }
 
 export { useDragAndDrop };

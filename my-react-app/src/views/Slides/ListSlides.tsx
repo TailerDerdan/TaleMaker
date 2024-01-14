@@ -36,9 +36,9 @@ const ListOfSLide = () => {
 			>
 				<SlideView
 					{...slide}
-					key={slide.id}
 					registerDndItem={registerDndItem}
 					index={index}
+					scale={scale}
 				/>
 			</div>
 		);

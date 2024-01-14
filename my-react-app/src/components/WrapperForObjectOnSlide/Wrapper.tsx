@@ -33,7 +33,7 @@ export const Wrapper = (props: WrapperProps) => {
 
 	const propsForDragAndDrop: useDraggableWorkFieldProps = {
 		refInitialOnObject,
-		refOnObject: refObject,
+		refObject,
 		setCoords: createChangeBlockCoords,
 		widthSlide,
 		heightSlide,
@@ -45,9 +45,6 @@ export const Wrapper = (props: WrapperProps) => {
 	const circlesForResize: TCircleForResize[] = [];
 
 	useEffect(() => {
-		useDragAndDrop(propsForDragAndDrop);
-	}, [object.point]);
-	useEffect(() => {
 		useSelection({
 			slideID,
 			blockID: object.id,
@@ -55,6 +52,9 @@ export const Wrapper = (props: WrapperProps) => {
 			setDown: createChangeBlockSelection,
 		});
 	}, [object.isSelection]);
+	useEffect(() => {
+		useDragAndDrop(propsForDragAndDrop);
+	}, [object.point]);
 
 	if (object.isSelection) {
 		AddData(circlesForResize);

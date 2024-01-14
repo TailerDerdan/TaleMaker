@@ -7,16 +7,22 @@ import {
 	Slide,
 	Presentation,
 	MainEditor,
+	Background,
 } from "../model/types";
 
 const textBlock: TextBlock = {
-	id: "id1",
+	id: "block1",
 	point: { x: 0, y: 0 },
-	width: 10,
-	height: 10,
+	width: 40,
+	height: 40,
 	type: "text",
-	chars: [],
-	chosenCharIds: [],
+	value: "qswe",
+	fontSize: 16,
+	fontFamily: "Comic Sans",
+	color: "#891231",
+	bold: false,
+	underlined: false,
+	chosenCharIds: ["char1"],
 	alignment: 0,
 	angleRotate: 30,
 	opacity: 1,
@@ -101,9 +107,10 @@ const imageBlock: Image = {
 };
 
 const slide1: Slide = {
+	mainSlideID: "slide1",
 	id: "slide1",
 	background: "#699DF9",
-	typeBackground: "color",
+	typeBackground: Background.Color,
 	elements: [],
 	chosenElements: [],
 	transition: 0,

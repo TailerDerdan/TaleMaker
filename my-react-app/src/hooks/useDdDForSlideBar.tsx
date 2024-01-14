@@ -1,4 +1,5 @@
-import { RefObject, useCallback, useRef } from "react";
+import { RefObject, useCallback, useEffect, useRef } from "react";
+import { useAppActions } from "../redux/hooks";
 
 type DndItemInfo = {
 	elementRef: RefObject<HTMLDivElement>;
@@ -40,26 +41,25 @@ function useDraggableList({ onOrderChange }: UseDraggableListParams) {
 					item.elementRef.current!.getBoundingClientRect().top;
 
 				const onMouseUp = (event: MouseEvent) => {
-					const newIndex = 0;
+					let newIndex = 0;
 					const draggableItemTop =
 						item.elementRef.current!.getBoundingClientRect().top;
-					// for (let i = 0; i < itemsRef.current.length - 1; ++i) {
-					// 	if (i === index) {
-					// 		continue;
-					// 	}
-					// 	console.log(item, 6);
-					// 	const currItem =
-					// 		itemsRef.current[i].elementRef.current!;
-					// 	if (
-					// 		currItem.getBoundingClientRect().top >
-					// 		draggableItemTop
-					// 	) {
-					// 		newIndex =
-					// 			draggableItemTop > item.startY ? i - 1 : i;
-					// 		break;
-					// 	}
-					// 	newIndex = i;
-					// }
+					for (let i = 0; i < itemsRef.current.length - 1; ++i) {
+						if (i === index) {
+							continue;
+						}
+						const currItem =
+							itemsRef.current[i].elementRef.current!;
+						if (
+							currItem.getBoundingClientRect().top >
+							draggableItemTop
+						) {
+							newIndex =
+								draggableItemTop > item.startY ? i - 1 : i;
+							break;
+						}
+						newIndex = i;
+					}
 					onOrderChange(index, newIndex);
 					onDrop(event);
 
@@ -77,6 +77,16 @@ function useDraggableList({ onOrderChange }: UseDraggableListParams) {
 		},
 		[onOrderChange],
 	);
+
+	// const { createDeleteSlide } = useAppActions();
+	// useEffect(() => {
+	// 	const handleKeyDownEvent = (event: KeyboardEvent) => {
+	// 		if (event.key == "Delete" && slideID != mainSlideID) {
+	// 			createDeleteSlide(slideID);
+	// 		}
+	// 	};
+	// 	window.addEventListener("keydown", handleKeyDownEvent);
+	// });
 
 	return {
 		registerDndItem,
