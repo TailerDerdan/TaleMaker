@@ -58,6 +58,7 @@ const Header = () => {
 	const [inputForImage, setInputForImage] = useState("");
 	const [inputForBackgroundImage, setinputForBackgroundImage] = useState("");
 	const [inputForBackgroundColor, setinputForBackgroundColor] = useState("");
+	const file = new Blob([JSON.stringify(slides)], { type: "text/plain" });
 
 	if (slides.length == 0) {
 		createAddSlide(CreateDefaultSlide(slides));
@@ -70,7 +71,8 @@ const Header = () => {
 			},
 			title: "Открыть",
 			id: "OpenButton",
-			type: ButtonType.Text,
+			type: ButtonType.Link,
+			json: file,
 		},
 		{
 			onClick: () => {
@@ -78,7 +80,7 @@ const Header = () => {
 			},
 			title: "Сохранить",
 			id: "SaveButton",
-			type: ButtonType.Text,
+			type: ButtonType.InputField,
 		},
 	];
 	const buttonsCorrect: Array<ButtonProps> = [
