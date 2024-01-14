@@ -11,6 +11,20 @@
 	white-space: nowrap;
 }
 
+.buttonLink {
+    text-decoration: none;
+    color: black;
+    width: 100%;
+    font-size: 2rem;
+    border-radius: 30px;
+    white-space: nowrap;
+    border: 0;
+    background-color: white;
+    height: 43px;
+    width: 200px;
+    align-items: center;
+}
+
 .buttonIcon {
 	border: none;
 	background: none;
