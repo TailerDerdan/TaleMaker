@@ -6,7 +6,7 @@ import { useAppActions } from "../../redux/hooks";
 
 type ModalWindowProps = {
 	active: boolean;
-	children: ReactNode[];
+	children: ReactNode[] | ReactNode;
 };
 
 function checkImage(url: string) {

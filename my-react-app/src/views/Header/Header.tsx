@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./Header.module.css";
 import { ButtonWithPopover } from "../../components/ButtonWithPopover/ButtonWithPopover";
 import {
 	Button,
+	ButtonLocation,
 	ButtonProps,
 	ButtonType,
 } from "../../components/button/Button";
@@ -15,7 +16,7 @@ import {
 	RedoIcon,
 	UndoIcon,
 } from "../../components/icons/toolbarIcons";
-import { Slide } from "../../model/types";
+import { MainEditor, Presentation, Slide } from "../../model/types";
 import { useAppActions, useAppSelector } from "../../redux/hooks";
 import {
 	CreateDefaultEllipseBlock,
@@ -26,10 +27,11 @@ import {
 	CreateDefaultTriangleBlock,
 } from "../../data/createDefaultObject";
 import { Modal } from "../../components/modalWindow/modalWindow";
+import { ActiveToolBar } from "./activeToolBar";
 
-function SaveFunc(slides: Slide[]) {
+function SaveFunc(presentation: Presentation) {
 	const temp = document.createElement("a");
-	const file = new Blob([JSON.stringify(slides)], {
+	const file = new Blob([JSON.stringify(presentation)], {
 		type: "text/plain",
 	});
 	temp.href = URL.createObjectURL(file);
@@ -39,9 +41,13 @@ function SaveFunc(slides: Slide[]) {
 	temp.remove();
 }
 
-const Header = () => {
-	const [name, setName] = useState<string>("Презентация");
-	const slides = useAppSelector((state) => state.slides);
+type HeaderProps = {
+	mainEditor: MainEditor;
+};
+
+const Header = (props: HeaderProps) => {
+	const { mainEditor } = props;
+	const slides = mainEditor.presentation.slides;
 	const {
 		createAddSlide,
 		createAddTextBlock,
@@ -51,38 +57,20 @@ const Header = () => {
 		createAddImage,
 		createChangeBackgroundColor,
 		createChangeBackgroundImage,
+		createChangeMainEditorName,
 	} = useAppActions();
+	const [modalActiveForFile, setModalActiveForFile] = useState(false);
 	const [modalActiveForImage, setModalActiveForImage] = useState(false);
 	const [modalActiveForBackground, setModalActiveForBackground] =
 		useState(false);
 	const [inputForImage, setInputForImage] = useState("");
 	const [inputForBackgroundImage, setinputForBackgroundImage] = useState("");
 	const [inputForBackgroundColor, setinputForBackgroundColor] = useState("");
-	const file = new Blob([JSON.stringify(slides)], { type: "text/plain" });
+	const fileImage = useRef<HTMLInputElement>(null);
+	const file = new Blob([JSON.stringify(mainEditor.presentation)], {
+		type: "text/plain",
+	});
 
-	if (slides.length == 0) {
-		createAddSlide(CreateDefaultSlide(slides));
-	}
-
-	const buttonsFile: Array<ButtonProps> = [
-		{
-			onClick: () => {
-				console.log(1);
-			},
-			title: "Открыть",
-			id: "OpenButton",
-			type: ButtonType.Link,
-			json: file,
-		},
-		{
-			onClick: () => {
-				SaveFunc(slides);
-			},
-			title: "Сохранить",
-			id: "SaveButton",
-			type: ButtonType.InputField,
-		},
-	];
 	const buttonsCorrect: Array<ButtonProps> = [
 		{
 			onClick: () => console.log("xxxx"),
@@ -148,8 +136,11 @@ const Header = () => {
 		{
 			onClick: () => {
 				createAddRectangle(
-					slides[0].mainSlideID,
-					CreateDefaultRectangleBlock(slides),
+					mainEditor.presentation.mainSlideID,
+					CreateDefaultRectangleBlock(
+						slides,
+						mainEditor.presentation.mainSlideID,
+					),
 				);
 			},
 			title: "Прямоугольник",
@@ -159,8 +150,11 @@ const Header = () => {
 		{
 			onClick: () => {
 				createAddEllipse(
-					slides[0].mainSlideID,
-					CreateDefaultEllipseBlock(slides),
+					mainEditor.presentation.mainSlideID,
+					CreateDefaultEllipseBlock(
+						slides,
+						mainEditor.presentation.mainSlideID,
+					),
 				);
 			},
 			title: "Эллипс",
@@ -170,8 +164,11 @@ const Header = () => {
 		{
 			onClick: () => {
 				createAddTriangle(
-					slides[0].mainSlideID,
-					CreateDefaultTriangleBlock(slides),
+					mainEditor.presentation.mainSlideID,
+					CreateDefaultTriangleBlock(
+						slides,
+						mainEditor.presentation.mainSlideID,
+					),
 				);
 			},
 			title: "Треугольник",
@@ -184,28 +181,58 @@ const Header = () => {
 		<div className={styles.header}>
 			<div
 				className={styles.header__wrapper__titlePresentation}
-				style={{ width: `${name.length * 5}px` }}
+				style={{
+					width: `${mainEditor.presentation.name.length * 5}px`,
+				}}
 			>
 				<input
-					value={name}
+					type={"text"}
+					value={mainEditor.presentation.name}
 					onChange={(change) => {
-						setName(change.target.value);
+						createChangeMainEditorName(change.target.value);
 					}}
 					className={styles.titlePresentation}
 					style={{
-						width: `${name.length * 10}px`,
+						width: `${mainEditor.presentation.name.length * 10}px`,
 					}}
 				/>
 			</div>
 			<div className={styles.header__generalPurposeButtons}>
 				<div className={styles.header__wrapperPopover}>
 					<div className={styles.header__buttonsPopover}>
-						<ButtonWithPopover
+						<Button
+							onClick={() => {
+								setModalActiveForFile(true);
+							}}
 							title={"Файл"}
-							buttons={buttonsFile}
 							id={"file"}
 							type={ButtonType.Text}
 						/>
+						<Modal active={modalActiveForFile}>
+							<div className={styles.buttonModal}>
+								<Button
+									onClick={() => console.log(1)}
+									title={"Открыть"}
+									id={"OpenButton"}
+									type={ButtonType.Link}
+									json={file}
+								/>
+								<Button
+									onClick={() => {
+										SaveFunc(mainEditor.presentation);
+									}}
+									title={"Сохранить"}
+									id={"SaveButton"}
+									type={ButtonType.InputField}
+								/>
+								<button
+									onClick={() => setModalActiveForFile(false)}
+									className={`${styles.buttonModal} ${styles.buttonCancel}`}
+								>
+									Отмена
+								</button>
+							</div>
+						</Modal>
 					</div>
 					<div className={styles.header__buttonsPopover}>
 						<ButtonWithPopover
@@ -237,7 +264,7 @@ const Header = () => {
 						onClick={() => {
 							console.log("sss");
 						}}
-						title="Слайд шоу"
+						title="Слайд-шоу"
 						id="slideShow"
 						type={ButtonType.Text}
 					/>
@@ -280,8 +307,11 @@ const Header = () => {
 					<Button
 						onClick={() => {
 							createAddTextBlock(
-								slides[0].mainSlideID,
-								CreateDefaultTextBlock(slides),
+								mainEditor.presentation.mainSlideID,
+								CreateDefaultTextBlock(
+									slides,
+									mainEditor.presentation.mainSlideID,
+								),
 							);
 						}}
 						icon={<CreateTextBoxIcon />}
@@ -299,32 +329,63 @@ const Header = () => {
 						type={ButtonType.Icon}
 					/>
 					<Modal active={modalActiveForImage}>
-						<input
-							placeholder={"Вставьте ссылку на изображение"}
-							value={inputForImage}
-							onChange={(event) =>
-								setInputForImage(event.target.value)
-							}
-						></input>
-						<button
-							onClick={() => {
-								// if (checkImage(inputForImage)) {
-								createAddImage(
-									slides[0].mainSlideID,
-									CreateDefaultImageBlock(
-										slides,
-										inputForImage,
-									),
-								);
-								setModalActiveForImage(false);
-								// }
-							}}
-						>
-							Вставить картинку
-						</button>
-						<button onClick={() => setModalActiveForImage(false)}>
-							Отмена
-						</button>
+						<div className={styles.wrapperInputForImage}>
+							<input
+								type={"url"}
+								placeholder={"Вставьте ссылку на изображение"}
+								value={inputForImage}
+								onChange={(event) =>
+									setInputForImage(event.target.value)
+								}
+								className={styles.inputForImage}
+							></input>
+							<input
+								ref={fileImage}
+								type={"file"}
+								onChange={() => {
+									if (
+										fileImage !== null &&
+										fileImage.current !== null &&
+										fileImage.current.files !== null
+									) {
+										setInputForImage(
+											URL.createObjectURL(
+												fileImage?.current?.files[0],
+											),
+										);
+									}
+								}}
+								className={styles.inputForImage}
+							/>
+						</div>
+						<div className={styles.wrapperForModalButton}>
+							<div>
+								<button
+									onClick={() => {
+										createAddImage(
+											mainEditor.presentation.mainSlideID,
+											CreateDefaultImageBlock(
+												slides,
+												inputForImage,
+												mainEditor.presentation
+													.mainSlideID,
+											),
+										);
+										setInputForImage("");
+										setModalActiveForImage(false);
+									}}
+									className={`${styles.buttonModal} ${styles.buttonCreate}`}
+								>
+									Вставить картинку
+								</button>
+							</div>
+							<button
+								onClick={() => setModalActiveForImage(false)}
+								className={`${styles.buttonModal} ${styles.buttonCancel}`}
+							>
+								Отмена
+							</button>
+						</div>
 					</Modal>
 				</div>
 				<div className={styles.header__toolboxButton}>
@@ -333,6 +394,7 @@ const Header = () => {
 						icon={<CreateGeomFigureIcon />}
 						type={ButtonType.Icon}
 						id="CreateGeomFigureIcon"
+						typeOfLocation={ButtonLocation.ToolBar}
 					/>
 				</div>
 				<div className={styles.header__toolboxButton}>
@@ -356,47 +418,81 @@ const Header = () => {
 						type={ButtonType.Text}
 					/>
 					<Modal active={modalActiveForBackground}>
-						<input
-							placeholder={"Вставьте ссылку на изображение"}
-							value={inputForBackgroundImage}
-							onChange={(event) =>
-								setinputForBackgroundImage(event.target.value)
-							}
-						></input>
-						<button
-							onClick={() => {
-								createChangeBackgroundImage(
-									slides[0].mainSlideID,
-									inputForBackgroundImage,
-								);
-								setModalActiveForBackground(false);
-							}}
-						>
-							Вставить картинку
-						</button>
-						<input
-							type={"color"}
-							value={inputForBackgroundColor}
-							onChange={(event) =>
-								setinputForBackgroundColor(event.target.value)
-							}
-						></input>
-						<button
-							onClick={() => {
-								createChangeBackgroundColor(
-									slides[0].mainSlideID,
-									inputForBackgroundColor,
-								);
-								setModalActiveForBackground(false);
-							}}
-						>
-							Установить цвет
-						</button>
-						<button
-							onClick={() => setModalActiveForBackground(false)}
-						>
-							Отмена
-						</button>
+						<div className={styles.wrapperInputForImage}>
+							<input
+								type={"color"}
+								value={inputForBackgroundColor}
+								onChange={(event) =>
+									setinputForBackgroundColor(
+										event.target.value,
+									)
+								}
+							></input>
+							<input
+								type={"url"}
+								placeholder={"Вставьте ссылку на изображение"}
+								value={inputForBackgroundImage}
+								onChange={(event) =>
+									setinputForBackgroundImage(
+										event.target.value,
+									)
+								}
+								className={styles.inputForImage}
+							></input>
+							<input
+								ref={fileImage}
+								type={"file"}
+								onChange={() => {
+									if (
+										fileImage !== null &&
+										fileImage.current !== null &&
+										fileImage.current.files !== null
+									) {
+										setinputForBackgroundImage(
+											URL.createObjectURL(
+												fileImage?.current?.files[0],
+											),
+										);
+									}
+								}}
+								className={styles.inputForImage}
+							/>
+						</div>
+						<div className={styles.wrapperForModalButton}>
+							<button
+								onClick={() => {
+									createChangeBackgroundColor(
+										mainEditor.presentation.mainSlideID,
+										inputForBackgroundColor,
+									);
+									setModalActiveForBackground(false);
+								}}
+								className={`${styles.buttonModal} ${styles.buttonSetColorObject}`}
+							>
+								Установить цвет
+							</button>
+							<button
+								onClick={() => {
+									createChangeBackgroundImage(
+										mainEditor.presentation.mainSlideID,
+										inputForBackgroundImage,
+									);
+									setinputForBackgroundImage("");
+									setModalActiveForBackground(false);
+								}}
+								className={`${styles.buttonModal} ${styles.buttonCreate}`}
+							>
+								Вставить картинку
+							</button>
+							<button
+								onClick={() =>
+									setModalActiveForBackground(false)
+								}
+								className={`${styles.buttonModal} ${styles.buttonCancel}`}
+							>
+								Отмена
+							</button>
+						</div>
 					</Modal>
 				</div>
 				<div className={styles.header__toolboxSeparator} />
@@ -410,6 +506,10 @@ const Header = () => {
 						type={ButtonType.Text}
 					/>
 				</div>
+				<ActiveToolBar
+					slides={slides}
+					mainSlideID={mainEditor.presentation.mainSlideID}
+				/>
 			</div>
 		</div>
 	);

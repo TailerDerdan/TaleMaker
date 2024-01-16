@@ -1,29 +1,43 @@
-import React, { RefObject, useRef } from "react";
+import React, { RefObject, useEffect, useRef } from "react";
 import { SlideProps, SlideView } from "../../components/slide/Slide";
 import styles from "./WorkField.module.css";
 import { useAppActions, useAppSelector } from "../../redux/hooks";
+import { MainEditor, Slide } from "../../model/types";
 
 type WorkFieldProps = {
-	id: string;
+	mainEditor: MainEditor;
 };
 
 export const WorkField = (props: WorkFieldProps) => {
-	const { id } = props;
+	const { mainEditor } = props;
+	const { createDeleteBlock } = useAppActions();
+	const ref = useRef<HTMLDivElement>(null);
 
-	const slides = useAppSelector((state) => state.slides);
+	const slides = mainEditor.presentation.slides;
 
-	const slideUndefined = slides.find((el) => {
-		if (el.id == id) {
+	const slide = slides.filter((el) => {
+		if (el.id == mainEditor.presentation.mainSlideID) {
 			return el;
 		}
 	});
 
-	const slide = slideUndefined ? slideUndefined : slides[0];
-	const ref = useRef<HTMLDivElement>(null);
+	if (slide.length === 0) {
+		return <div ref={ref} className={styles.workField}></div>;
+	}
+
+	useEffect(() => {
+		const onKeyDown = (event: KeyboardEvent) => {
+			if (event.key == "Delete") {
+				createDeleteBlock(slide[0].id);
+			}
+		};
+		document?.addEventListener("keydown", onKeyDown);
+		return () => document?.removeEventListener("keydown", onKeyDown);
+	});
 
 	return (
 		<div ref={ref} className={styles.workField}>
-			<SlideView {...slide} />
+			<SlideView {...slide[0]} />
 		</div>
 	);
 };

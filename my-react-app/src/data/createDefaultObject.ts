@@ -11,10 +11,14 @@ import {
 } from "../model/types";
 import { generateID } from "../components/generateID/generateID";
 
-function CalculateCountOfObject(slides: Slide[], typeObject: string) {
+function CalculateCountOfObject(
+	slides: Slide[],
+	typeObject: string,
+	mainSlideID: string,
+) {
 	let countOfObject = 0;
 	for (const slide of slides) {
-		if (slide.id == slide.mainSlideID) {
+		if (slide.id == mainSlideID) {
 			for (const elem of slide.elements) {
 				if (elem.type == typeObject) countOfObject++;
 			}
@@ -30,21 +34,25 @@ function CreateDefaultSlide(slides: Slide[]) {
 		countOfObject: slides.length,
 	});
 	const defaultSlide: Slide = {
-		mainSlideID: slides.length == 0 ? id : slides[0].mainSlideID,
 		typeBackground: Background.Color,
-		background: "#699DF9",
+		background: "#ffffff",
 		id: id,
 		elements: [],
 		chosenElements: [],
 		transition: TransionType.Default,
-		width: 0.66 * document.documentElement.clientWidth,
-		height: 0.64 * document.documentElement.clientHeight,
+		width: 0.66,
+		height: 0.64,
+		isSelection: false,
 	};
 	return defaultSlide;
 }
 
-function CreateDefaultTextBlock(slides: Slide[]) {
-	const countOfTextBlock = CalculateCountOfObject(slides, "text");
+function CreateDefaultTextBlock(slides: Slide[], mainSlideID: string) {
+	const countOfTextBlock = CalculateCountOfObject(
+		slides,
+		"text",
+		mainSlideID,
+	);
 	const defaultBlock: TextBlock = {
 		type: "text",
 		id: generateID({
@@ -69,8 +77,16 @@ function CreateDefaultTextBlock(slides: Slide[]) {
 	return defaultBlock;
 }
 
-function CreateDefaultImageBlock(slides: Slide[], urlStr: string) {
-	const countOfImageBlock = CalculateCountOfObject(slides, "image");
+function CreateDefaultImageBlock(
+	slides: Slide[],
+	urlStr: string,
+	mainSlideID: string,
+) {
+	const countOfImageBlock = CalculateCountOfObject(
+		slides,
+		"image",
+		mainSlideID,
+	);
 	const defaultBlock: Image = {
 		type: "image",
 		id: generateID({
@@ -88,8 +104,12 @@ function CreateDefaultImageBlock(slides: Slide[], urlStr: string) {
 	return defaultBlock;
 }
 
-function CreateDefaultEllipseBlock(slides: Slide[]) {
-	const countOfEllipse = CalculateCountOfObject(slides, "ellipse");
+function CreateDefaultEllipseBlock(slides: Slide[], mainSlideID: string) {
+	const countOfEllipse = CalculateCountOfObject(
+		slides,
+		"ellipse",
+		mainSlideID,
+	);
 	const defaultBlock: Ellipse = {
 		type: "ellipse",
 		id: generateID({
@@ -112,8 +132,12 @@ function CreateDefaultEllipseBlock(slides: Slide[]) {
 	return defaultBlock;
 }
 
-function CreateDefaultRectangleBlock(slides: Slide[]) {
-	const countOfRectangle = CalculateCountOfObject(slides, "rectangle");
+function CreateDefaultRectangleBlock(slides: Slide[], mainSlideID: string) {
+	const countOfRectangle = CalculateCountOfObject(
+		slides,
+		"rectangle",
+		mainSlideID,
+	);
 	const defaultBlock: Rectangle = {
 		type: "rectangle",
 		id: generateID({
@@ -133,8 +157,12 @@ function CreateDefaultRectangleBlock(slides: Slide[]) {
 	return defaultBlock;
 }
 
-function CreateDefaultTriangleBlock(slides: Slide[]) {
-	const countOfRectangle = CalculateCountOfObject(slides, "triangle");
+function CreateDefaultTriangleBlock(slides: Slide[], mainSlideID: string) {
+	const countOfRectangle = CalculateCountOfObject(
+		slides,
+		"triangle",
+		mainSlideID,
+	);
 	const defaultBlock: Triangle = {
 		type: "triangle",
 		id: generateID({

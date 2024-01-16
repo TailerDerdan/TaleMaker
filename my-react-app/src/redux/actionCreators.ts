@@ -5,6 +5,7 @@ import {
 	EllipseActions,
 	GraphicObjectAction,
 	ImageActions,
+	MainEditorActions,
 	RectangleActions,
 	SlideActions,
 	TextBlockActions,
@@ -93,13 +94,10 @@ function createChangeBlockAngleRotate(
 		},
 	};
 }
-function createDeleteBlock(slideID: string, blockID: string) {
+function createDeleteBlock(slideID: string) {
 	return {
 		type: BlockActions.DELETE_BLOCK,
 		slideID,
-		payload: {
-			blockID,
-		},
 	};
 }
 function createChangeBlockSelection(
@@ -108,7 +106,7 @@ function createChangeBlockSelection(
 	isSelection: boolean,
 ) {
 	return {
-		type: BlockActions.CHANGE_SELECTION,
+		type: BlockActions.CHANGE_SELECTION_BLOCK,
 		slideID,
 		payload: {
 			blockID,
@@ -179,6 +177,76 @@ function createAddTextBlock(slideID: string, textBlock: TextBlock) {
 		type: TextBlockActions.ADD_TEXT_BLOCK,
 		slideID,
 		payload: textBlock,
+	};
+}
+function createChangeTextBlockColor(
+	slideID: string,
+	textBlockID: string,
+	newColor: string,
+) {
+	return {
+		type: TextBlockActions.CHANGE_TEXT_COLOR,
+		slideID,
+		payload: {
+			textBlockID,
+			newColor,
+		},
+	};
+}
+function createChangeTextBlockFontSize(
+	slideID: string,
+	textBlockID: string,
+	newFontSize: number,
+) {
+	return {
+		type: TextBlockActions.CHANGE_FONT_SIZE,
+		slideID,
+		payload: {
+			textBlockID,
+			newFontSize,
+		},
+	};
+}
+function createChangeTextBlockFontFamily(
+	slideID: string,
+	textBlockID: string,
+	newFontFamily: string,
+) {
+	return {
+		type: TextBlockActions.CHANGE_FONT_FAMILY,
+		slideID,
+		payload: {
+			textBlockID,
+			newFontFamily,
+		},
+	};
+}
+function createChangeTextBlockBold(
+	slideID: string,
+	textBlockID: string,
+	bold: boolean,
+) {
+	return {
+		type: TextBlockActions.CHANGE_BOLD,
+		slideID,
+		payload: {
+			textBlockID,
+			bold,
+		},
+	};
+}
+function createChangeTextBlockUnderlined(
+	slideID: string,
+	textBlockID: string,
+	underlined: boolean,
+) {
+	return {
+		type: TextBlockActions.CHANGE_UNDERLINE,
+		slideID,
+		payload: {
+			textBlockID,
+			underlined,
+		},
 	};
 }
 function createChangeEllipseRadiusX(
@@ -309,12 +377,9 @@ function createAddSlide(slide: Slide) {
 		payload: slide,
 	};
 }
-function createDeleteSlide(slideID: string) {
+function createDeleteSlide() {
 	return {
 		type: SlideActions.DELETE_SLIDE,
-		payload: {
-			slideID,
-		},
 	};
 }
 function createChangeOrder(from: number, to: number) {
@@ -323,6 +388,34 @@ function createChangeOrder(from: number, to: number) {
 		payload: {
 			from,
 			to,
+		},
+	};
+}
+
+function createMainSlide(newMainSlideID: string) {
+	return {
+		type: SlideActions.CHANGE_MAIN_SLIDE,
+		payload: {
+			newMainSlideID,
+		},
+	};
+}
+
+function createChangeSlideSelection(slideID: string, isSelection: boolean) {
+	return {
+		type: SlideActions.CHANGE_SELECTION_SLIDE,
+		slideID,
+		payload: {
+			isSelection,
+		},
+	};
+}
+
+function createChangeMainEditorName(newName: string) {
+	return {
+		type: MainEditorActions.CHANGE_NAME_PRESENTATION,
+		payload: {
+			newName,
 		},
 	};
 }
@@ -355,4 +448,12 @@ export {
 	createChangeGraphicObjectBorderThickness,
 	createChangeGraphicObjectBorderColor,
 	createChangeOrder,
+	createMainSlide,
+	createChangeSlideSelection,
+	createChangeTextBlockBold,
+	createChangeTextBlockFontSize,
+	createChangeTextBlockColor,
+	createChangeTextBlockUnderlined,
+	createChangeTextBlockFontFamily,
+	createChangeMainEditorName,
 };

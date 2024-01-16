@@ -3,17 +3,10 @@ import { Header } from "../Header/Header";
 import { ListOfSLide } from "../Slides/ListSlides";
 import { WorkField } from "../WorkField/WorkField";
 import styles from "./App.module.css";
+import { slideMaker } from "../main/main";
 
 function App() {
-	return (
-		<>
-			<Header />
-			<div className={styles.two__panel__layout}>
-				<ListOfSLide />
-				<WorkField id="slide1" />
-			</div>
-		</>
-	);
+	return slideMaker();
 }
 
 export default App;

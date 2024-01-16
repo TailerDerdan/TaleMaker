@@ -6,23 +6,98 @@
 
 .button {
 	width: 100%;
-	font-size: 2rem;
-	border-radius: 30px;
+	appearance: none;
+	background-color: #fdfffc;
+	border: 1px solid rgb(27 31 35 / 15%);
+	border-radius: 1.875rem;
+	box-shadow:
+		rgb(27 31 35 / 4%) 0 1px 0,
+		rgb(255 255 255 / 25%) 0 1px 0 inset;
+	box-sizing: border-box;
+	color: #24292e;
+	cursor: pointer;
+	display: inline-block;
+	font-family: Lora;
+	text-align: center;
+	font-style: normal;
+	font-weight: 500;
+	line-height: 20px;
+	list-style: none;
+	padding: 0.6rem 2.44rem;
+	position: relative;
+	transition: background-color 0.2s cubic-bezier(0.3, 0, 0.5, 1);
+	user-select: none;
+	touch-action: manipulation;
+	vertical-align: middle;
 	white-space: nowrap;
+	word-wrap: break-word;
+}
+
+.buttonFontSize {
+	font-size: 1.875rem;
+}
+
+.buttonFontSizeForToolBar {
+	font-size: 1.5rem;
+	padding: 0.6rem 1rem;
+}
+
+.button:hover {
+	background-color: #f3f4f6;
+	text-decoration: none;
+	transition-duration: 0.1s;
+}
+
+.button:disabled {
+	background-color: #fafbfc;
+	border-color: rgb(27 31 35 / 15%);
+	color: #959da5;
+	cursor: default;
+}
+
+.button:active {
+	background-color: #edeff2;
+	box-shadow: rgb(225 228 232 / 20%) 0 1px 0 inset;
+	transition: none 0s;
+}
+
+.button:focus {
+	outline: 1px transparent;
+}
+
+.button::before {
+	display: none;
 }
 
 .buttonLink {
-	text-decoration: none;
-	color: black;
 	width: 100%;
-	font-size: 2rem;
-	border-radius: 30px;
+	appearance: none;
+	background-color: #fdfffc;
+	border: 1px solid rgb(27 31 35 / 15%);
+	border-radius: 1.875rem;
+	box-shadow:
+		rgb(27 31 35 / 4%) 0 1px 0,
+		rgb(255 255 255 / 25%) 0 1px 0 inset;
+	box-sizing: border-box;
+	color: #24292e;
+	cursor: pointer;
+	display: inline-block;
+	font-size: 1.875rem;
+	font-family: Lora;
+	text-align: center;
+	font-style: normal;
+	font-weight: 500;
+	line-height: 20px;
+	list-style: none;
+	padding: 0.6rem 2.44rem;
+	position: relative;
+	transition: background-color 0.2s cubic-bezier(0.3, 0, 0.5, 1);
+	user-select: none;
+	touch-action: manipulation;
+	vertical-align: middle;
 	white-space: nowrap;
-	border: 0;
-	background-color: white;
-	height: 43px;
-	width: 200px;
-	align-items: center;
+	word-wrap: break-word;
+	text-decoration: none;
 }
 
 .buttonIcon {

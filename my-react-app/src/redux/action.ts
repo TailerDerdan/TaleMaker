@@ -17,7 +17,7 @@ enum BlockActions {
 	CHANGE_COORDS = "CHANGE_COORDS",
 	CHANGE_OPACITY = "CHANGE_OPACITY",
 	DELETE_BLOCK = "DELETE_BLOCK",
-	CHANGE_SELECTION = "CHANGE_SELECTION",
+	CHANGE_SELECTION_BLOCK = "CHANGE_SELECTION_BLOCK",
 }
 type ChangeBlockWidth = {
 	type: BlockActions.CHANGE_WIDTH;
@@ -62,12 +62,9 @@ type ChangeBlockOpacity = {
 type DeleteBlock = {
 	type: BlockActions.DELETE_BLOCK;
 	slideID: string;
-	payload: {
-		blockID: string;
-	};
 };
 type ChangeBlockSelection = {
-	type: BlockActions.CHANGE_SELECTION;
+	type: BlockActions.CHANGE_SELECTION_BLOCK;
 	slideID: string;
 	payload: {
 		blockID: string;
@@ -108,6 +105,11 @@ type ChangeGraphicObjectBorderThickness = {
 enum TextBlockActions {
 	CHANGE_TEXT = "CHANGE_TEXT",
 	ADD_TEXT_BLOCK = "ADD_TEXT_BLOCK",
+	CHANGE_TEXT_COLOR = "CHANGE_TEXT_COLOR",
+	CHANGE_FONT_SIZE = "CHANGE_FONT_SIZE",
+	CHANGE_FONT_FAMILY = "CHANGE_FONT_FAMILY",
+	CHANGE_BOLD = "CHANGE_BOLD",
+	CHANGE_UNDERLINE = "CHANGE_UNDERLINE",
 }
 type ChangeTextBlockText = {
 	type: TextBlockActions.CHANGE_TEXT;
@@ -121,6 +123,46 @@ type AddTextBlock = {
 	type: TextBlockActions.ADD_TEXT_BLOCK;
 	slideID: string;
 	payload: TextBlock;
+};
+type ChangeTextBlockColor = {
+	type: TextBlockActions.CHANGE_TEXT_COLOR;
+	slideID: string;
+	payload: {
+		textBlockID: string;
+		newColor: string;
+	};
+};
+type ChangeTextBlockFontSize = {
+	type: TextBlockActions.CHANGE_FONT_SIZE;
+	slideID: string;
+	payload: {
+		textBlockID: string;
+		newFontSize: number;
+	};
+};
+type ChangeTextBlockFontFamily = {
+	type: TextBlockActions.CHANGE_FONT_FAMILY;
+	slideID: string;
+	payload: {
+		textBlockID: string;
+		newFontFamily: string;
+	};
+};
+type ChangeTextBlockBold = {
+	type: TextBlockActions.CHANGE_BOLD;
+	slideID: string;
+	payload: {
+		textBlockID: string;
+		bold: boolean;
+	};
+};
+type ChangeTextBlockUnderline = {
+	type: TextBlockActions.CHANGE_UNDERLINE;
+	slideID: string;
+	payload: {
+		textBlockID: string;
+		underlined: boolean;
+	};
 };
 
 enum EllipseActions {
@@ -236,6 +278,8 @@ enum SlideActions {
 	ADD_SLIDE = "ADD_SLIDE",
 	DELETE_SLIDE = "DELETE_SLIDE",
 	CHANGE_ORDER = "CHANGE_ORDER",
+	CHANGE_MAIN_SLIDE = "CHANGE_MAIN_SLIDE",
+	CHANGE_SELECTION_SLIDE = "CHANGE_SELECTION_SLIDE",
 }
 type AddSlide = {
 	type: SlideActions.ADD_SLIDE;
@@ -244,10 +288,6 @@ type AddSlide = {
 };
 type DeleteSlide = {
 	type: SlideActions.DELETE_SLIDE;
-	slideID: string;
-	payload: {
-		slideID: string;
-	};
 };
 type ChangeOrder = {
 	type: SlideActions.CHANGE_ORDER;
@@ -255,6 +295,30 @@ type ChangeOrder = {
 	payload: {
 		from: number;
 		to: number;
+	};
+};
+type ChangeMainSlide = {
+	type: SlideActions.CHANGE_MAIN_SLIDE;
+	payload: {
+		newMainSlideID: string;
+	};
+};
+
+type ChangeSlideSelection = {
+	type: SlideActions.CHANGE_SELECTION_SLIDE;
+	slideID: string;
+	payload: {
+		isSelection: boolean;
+	};
+};
+
+enum MainEditorActions {
+	CHANGE_NAME_PRESENTATION = "CHANGE_NAME_PRESENTATION",
+}
+type ChangeMainEditorName = {
+	type: MainEditorActions.CHANGE_NAME_PRESENTATION;
+	payload: {
+		newName: string;
 	};
 };
 
@@ -285,7 +349,15 @@ type Actions =
 	| ChangeGraphicObjectBorderColor
 	| ChangeGraphicObjectBorderThickness
 	| ChangeGraphicObjectColor
-	| ChangeOrder;
+	| ChangeOrder
+	| ChangeMainSlide
+	| ChangeSlideSelection
+	| ChangeTextBlockBold
+	| ChangeTextBlockColor
+	| ChangeTextBlockUnderline
+	| ChangeTextBlockFontFamily
+	| ChangeTextBlockFontSize
+	| ChangeMainEditorName;
 
 export {
 	type Actions,
@@ -300,4 +372,5 @@ export {
 	RectangleActions,
 	SlideActions,
 	GraphicObjectAction,
+	MainEditorActions,
 };

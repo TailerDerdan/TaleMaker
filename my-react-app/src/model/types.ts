@@ -112,7 +112,7 @@ type Slide = {
 	animations?: Array<Animation>;
 	width: number;
 	height: number;
-	mainSlideID: string;
+	isSelection: boolean;
 };
 
 type Presentation = {
@@ -120,6 +120,7 @@ type Presentation = {
 	name: string;
 	slides: Array<Slide>;
 	chosenSlideIds: Array<string>;
+	mainSlideID: string;
 };
 
 type MainEditor = {

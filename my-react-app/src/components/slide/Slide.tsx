@@ -1,5 +1,5 @@
 import React, { RefObject, useEffect, useRef, useState } from "react";
-import { ObjectOnSlide, Slide, TransionType } from "../../model/types";
+import { ObjectOnSlide, Slide } from "../../model/types";
 import { EllipseView } from "../Ellipse";
 import { RectangleView } from "../Rectangle";
 import { TriangleView } from "../Triangle";
@@ -8,6 +8,9 @@ import { ImageView } from "../ImageView";
 import styles from "../slide/Slide.module.css";
 import { Wrapper } from "../WrapperForObjectOnSlide/Wrapper";
 import { RegisterDndItemFn } from "../../hooks/useDdDForSlideBar";
+import { useAppActions } from "../../redux/hooks";
+import { useSelection } from "../../hooks/UseSelection";
+import { useSelectionForSlideBar } from "../../hooks/useSelectionForSlideBar";
 
 type ObjectProps = {
 	objectOnSlide: ObjectOnSlide;
@@ -45,11 +48,7 @@ const Object = (props: ObjectProps) => {
 	);
 };
 
-type SlideProps = Slide & {
-	registerDndItem?: RegisterDndItemFn;
-	index?: number;
-	scale?: number;
-};
+type SlideProps = Slide;
 
 function SlideView(props: SlideProps) {
 	const {
@@ -62,56 +61,24 @@ function SlideView(props: SlideProps) {
 		animations,
 		width,
 		height,
-		registerDndItem,
-		index,
-		scale,
 	} = props;
 
 	const widthSlide = width * document.documentElement.clientWidth;
 	const heightSlide = height * document.documentElement.clientHeight;
 
 	const ref = useRef<HTMLDivElement>(null);
-	if (registerDndItem && index !== undefined && scale !== undefined) {
-		useEffect(() => {
-			const { onDragStart } = registerDndItem(index, {
-				elementRef: ref,
-			});
-			const onMouseDown = (mouseDownEvent: MouseEvent) => {
-				onDragStart({
-					onDrag: (dragEvent) => {
-						ref.current!.style.position = "absolute";
-						ref.current!.style.zIndex = "1";
-						ref.current!.style.boxShadow = "black 2px 2px 4px";
-						ref.current!.style.top = `${
-							(dragEvent.pageY - mouseDownEvent.pageY) / scale
-						}px`;
-					},
-					onDrop: (dropEvent) => {
-						ref.current!.style.position = "";
-						ref.current!.style.zIndex = "";
-						ref.current!.style.boxShadow = "";
-						ref.current!.style.top = "";
-					},
-				});
-			};
-			const control = ref.current!;
-			control.addEventListener("mousedown", onMouseDown);
-			return () => control.removeEventListener("mousedown", onMouseDown);
-		}, [index, registerDndItem]);
-	}
 
-	const stylesForSlide = {
-		width: `${widthSlide}px`,
-		height: `${heightSlide}px`,
-		backgroundImage: typeBackground == "image" ? background : "",
-		backgroundColor: typeBackground == "color" ? background : "",
-	};
 	return (
 		<div
 			key={id}
 			ref={ref}
 			className={styles.slideStyles}
-			style={stylesForSlide}
+			style={{
+				width: `${widthSlide}px`,
+				height: `${heightSlide}px`,
+				backgroundImage: typeBackground == "image" ? background : "",
+				backgroundColor: typeBackground == "color" ? background : "",
+			}}
 		>
 			{elements.map((elem) => (
 				<Object

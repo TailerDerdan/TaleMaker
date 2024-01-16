@@ -1,0 +1,22 @@
+.panel {
+	width: 10vw;
+	padding: 8px 10px;
+	background-color: white;
+	display: none;
+	overflow: hidden;
+	opacity: 0;
+	pointer-events: none;
+}
+
+.panel.active {
+	opacity: 1;
+	pointer-events: all;
+	display: flex;
+	flex-flow: column nowrap;
+	align-items: center;
+	position: absolute;
+	top: 25%;
+	z-index: 100;
+	border-radius: 10px;
+	box-shadow: black 2px 2px 4px;
+}

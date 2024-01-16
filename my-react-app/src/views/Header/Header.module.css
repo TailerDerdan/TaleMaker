@@ -2,8 +2,13 @@
 	display: flex;
 	flex-direction: column;
 	width: 100%;
-	background-color: #7d426e;
+	background: linear-gradient(
+		rgb(67 19 115 / 100%),
+		rgb(117 29 237 / 100%),
+		rgb(175 26 255 / 100%)
+	);
 	z-index: 100;
+	min-height: 25vh;
 }
 
 .header__wrapper__titlePresentation {
@@ -53,7 +58,7 @@
 	width: 89%;
 	background-color: #fdfffc;
 	margin-left: 8%;
-	height: 41px;
+	height: 3%;
 	border-radius: 30px;
 	margin-bottom: 2%;
 	padding-left: 30px;
@@ -69,4 +74,103 @@
 
 .header__toolboxButton {
 	margin-right: 25px;
+}
+
+.wrapperInputForImage {
+	display: flex;
+	flex-direction: column;
+	width: 50%;
+}
+
+.wrapperForModalButton {
+	display: flex;
+	width: 50%;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.inputForImage {
+	font-family: inherit;
+	width: 100%;
+	border: 0;
+	border-bottom: 2px solid gray;
+	outline: 0;
+	font-size: 1.3rem;
+	color: gray;
+	padding: 7px 0;
+	background: transparent;
+	transition: border-color 0.2s;
+}
+
+input[type="text"] {
+	font-family: Lora;
+}
+
+.buttonModal {
+	appearance: none;
+	background-color: #fdfffc;
+	border: 1px solid rgb(27 31 35 / 15%);
+	border-radius: 1.875rem;
+	box-shadow:
+		rgb(27 31 35 / 4%) 0 1px 0,
+		rgb(255 255 255 / 25%) 0 1px 0 inset;
+	box-sizing: border-box;
+	color: #24292e;
+	cursor: pointer;
+	display: inline-block;
+	font-family: Lora;
+	font-size: 25px;
+	text-align: center;
+	font-style: normal;
+	font-weight: 500;
+	line-height: 20px;
+	list-style: none;
+	padding: 8px 16px;
+	position: relative;
+	transition: background-color 0.2s cubic-bezier(0.3, 0, 0.5, 1);
+	user-select: none;
+	touch-action: manipulation;
+	vertical-align: middle;
+	white-space: nowrap;
+	word-wrap: break-word;
+}
+
+.buttonModal:hover {
+	background-color: #f3f4f6;
+	text-decoration: none;
+	transition-duration: 0.1s;
+}
+
+.buttonModal:disabled {
+	background-color: #fafbfc;
+	border-color: rgb(27 31 35 / 15%);
+	color: #959da5;
+	cursor: default;
+}
+
+.buttonModal:active {
+	background-color: #edeff2;
+	box-shadow: rgb(225 228 232 / 20%) 0 1px 0 inset;
+	transition: none 0s;
+}
+
+.buttonModal:focus {
+	outline: 1px transparent;
+}
+
+.buttonModal::before {
+	display: none;
+}
+
+.buttonCreate {
+	margin-bottom: 2.5%;
+}
+
+.buttonCancel {
+	margin-top: 2.5%;
+}
+
+.buttonSetColorObject {
+	margin-bottom: 5%;
 }

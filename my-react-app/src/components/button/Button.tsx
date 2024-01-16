@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Button.module.css";
+import { ChangeData } from "../../data/data";
 
 enum ButtonType {
 	Icon,
@@ -9,6 +10,11 @@ enum ButtonType {
 	ToolBButton,
 }
 
+export enum ButtonLocation {
+	ToolBar,
+	SimpleButton,
+}
+
 const downloadName = "presentation.json";
 
 type ButtonProps = {
@@ -16,19 +22,26 @@ type ButtonProps = {
 	title?: string;
 	id: string;
 	type: ButtonType;
+	typeLocation?: ButtonLocation;
 	icon?: JSX.Element | undefined;
 	json?: Blob | MediaSource;
 };
 
 const Button = (props: ButtonProps) => {
 	const ButtonProps = props;
+	let styleFontSize;
+	if (ButtonProps.typeLocation === ButtonLocation.ToolBar) {
+		styleFontSize = styles.buttonFontSizeForToolBar;
+	} else {
+		styleFontSize = styles.buttonFontSize;
+	}
 	if (ButtonProps.type == ButtonType.Text) {
 		return (
 			<div key={ButtonProps.id} className={styles.buttonWrapper}>
 				<button
 					key={ButtonProps.id}
 					onClick={ButtonProps.onClick}
-					className={styles.button}
+					className={`${styles.button} ${styleFontSize}`}
 				>
 					{ButtonProps.title}
 				</button>
@@ -93,7 +106,7 @@ const Button = (props: ButtonProps) => {
 						if (inputFile.files != null) {
 							inputFile.files[0].text().then((data) => {
 								const newData = JSON.parse(data);
-								console.log(newData);
+								ChangeData(newData);
 							});
 						}
 					}}

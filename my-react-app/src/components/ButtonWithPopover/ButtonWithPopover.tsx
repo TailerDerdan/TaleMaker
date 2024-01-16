@@ -1,5 +1,10 @@
 import React, { useState, JSX } from "react";
-import { Button, ButtonProps, ButtonType } from "../button/Button";
+import {
+	Button,
+	ButtonLocation,
+	ButtonProps,
+	ButtonType,
+} from "../button/Button";
 import styles from "./ButtonWithPopover.module.css";
 
 type ButtonWithPopoverProps = {
@@ -8,10 +13,11 @@ type ButtonWithPopoverProps = {
 	id: string;
 	type: ButtonType;
 	icon?: JSX.Element;
+	typeOfLocation?: ButtonLocation;
 };
 
 const ButtonWithPopover = (props: ButtonWithPopoverProps) => {
-	const { title, buttons, id, type, icon } = props;
+	const { title, buttons, id, type, icon, typeOfLocation } = props;
 	const [opened, setOpened] = useState<boolean>(false);
 	if (type == ButtonType.Text) {
 		return (
@@ -33,6 +39,13 @@ const ButtonWithPopover = (props: ButtonWithPopoverProps) => {
 		);
 	}
 	if (type == ButtonType.Icon) {
+		let styleForButton;
+		if (typeOfLocation === ButtonLocation.ToolBar) {
+			styleForButton = styles.popoverForToolBar;
+			console.log(1);
+		} else {
+			styleForButton = styles.popover;
+		}
 		return (
 			<>
 				<Button
@@ -42,9 +55,13 @@ const ButtonWithPopover = (props: ButtonWithPopoverProps) => {
 					type={type}
 				/>
 				{opened ? (
-					<div className={styles.popover}>
+					<div className={styleForButton}>
 						{buttons.map((el, i) => (
-							<Button {...el} key={id + i} />
+							<Button
+								{...el}
+								key={id + i}
+								typeLocation={typeOfLocation}
+							/>
 						))}
 					</div>
 				) : null}

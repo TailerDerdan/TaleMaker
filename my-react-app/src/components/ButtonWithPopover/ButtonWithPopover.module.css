@@ -6,3 +6,12 @@
 	width: 200px;
 	z-index: 100;
 }
+
+.popoverForToolBar {
+	display: flex;
+	position: absolute;
+	top: 21%;
+	flex-direction: column;
+	width: 200px;
+	z-index: 100;
+}

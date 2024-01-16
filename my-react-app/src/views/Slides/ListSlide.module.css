@@ -1,15 +1,36 @@
+.listOfSlideBlock {
+	display: block;
+	width: 22vw;
+	height: 75vh;
+	overflow-y: auto;
+	background-color: rgb(141 140 182 / 10%);
+}
+
 .listOfSlide {
 	height: inherit;
 	display: flex;
 	flex-flow: column nowrap;
 	max-width: inherit;
-	padding: 2% 1% 0;
 	border-right: 1px solid #000;
-	background-color: rgb(141 140 182 / 10%);
 }
 
 .slide {
 	transform-origin: top left;
-	margin-bottom: 1rem;
 	max-width: inherit;
+	margin: 0.8rem 1rem;
+}
+
+.listOfSlideBlock::-webkit-scrollbar {
+	width: 10px;
+}
+
+.listOfSlideBlock::-webkit-scrollbar-track {
+	border-radius: 8px;
+	background-color: #e7e7e7;
+	border: 1px solid #cacaca;
+}
+
+.listOfSlideBlock::-webkit-scrollbar-thumb {
+	border-radius: 8px;
+	background-color: rgb(141 140 182 / 20%);
 }

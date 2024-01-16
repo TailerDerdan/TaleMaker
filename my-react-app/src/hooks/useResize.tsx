@@ -280,7 +280,6 @@ function useResize(props: useResizeProps) {
 					default:
 						break;
 				}
-				console.log(PhysicalParametersOfObject);
 				setCoords(slideID, blockCircleID, { x: newPos.x, y: newPos.y });
 				setCoords(slideID, blockResizeableID, {
 					x: PhysicalParametersOfObject.left,
